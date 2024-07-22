@@ -31,11 +31,6 @@ class OnBoardingViewController: BaseViewController {
         self.view.addSubview(button)
         return button
     }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
     
     override func configureLayout() {
         appTitle.snp.makeConstraints {
@@ -54,12 +49,11 @@ class OnBoardingViewController: BaseViewController {
             $0.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
-
 }
 
 private extension OnBoardingViewController {
     @objc func startButtonTapped() {
-//        let vc = ProfileViewController()
-//        navigationController?.pushViewController(vc, animated: true)
+        let vc = ProfileViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

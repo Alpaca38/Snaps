@@ -31,6 +31,13 @@
 		D1E8B1892C4E2520009B3D81 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1882C4E2520009B3D81 /* User.swift */; };
 		D1E8B18B2C4E25C8009B3D81 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B18A2C4E25C8009B3D81 /* Image.swift */; };
 		D1E8B18E2C4E2D53009B3D81 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B18D2C4E2D53009B3D81 /* CustomButton.swift */; };
+		D1E8B1912C4E315E009B3D81 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1902C4E315E009B3D81 /* ProfileViewController.swift */; };
+		D1E8B1932C4E3250009B3D81 /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1922C4E3250009B3D81 /* CircleImageView.swift */; };
+		D1E8B1952C4E3293009B3D81 /* NicknameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1942C4E3293009B3D81 /* NicknameTextField.swift */; };
+		D1E8B1982C4E3649009B3D81 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1972C4E3649009B3D81 /* ProfileViewModel.swift */; };
+		D1E8B19B2C4E367C009B3D81 /* TextFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B19A2C4E367C009B3D81 /* TextFieldState.swift */; };
+		D1E8B19D2C4E36CB009B3D81 /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B19C2C4E36CB009B3D81 /* ValidationError.swift */; };
+		D1E8B19F2C4E376A009B3D81 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B19E2C4E376A009B3D81 /* TabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +75,13 @@
 		D1E8B1882C4E2520009B3D81 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D1E8B18A2C4E25C8009B3D81 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		D1E8B18D2C4E2D53009B3D81 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		D1E8B1902C4E315E009B3D81 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D1E8B1922C4E3250009B3D81 /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
+		D1E8B1942C4E3293009B3D81 /* NicknameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameTextField.swift; sourceTree = "<group>"; };
+		D1E8B1972C4E3649009B3D81 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		D1E8B19A2C4E367C009B3D81 /* TextFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldState.swift; sourceTree = "<group>"; };
+		D1E8B19C2C4E36CB009B3D81 /* ValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
+		D1E8B19E2C4E376A009B3D81 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +120,12 @@
 		D1E8B1482C4E1568009B3D81 /* Snaps */ = {
 			isa = PBXGroup;
 			children = (
+				D1E8B1992C4E3675009B3D81 /* ProfileValidation */,
+				D1E8B1962C4E3642009B3D81 /* ViewModel */,
 				D1E8B18C2C4E2D46009B3D81 /* View */,
+				D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */,
+				D1E8B1902C4E315E009B3D81 /* ProfileViewController.swift */,
+				D1E8B19E2C4E376A009B3D81 /* TabBarController.swift */,
 				D1E8B1872C4E2511009B3D81 /* Model */,
 				D1E8B1822C4E23DA009B3D81 /* UserDefaults */,
 				D1E8B1792C4E19BE009B3D81 /* Resource */,
@@ -115,7 +134,6 @@
 				D1E8B1722C4E18BB009B3D81 /* Base */,
 				D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */,
 				D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */,
-				D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */,
 				D1E8B1522C4E1569009B3D81 /* Assets.xcassets */,
 				D1E8B1542C4E1569009B3D81 /* LaunchScreen.storyboard */,
 				D1E8B1572C4E1569009B3D81 /* Info.plist */,
@@ -179,9 +197,36 @@
 		D1E8B18C2C4E2D46009B3D81 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D1E8B18D2C4E2D53009B3D81 /* CustomButton.swift */,
+				D1E8B18F2C4E3141009B3D81 /* Custom */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D1E8B18F2C4E3141009B3D81 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				D1E8B18D2C4E2D53009B3D81 /* CustomButton.swift */,
+				D1E8B1922C4E3250009B3D81 /* CircleImageView.swift */,
+				D1E8B1942C4E3293009B3D81 /* NicknameTextField.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		D1E8B1962C4E3642009B3D81 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D1E8B1972C4E3649009B3D81 /* ProfileViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D1E8B1992C4E3675009B3D81 /* ProfileValidation */ = {
+			isa = PBXGroup;
+			children = (
+				D1E8B19A2C4E367C009B3D81 /* TextFieldState.swift */,
+				D1E8B19C2C4E36CB009B3D81 /* ValidationError.swift */,
+			);
+			path = ProfileValidation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,12 +316,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1E8B1892C4E2520009B3D81 /* User.swift in Sources */,
+				D1E8B1982C4E3649009B3D81 /* ProfileViewModel.swift in Sources */,
+				D1E8B19D2C4E36CB009B3D81 /* ValidationError.swift in Sources */,
+				D1E8B1952C4E3293009B3D81 /* NicknameTextField.swift in Sources */,
 				D1E8B18E2C4E2D53009B3D81 /* CustomButton.swift in Sources */,
+				D1E8B19B2C4E367C009B3D81 /* TextFieldState.swift in Sources */,
 				D1E8B14E2C4E1568009B3D81 /* OnBoardingViewController.swift in Sources */,
 				D1E8B17D2C4E1A89009B3D81 /* BaseCollectionViewCell.swift in Sources */,
 				D1E8B1862C4E2463009B3D81 /* UserDefaultsManager.swift in Sources */,
 				D1E8B14A2C4E1568009B3D81 /* AppDelegate.swift in Sources */,
+				D1E8B1912C4E315E009B3D81 /* ProfileViewController.swift in Sources */,
 				D1E8B1842C4E2401009B3D81 /* UserDefaults.swift in Sources */,
+				D1E8B1932C4E3250009B3D81 /* CircleImageView.swift in Sources */,
+				D1E8B19F2C4E376A009B3D81 /* TabBarController.swift in Sources */,
 				D1E8B17B2C4E19C4009B3D81 /* Color.swift in Sources */,
 				D1E8B18B2C4E25C8009B3D81 /* Image.swift in Sources */,
 				D1E8B17F2C4E1F85009B3D81 /* Observable.swift in Sources */,
