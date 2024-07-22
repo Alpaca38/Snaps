@@ -10,7 +10,7 @@ import Foundation
 final class ProfileViewModel {
     private(set) var outputValidText = Observable("")
     private(set) var outputNickname = Observable<String?>(nil)
-    private(set) var outputValid = Observable(false)
+    private(set) var outputTextValid = Observable(false)
     private(set) var outputImageIndex = Observable<Int?>(nil)
     
     var inputText: Observable<String?> = Observable("")
@@ -23,16 +23,16 @@ final class ProfileViewModel {
             do {
                 _ = try validateProfileName(text: text)
                 outputValidText.value = TextFieldState.valid
-                outputValid.value = true
+                outputTextValid.value = true
             } catch ValidationError.includeSpecial {
                 outputValidText.value = TextFieldState.specialCharacter
-                outputValid.value = false
+                outputTextValid.value = false
             } catch ValidationError.includeInt {
                 outputValidText.value = TextFieldState.number
-                outputValid.value = false
+                outputTextValid.value = false
             } catch ValidationError.isNotValidCount {
                 outputValidText.value = TextFieldState.count
-                outputValid.value = false
+                outputTextValid.value = false
             } catch {
                 
             }

@@ -38,6 +38,9 @@
 		D1E8B19B2C4E367C009B3D81 /* TextFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B19A2C4E367C009B3D81 /* TextFieldState.swift */; };
 		D1E8B19D2C4E36CB009B3D81 /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B19C2C4E36CB009B3D81 /* ValidationError.swift */; };
 		D1E8B19F2C4E376A009B3D81 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B19E2C4E376A009B3D81 /* TabBarController.swift */; };
+		D1E8B1A12C4E3F5D009B3D81 /* MBTIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1A02C4E3F5D009B3D81 /* MBTIView.swift */; };
+		D1E8B1A32C4E3FBA009B3D81 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1A22C4E3FBA009B3D81 /* BaseView.swift */; };
+		D1E8B1A62C4E4845009B3D81 /* MBTICell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1A52C4E4845009B3D81 /* MBTICell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -82,6 +85,9 @@
 		D1E8B19A2C4E367C009B3D81 /* TextFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldState.swift; sourceTree = "<group>"; };
 		D1E8B19C2C4E36CB009B3D81 /* ValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
 		D1E8B19E2C4E376A009B3D81 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		D1E8B1A02C4E3F5D009B3D81 /* MBTIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTIView.swift; sourceTree = "<group>"; };
+		D1E8B1A22C4E3FBA009B3D81 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		D1E8B1A52C4E4845009B3D81 /* MBTICell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTICell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,9 +129,6 @@
 				D1E8B1992C4E3675009B3D81 /* ProfileValidation */,
 				D1E8B1962C4E3642009B3D81 /* ViewModel */,
 				D1E8B18C2C4E2D46009B3D81 /* View */,
-				D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */,
-				D1E8B1902C4E315E009B3D81 /* ProfileViewController.swift */,
-				D1E8B19E2C4E376A009B3D81 /* TabBarController.swift */,
 				D1E8B1872C4E2511009B3D81 /* Model */,
 				D1E8B1822C4E23DA009B3D81 /* UserDefaults */,
 				D1E8B1792C4E19BE009B3D81 /* Resource */,
@@ -146,6 +149,7 @@
 			children = (
 				D1E8B1772C4E1996009B3D81 /* BaseViewController.swift */,
 				D1E8B17C2C4E1A89009B3D81 /* BaseCollectionViewCell.swift */,
+				D1E8B1A22C4E3FBA009B3D81 /* BaseView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -198,6 +202,11 @@
 			isa = PBXGroup;
 			children = (
 				D1E8B18F2C4E3141009B3D81 /* Custom */,
+				D1E8B1A42C4E482D009B3D81 /* Cell */,
+				D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */,
+				D1E8B1902C4E315E009B3D81 /* ProfileViewController.swift */,
+				D1E8B19E2C4E376A009B3D81 /* TabBarController.swift */,
+				D1E8B1A02C4E3F5D009B3D81 /* MBTIView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -227,6 +236,14 @@
 				D1E8B19C2C4E36CB009B3D81 /* ValidationError.swift */,
 			);
 			path = ProfileValidation;
+			sourceTree = "<group>";
+		};
+		D1E8B1A42C4E482D009B3D81 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				D1E8B1A52C4E4845009B3D81 /* MBTICell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,8 +347,11 @@
 				D1E8B1932C4E3250009B3D81 /* CircleImageView.swift in Sources */,
 				D1E8B19F2C4E376A009B3D81 /* TabBarController.swift in Sources */,
 				D1E8B17B2C4E19C4009B3D81 /* Color.swift in Sources */,
+				D1E8B1A32C4E3FBA009B3D81 /* BaseView.swift in Sources */,
 				D1E8B18B2C4E25C8009B3D81 /* Image.swift in Sources */,
 				D1E8B17F2C4E1F85009B3D81 /* Observable.swift in Sources */,
+				D1E8B1A62C4E4845009B3D81 /* MBTICell.swift in Sources */,
+				D1E8B1A12C4E3F5D009B3D81 /* MBTIView.swift in Sources */,
 				D1E8B1602C4E16A7009B3D81 /* APIKey.swift in Sources */,
 				D1E8B1762C4E18DB009B3D81 /* ReuseIdentifier.swift in Sources */,
 				D1E8B14C2C4E1568009B3D81 /* SceneDelegate.swift in Sources */,

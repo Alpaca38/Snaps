@@ -50,6 +50,13 @@ final class ProfileViewController: BaseViewController {
         return button
     }()
     
+    private lazy var mbtiView = {
+        let view = MBTIView()
+        view.collectionView.delegate = self
+        self.view.addSubview(view)
+        return view
+    }()
+    
     let viewModel = ProfileViewModel()
     
     override func viewDidLoad() {
@@ -82,9 +89,14 @@ final class ProfileViewController: BaseViewController {
             $0.leading.equalToSuperview().offset(28)
         }
         
+        mbtiView.snp.makeConstraints {
+            $0.top.equalTo(textFieldStateLabel.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(200)
+        }
+        
         completeButton.snp.makeConstraints {
-            $0.top.equalTo(textFieldStateLabel.snp.bottom).offset(20)
-            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
     
@@ -144,7 +156,7 @@ private extension ProfileViewController {
             SceneManager.shared.setScene(viewController: TabBarController())
         }
         
-        viewModel.outputValid.bind { [weak self] in
+        viewModel.outputTextValid.bind { [weak self] in
             guard let self else { return }
             completeButton.backgroundColor = $0 ? Color.main : .gray
             completeButton.isEnabled = $0
@@ -164,13 +176,46 @@ private extension ProfileViewController {
     }
     
     @objc func profileImageTapped() {
-//        let vc = ProfileImageViewController()
-//        navigationController?.pushViewController(vc, animated: true)
+        //        let vc = ProfileImageViewController()
+        //        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension ProfileViewController: UITextFieldDelegate {
     @objc func textFieldDidChage(_ textField: UITextField) {
         viewModel.inputText.value = textField.text
+    }
+}
+
+extension ProfileViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard var data = mbtiView.dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        mbtiView.mbtiItems[indexPath.item].selected = data.selected ? false : true
+        updatePair(data: data)
+       
+        data.selected.toggle()
+        
+        mbtiView.updateSnapshot()
+    }
+    
+    private func updatePair(data: MBTIItem) {
+        let pairs: [String: String] = [
+            "E": "I", "I": "E",
+            "S": "N", "N": "S",
+            "T": "F", "F": "T",
+            "J": "P", "P": "J"
+        ]
+        guard let pairElement = pairs[data.element] else { return }
+        // 짝이 되는 값의 위치의 selected 값 업데이트
+        for (index, item) in mbtiView.mbtiItems.enumerated() {
+            if item.element == pairElement {
+                mbtiView.mbtiItems[index].selected = false
+            }
+        }
+    }
+    
+    private func sendMBTI() {
+        
     }
 }
