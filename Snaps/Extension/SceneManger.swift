@@ -1,0 +1,24 @@
+//
+//  SceneManger.swift
+//  Snaps
+//
+//  Created by 조규연 on 7/22/24.
+//
+
+import UIKit
+
+final class SceneManager {
+    private init() { }
+    
+    static let shared = SceneManager()
+    
+    func setScene(viewController: UIViewController) {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        
+        let navigationController = UINavigationController(rootViewController: viewController)
+        
+        sceneDelegate?.window?.rootViewController = navigationController
+        sceneDelegate?.window?.makeKeyAndVisible()
+    }
+}
