@@ -15,12 +15,14 @@ final class ProfileViewModel {
     private(set) var outputMBTIValid = Observable(false)
     private(set) var outputTotalValid = Observable(false)
     private(set) var outputMBTI = Observable<[MBTIItem]?>(nil)
+    private(set) var outputSaveImageIndex = Observable<Int?>(nil)
     
     var inputText: Observable<String?> = Observable("")
     var inputValidNickname = Observable<String?>(nil)
     var inputSelectedImageIndex = Observable<Int?>(nil)
     var inputMBTI = Observable<[MBTIItem]?>(nil)
     var inputValidMBTI = Observable<[MBTIItem]?>(nil)
+    var inputSaveImage = Observable<Int?>(nil)
     
     init() {
         inputText.bind { [weak self] value in
@@ -70,6 +72,11 @@ final class ProfileViewModel {
         inputValidMBTI.bind { [weak self] mbti in
             guard let mbti else { return }
             self?.outputMBTI.value = mbti
+        }
+        
+        inputSaveImage.bind { [weak self] index in
+            guard let index else { return }
+            self?.outputSaveImageIndex.value = index
         }
     }
     

@@ -57,7 +57,7 @@ final class ProfileViewController: BaseViewController {
         return view
     }()
     
-    let viewModel = ProfileViewModel()
+    private let viewModel = ProfileViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,10 +116,10 @@ private extension ProfileViewController {
     
     func setNavi() {
         if UserDefaultsManager.user.nickname == "" {
-            title = "PROFILE SETTING"
+            navigationItem.title = NaviTitle.profileSetting
             setRandomImage()
         } else {
-            navigationItem.title = "EDIT PROFILE"
+            navigationItem.title = NaviTitle.editProfile
             let saveButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
             navigationItem.rightBarButtonItem = saveButton
             profileImageView.image = UIImage(named: Image.Profile.allCases[UserDefaultsManager.user.image].profileImage)
@@ -133,9 +133,10 @@ private extension ProfileViewController {
     }
     
     @objc func saveButtonTapped() {
-        if textFieldStateLabel.text == TextFieldState.valid || nicknameTextField.text == UserDefaultsManager.user.nickname {
+        if nicknameTextField.text == UserDefaultsManager.user.nickname || viewModel.outputTotalValid.value {
             guard let nickname = nicknameTextField.text else { return }
             UserDefaultsManager.user.nickname = nickname
+            UserDefaultsManager.user.mbti = mbtiView.mbtiItems
             
             navigationController?.popViewController(animated: true)
         } else {
@@ -152,8 +153,6 @@ private extension ProfileViewController {
         viewModel.outputNickname.bind { nickname in
             guard let nickname else { return }
             UserDefaultsManager.user.nickname = nickname
-            UserDefaultsManager.isLogin = true
-            SceneManager.shared.setScene(viewController: TabBarController())
         }
         
         viewModel.outputTotalValid.bind { [weak self] in
@@ -162,7 +161,7 @@ private extension ProfileViewController {
             completeButton.isEnabled = $0
         }
         
-        viewModel.outputImageIndex.bind { index in
+        viewModel.outputSaveImageIndex.bind { index in
             guard let index else { return }
             UserDefaultsManager.user.image = index
         }
@@ -178,13 +177,21 @@ private extension ProfileViewController {
     @objc func completeButtonTapped() {
         guard let nickname = nicknameTextField.text else { return }
         viewModel.inputValidNickname.value = nickname
-        
+        viewModel.inputSaveImage.value = viewModel.outputImageIndex.value
         viewModel.inputValidMBTI.value = mbtiView.mbtiItems
+        
+        UserDefaultsManager.isLogin = true
+        SceneManager.shared.setScene(viewController: TabBarController())
     }
     
     @objc func profileImageTapped() {
-        //        let vc = ProfileImageViewController()
-        //        navigationController?.pushViewController(vc, animated: true)
+        let vc = ProfileImageViewController()
+        vc.viewModel.inputSelectedIndex.value = viewModel.outputImageIndex.value ?? UserDefaultsManager.user.image
+        vc.sendImage = { [weak self] image in
+            self?.profileImageView.image = UIImage(named: image)
+            self?.viewModel.inputSelectedImageIndex.value = Image.Profile.allCases.firstIndex(where: { $0.profileImage == image })
+        }
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -196,7 +203,7 @@ extension ProfileViewController: UITextFieldDelegate {
 
 extension ProfileViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard var data = mbtiView.dataSource.itemIdentifier(for: indexPath) else { return }
+        guard let data = mbtiView.dataSource.itemIdentifier(for: indexPath) else { return }
         
         mbtiView.mbtiItems[indexPath.item].selected = data.selected ? false : true
         updatePair(data: data)

@@ -41,6 +41,10 @@
 		D1E8B1A12C4E3F5D009B3D81 /* MBTIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1A02C4E3F5D009B3D81 /* MBTIView.swift */; };
 		D1E8B1A32C4E3FBA009B3D81 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1A22C4E3FBA009B3D81 /* BaseView.swift */; };
 		D1E8B1A62C4E4845009B3D81 /* MBTICell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1A52C4E4845009B3D81 /* MBTICell.swift */; };
+		D1E8B1A82C4E7FCA009B3D81 /* ProfileImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1A72C4E7FCA009B3D81 /* ProfileImageViewController.swift */; };
+		D1E8B1AA2C4E80B5009B3D81 /* ProfileImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1A92C4E80B5009B3D81 /* ProfileImageCell.swift */; };
+		D1E8B1AC2C4E8123009B3D81 /* NaviTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1AB2C4E8123009B3D81 /* NaviTitle.swift */; };
+		D1E8B1AE2C4E81E0009B3D81 /* ProfileImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1AD2C4E81E0009B3D81 /* ProfileImageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -88,6 +92,10 @@
 		D1E8B1A02C4E3F5D009B3D81 /* MBTIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTIView.swift; sourceTree = "<group>"; };
 		D1E8B1A22C4E3FBA009B3D81 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		D1E8B1A52C4E4845009B3D81 /* MBTICell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTICell.swift; sourceTree = "<group>"; };
+		D1E8B1A72C4E7FCA009B3D81 /* ProfileImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageViewController.swift; sourceTree = "<group>"; };
+		D1E8B1A92C4E80B5009B3D81 /* ProfileImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageCell.swift; sourceTree = "<group>"; };
+		D1E8B1AB2C4E8123009B3D81 /* NaviTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaviTitle.swift; sourceTree = "<group>"; };
+		D1E8B1AD2C4E81E0009B3D81 /* ProfileImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +185,7 @@
 			children = (
 				D1E8B17A2C4E19C4009B3D81 /* Color.swift */,
 				D1E8B18A2C4E25C8009B3D81 /* Image.swift */,
+				D1E8B1AB2C4E8123009B3D81 /* NaviTitle.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -205,6 +214,7 @@
 				D1E8B1A42C4E482D009B3D81 /* Cell */,
 				D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */,
 				D1E8B1902C4E315E009B3D81 /* ProfileViewController.swift */,
+				D1E8B1A72C4E7FCA009B3D81 /* ProfileImageViewController.swift */,
 				D1E8B19E2C4E376A009B3D81 /* TabBarController.swift */,
 				D1E8B1A02C4E3F5D009B3D81 /* MBTIView.swift */,
 			);
@@ -225,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				D1E8B1972C4E3649009B3D81 /* ProfileViewModel.swift */,
+				D1E8B1AD2C4E81E0009B3D81 /* ProfileImageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -242,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				D1E8B1A52C4E4845009B3D81 /* MBTICell.swift */,
+				D1E8B1A92C4E80B5009B3D81 /* ProfileImageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -346,8 +358,12 @@
 				D1E8B1842C4E2401009B3D81 /* UserDefaults.swift in Sources */,
 				D1E8B1932C4E3250009B3D81 /* CircleImageView.swift in Sources */,
 				D1E8B19F2C4E376A009B3D81 /* TabBarController.swift in Sources */,
+				D1E8B1AC2C4E8123009B3D81 /* NaviTitle.swift in Sources */,
 				D1E8B17B2C4E19C4009B3D81 /* Color.swift in Sources */,
 				D1E8B1A32C4E3FBA009B3D81 /* BaseView.swift in Sources */,
+				D1E8B1A82C4E7FCA009B3D81 /* ProfileImageViewController.swift in Sources */,
+				D1E8B1AE2C4E81E0009B3D81 /* ProfileImageViewModel.swift in Sources */,
+				D1E8B1AA2C4E80B5009B3D81 /* ProfileImageCell.swift in Sources */,
 				D1E8B18B2C4E25C8009B3D81 /* Image.swift in Sources */,
 				D1E8B17F2C4E1F85009B3D81 /* Observable.swift in Sources */,
 				D1E8B1A62C4E4845009B3D81 /* MBTICell.swift in Sources */,
