@@ -99,7 +99,7 @@ extension MBTIView {
     typealias SnapShot = NSDiffableDataSourceSnapshot<Int, MBTIItem>
 }
 
-struct MBTIItem: Hashable {
+struct MBTIItem: Codable, Hashable {
     let element: String
     var selected: Bool = false
 }

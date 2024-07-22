@@ -156,15 +156,20 @@ private extension ProfileViewController {
             SceneManager.shared.setScene(viewController: TabBarController())
         }
         
-        viewModel.outputTextValid.bind { [weak self] in
+        viewModel.outputTotalValid.bind { [weak self] in
             guard let self else { return }
-            completeButton.backgroundColor = $0 ? Color.main : .gray
+            completeButton.backgroundColor = $0 ? Color.main : Color.gray
             completeButton.isEnabled = $0
         }
         
         viewModel.outputImageIndex.bind { index in
             guard let index else { return }
             UserDefaultsManager.user.image = index
+        }
+        
+        viewModel.outputMBTI.bind { mbti in
+            guard let mbti else { return }
+            UserDefaultsManager.user.mbti = mbti
         }
     }
 }
@@ -173,6 +178,8 @@ private extension ProfileViewController {
     @objc func completeButtonTapped() {
         guard let nickname = nicknameTextField.text else { return }
         viewModel.inputValidNickname.value = nickname
+        
+        viewModel.inputValidMBTI.value = mbtiView.mbtiItems
     }
     
     @objc func profileImageTapped() {
@@ -193,8 +200,8 @@ extension ProfileViewController: UICollectionViewDelegate {
         
         mbtiView.mbtiItems[indexPath.item].selected = data.selected ? false : true
         updatePair(data: data)
-       
-        data.selected.toggle()
+        
+        viewModel.inputMBTI.value = mbtiView.mbtiItems
         
         mbtiView.updateSnapshot()
     }
@@ -213,9 +220,5 @@ extension ProfileViewController: UICollectionViewDelegate {
                 mbtiView.mbtiItems[index].selected = false
             }
         }
-    }
-    
-    private func sendMBTI() {
-        
     }
 }

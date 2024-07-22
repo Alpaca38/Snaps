@@ -10,4 +10,5 @@ import Foundation
 struct User: Codable {
     var nickname: String = ""
     var image: Image.Profile.RawValue // Int
+    var mbti: [MBTIItem] = []
 }

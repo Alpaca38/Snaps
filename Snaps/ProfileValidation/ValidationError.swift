@@ -7,8 +7,12 @@
 
 import Foundation
 
-enum ValidationError: Error {
+enum NicknameValidationError: Error {
     case includeSpecial
     case includeInt
+    case isNotValidCount
+}
+
+enum MBTIValidationError: Error {
     case isNotValidCount
 }

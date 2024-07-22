@@ -12,10 +12,15 @@ final class ProfileViewModel {
     private(set) var outputNickname = Observable<String?>(nil)
     private(set) var outputTextValid = Observable(false)
     private(set) var outputImageIndex = Observable<Int?>(nil)
+    private(set) var outputMBTIValid = Observable(false)
+    private(set) var outputTotalValid = Observable(false)
+    private(set) var outputMBTI = Observable<[MBTIItem]?>(nil)
     
     var inputText: Observable<String?> = Observable("")
     var inputValidNickname = Observable<String?>(nil)
     var inputSelectedImageIndex = Observable<Int?>(nil)
+    var inputMBTI = Observable<[MBTIItem]?>(nil)
+    var inputValidMBTI = Observable<[MBTIItem]?>(nil)
     
     init() {
         inputText.bind { [weak self] value in
@@ -24,18 +29,19 @@ final class ProfileViewModel {
                 _ = try validateProfileName(text: text)
                 outputValidText.value = TextFieldState.valid
                 outputTextValid.value = true
-            } catch ValidationError.includeSpecial {
+            } catch NicknameValidationError.includeSpecial {
                 outputValidText.value = TextFieldState.specialCharacter
                 outputTextValid.value = false
-            } catch ValidationError.includeInt {
+            } catch NicknameValidationError.includeInt {
                 outputValidText.value = TextFieldState.number
                 outputTextValid.value = false
-            } catch ValidationError.isNotValidCount {
+            } catch NicknameValidationError.isNotValidCount {
                 outputValidText.value = TextFieldState.count
                 outputTextValid.value = false
             } catch {
                 
             }
+            updateTotalValid()
         }
         
         inputValidNickname.bind { [weak self] nickname in
@@ -47,18 +53,47 @@ final class ProfileViewModel {
             guard let index else { return }
             self?.outputImageIndex.value = index
         }
+        
+        inputMBTI.bind { [weak self] mbti in
+            guard let mbti ,let self else { return }
+            do {
+                _ = try validateMBTI(mbti: mbti)
+                outputMBTIValid.value = true
+            } catch MBTIValidationError.isNotValidCount {
+                outputMBTIValid.value = false
+            } catch {
+                
+            }
+            updateTotalValid()
+        }
+        
+        inputValidMBTI.bind { [weak self] mbti in
+            guard let mbti else { return }
+            self?.outputMBTI.value = mbti
+        }
     }
     
     private func validateProfileName(text: String) throws -> Bool {
         guard !text.contains(where: { "@#$%".contains($0) }) else {
-            throw ValidationError.includeSpecial
+            throw NicknameValidationError.includeSpecial
         }
         guard text.rangeOfCharacter(from: .decimalDigits) == nil else {
-            throw ValidationError.includeInt
+            throw NicknameValidationError.includeInt
         }
         guard text.count >= 2 && text.count < 10 else {
-            throw ValidationError.isNotValidCount
+            throw NicknameValidationError.isNotValidCount
         }
         return true
+    }
+    
+    private func validateMBTI(mbti: [MBTIItem]) throws -> Bool {
+        guard mbti.filter({ $0.selected }).count == 4 else {
+            throw MBTIValidationError.isNotValidCount
+        }
+        return true
+    }
+    
+    private func updateTotalValid() {
+        outputTotalValid.value = outputTextValid.value && outputMBTIValid.value
     }
 }
