@@ -7,11 +7,13 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class PhotoCell: BaseCollectionViewCell {
     private lazy var mainImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
         view.backgroundColor = Color.lightGray
         contentView.addSubview(view)
         return view
@@ -61,8 +63,25 @@ final class PhotoCell: BaseCollectionViewCell {
         }
     }
     
-    func configure(category: Category) {
+    func configure(data: PhotoItem, category: Category) {
+        let url = URL(string: data.urls.small)
+        mainImageView.kf.setImage(with: url)
         
+        likeCountView.setTitle(data.likes.formatted(), for: .normal)
+        likeCountView.setAttributedTitle(NSAttributedString(string: data.likes.formatted(), attributes: [
+            .font: UIFont.systemFont(ofSize: 13, weight: .regular),
+            .foregroundColor: Color.white
+        ]), for: .normal)
+                
+        switch category {
+        case .trend:
+            likeButton.isHidden = true
+        case .search:
+            likeButton.isHidden = false
+            likeCountView.isHidden = false
+        case .like:
+            likeCountView.isHidden = true
+        }
     }
 }
 

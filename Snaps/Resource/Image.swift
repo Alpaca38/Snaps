@@ -11,7 +11,7 @@ enum Image {
     static let camera = UIImage(systemName: "camera.fill")
     static let star = UIImage(systemName: "star.fill")
     static let launchTitle = UIImage(named: "snaps_image")
-    static let lauchImage = UIImage(named: "launchImage")
+    static let lauchImage = UIImage(named: "launch")
     static let likeCircleInactive = UIImage(named: "like_circle_inactive")
     static let likeCircle = UIImage(named: "like_circle")
     static let likeInactive = UIImage(named: "like_inactive")

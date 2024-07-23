@@ -7,10 +7,13 @@
 
 import UIKit
 import SnapKit
+import Toast
 
 final class SearchPhotoViewController: BaseViewController {
-    private let searchController = UISearchController(searchResultsController: nil)
+    private let viewModel = SearchPhotoViewModel()
     private var dataSource: DataSource!
+    
+    private let searchController = UISearchController(searchResultsController: nil)
     
     private lazy var sortButton = {
         var config = UIButton.Configuration.gray()
@@ -21,12 +24,15 @@ final class SearchPhotoViewController: BaseViewController {
         config.title = "최신순"
         let view = UIButton(configuration: config)
         view.addTarget(self, action: #selector(sortButtonTapped(_:)), for: .touchUpInside)
+        view.setTitle("최신순", for: .normal)
+        view.setTitle("관련순", for: .selected)
         self.view.addSubview(view)
         return view
     }()
     
     private lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        view.prefetchDataSource = self
         self.view.addSubview(view)
         return view
     }()
@@ -36,7 +42,7 @@ final class SearchPhotoViewController: BaseViewController {
         setNavi()
         setSearchController()
         configureDataSource()
-        updateSnapshot()
+        bindData()
     }
     
     override func configureLayout() {
@@ -66,9 +72,8 @@ private extension SearchPhotoViewController {
     }
     
     @objc func sortButtonTapped(_ sender: UIButton) {
-        // inputButtonTap
-        sender.isSelected ? sender.setTitle("최신순", for: .normal) : sender.setTitle("관련순", for: .normal)
         sender.isSelected.toggle()
+        viewModel.inputSortButton.value = sender.isSelected
     }
     
     func createLayout() -> UICollectionViewLayout {
@@ -94,7 +99,7 @@ private extension SearchPhotoViewController {
 private extension SearchPhotoViewController {
     func configureDataSource() {
         let cellRegistration = SearchCellRegistration { cell, indexPath, itemIdentifier in
-            cell.configure(category: .search)
+            cell.configure(data: itemIdentifier, category: .search)
         }
         
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
@@ -103,19 +108,55 @@ private extension SearchPhotoViewController {
         })
     }
     
-    func updateSnapshot() {
+    func updateSnapshot(items: [PhotoItem]) {
         var snapshot = Snapshot()
         snapshot.appendSections(Section.allCases)
-        snapshot.appendItems(["star", "star.fill", "asdfas", "adfasdf", "czvzvx"], toSection: .main)
+        snapshot.appendItems(items, toSection: .main)
         
         dataSource.apply(snapshot)
     }
 }
 
+// MARK: Data Bind
+private extension SearchPhotoViewController {
+    func bindData() {
+        viewModel.outputList.bind(false) { [weak self] items in
+            if items.isEmpty {
+                self?.view.makeToast("검색 결과가 없습니다.", position: .center)
+            }
+            self?.updateSnapshot(items: items)
+        }
+        
+        viewModel.outputListIsNotEmpty.bind(false) { [weak self] _ in
+            guard let self else { return }
+            collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+        }
+        
+        viewModel.outputNetworkError.bind { [weak self] error in
+            self?.view.makeToast(error?.rawValue, position: .center)
+        }
+        
+        viewModel.outputSort.bind { [weak self] _ in
+            self?.viewModel.inputPage.value = 1
+        }
+    }
+}
+
 extension SearchPhotoViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        guard let text = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-//        inputSearchText
+        guard let text = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty else { return }
+        viewModel.inputText.value = text
+    }
+}
+
+extension SearchPhotoViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        let list = viewModel.outputList.value
+        indexPaths.forEach {
+            if list.count - 4 == $0.item {
+                viewModel.inputPage.value += 1
+            }
+        }
     }
 }
 
@@ -124,7 +165,7 @@ private extension SearchPhotoViewController {
         case main
     }
     
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, String>
-    typealias SearchCellRegistration = UICollectionView.CellRegistration<PhotoCell, String>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, String>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, PhotoItem>
+    typealias SearchCellRegistration = UICollectionView.CellRegistration<PhotoCell, PhotoItem>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, PhotoItem>
 }
