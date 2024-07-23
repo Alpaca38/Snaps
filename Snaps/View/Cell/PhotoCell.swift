@@ -75,6 +75,7 @@ final class PhotoCell: BaseCollectionViewCell {
                 
         switch category {
         case .trend:
+            mainImageView.layer.cornerRadius = 12
             likeButton.isHidden = true
         case .search:
             likeButton.isHidden = false
