@@ -9,6 +9,7 @@ import UIKit
 
 enum Image {
     static let camera = UIImage(systemName: "camera.fill")
+    static let star = UIImage(systemName: "star.fill")
     static let launchTitle = UIImage(named: "snaps_image")
     static let lauchImage = UIImage(named: "launchImage")
     static let likeCircleInactive = UIImage(named: "like_circle_inactive")

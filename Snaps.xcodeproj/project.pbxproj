@@ -45,6 +45,8 @@
 		D1E8B1AA2C4E80B5009B3D81 /* ProfileImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1A92C4E80B5009B3D81 /* ProfileImageCell.swift */; };
 		D1E8B1AC2C4E8123009B3D81 /* NaviTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1AB2C4E8123009B3D81 /* NaviTitle.swift */; };
 		D1E8B1AE2C4E81E0009B3D81 /* ProfileImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1AD2C4E81E0009B3D81 /* ProfileImageViewModel.swift */; };
+		D1E8B1B02C4F2867009B3D81 /* SearchPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1AF2C4F2867009B3D81 /* SearchPhotoViewController.swift */; };
+		D1E8B1B22C4F3902009B3D81 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1B12C4F3902009B3D81 /* PhotoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -96,6 +98,8 @@
 		D1E8B1A92C4E80B5009B3D81 /* ProfileImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageCell.swift; sourceTree = "<group>"; };
 		D1E8B1AB2C4E8123009B3D81 /* NaviTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaviTitle.swift; sourceTree = "<group>"; };
 		D1E8B1AD2C4E81E0009B3D81 /* ProfileImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageViewModel.swift; sourceTree = "<group>"; };
+		D1E8B1AF2C4F2867009B3D81 /* SearchPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotoViewController.swift; sourceTree = "<group>"; };
+		D1E8B1B12C4F3902009B3D81 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +219,7 @@
 				D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */,
 				D1E8B1902C4E315E009B3D81 /* ProfileViewController.swift */,
 				D1E8B1A72C4E7FCA009B3D81 /* ProfileImageViewController.swift */,
+				D1E8B1AF2C4F2867009B3D81 /* SearchPhotoViewController.swift */,
 				D1E8B19E2C4E376A009B3D81 /* TabBarController.swift */,
 				D1E8B1A02C4E3F5D009B3D81 /* MBTIView.swift */,
 			);
@@ -254,6 +259,7 @@
 			children = (
 				D1E8B1A52C4E4845009B3D81 /* MBTICell.swift */,
 				D1E8B1A92C4E80B5009B3D81 /* ProfileImageCell.swift */,
+				D1E8B1B12C4F3902009B3D81 /* PhotoCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -357,6 +363,7 @@
 				D1E8B1912C4E315E009B3D81 /* ProfileViewController.swift in Sources */,
 				D1E8B1842C4E2401009B3D81 /* UserDefaults.swift in Sources */,
 				D1E8B1932C4E3250009B3D81 /* CircleImageView.swift in Sources */,
+				D1E8B1B02C4F2867009B3D81 /* SearchPhotoViewController.swift in Sources */,
 				D1E8B19F2C4E376A009B3D81 /* TabBarController.swift in Sources */,
 				D1E8B1AC2C4E8123009B3D81 /* NaviTitle.swift in Sources */,
 				D1E8B17B2C4E19C4009B3D81 /* Color.swift in Sources */,
@@ -367,6 +374,7 @@
 				D1E8B18B2C4E25C8009B3D81 /* Image.swift in Sources */,
 				D1E8B17F2C4E1F85009B3D81 /* Observable.swift in Sources */,
 				D1E8B1A62C4E4845009B3D81 /* MBTICell.swift in Sources */,
+				D1E8B1B22C4F3902009B3D81 /* PhotoCell.swift in Sources */,
 				D1E8B1A12C4E3F5D009B3D81 /* MBTIView.swift in Sources */,
 				D1E8B1602C4E16A7009B3D81 /* APIKey.swift in Sources */,
 				D1E8B1762C4E18DB009B3D81 /* ReuseIdentifier.swift in Sources */,
