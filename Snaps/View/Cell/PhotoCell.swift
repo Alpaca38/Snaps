@@ -66,7 +66,6 @@ final class PhotoCell: BaseCollectionViewCell {
     func configure(data: PhotoItem, category: Category) {
         let url = URL(string: data.urls.small)
         mainImageView.kf.setImage(with: url)
-        
         likeCountView.setTitle(data.likes.formatted(), for: .normal)
         likeCountView.setAttributedTitle(NSAttributedString(string: data.likes.formatted(), attributes: [
             .font: UIFont.systemFont(ofSize: 13, weight: .regular),

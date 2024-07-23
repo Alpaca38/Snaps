@@ -52,6 +52,9 @@
 		D1E8B1E62C4F914E009B3D81 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1E52C4F914E009B3D81 /* APIError.swift */; };
 		D1E8B1E82C4F9179009B3D81 /* PhotoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1E72C4F9179009B3D81 /* PhotoAPI.swift */; };
 		D1E8B1EA2C4F9557009B3D81 /* SearchPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1E92C4F9557009B3D81 /* SearchPhotoViewModel.swift */; };
+		D1E8B1EC2C4FD061009B3D81 /* TopicPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1EB2C4FD061009B3D81 /* TopicPhotoViewController.swift */; };
+		D1E8B1EE2C4FD0A6009B3D81 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1ED2C4FD0A6009B3D81 /* PhotoViewController.swift */; };
+		D1E8B1F02C4FE21E009B3D81 /* TopicPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1EF2C4FE21E009B3D81 /* TopicPhotoViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -110,6 +113,9 @@
 		D1E8B1E52C4F914E009B3D81 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		D1E8B1E72C4F9179009B3D81 /* PhotoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAPI.swift; sourceTree = "<group>"; };
 		D1E8B1E92C4F9557009B3D81 /* SearchPhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotoViewModel.swift; sourceTree = "<group>"; };
+		D1E8B1EB2C4FD061009B3D81 /* TopicPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicPhotoViewController.swift; sourceTree = "<group>"; };
+		D1E8B1ED2C4FD0A6009B3D81 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		D1E8B1EF2C4FE21E009B3D81 /* TopicPhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicPhotoViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +238,7 @@
 				D1E8B1902C4E315E009B3D81 /* ProfileViewController.swift */,
 				D1E8B1A72C4E7FCA009B3D81 /* ProfileImageViewController.swift */,
 				D1E8B1AF2C4F2867009B3D81 /* SearchPhotoViewController.swift */,
+				D1E8B1EB2C4FD061009B3D81 /* TopicPhotoViewController.swift */,
 				D1E8B19E2C4E376A009B3D81 /* TabBarController.swift */,
 				D1E8B1A02C4E3F5D009B3D81 /* MBTIView.swift */,
 			);
@@ -244,6 +251,7 @@
 				D1E8B18D2C4E2D53009B3D81 /* CustomButton.swift */,
 				D1E8B1922C4E3250009B3D81 /* CircleImageView.swift */,
 				D1E8B1942C4E3293009B3D81 /* NicknameTextField.swift */,
+				D1E8B1ED2C4FD0A6009B3D81 /* PhotoViewController.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -254,6 +262,7 @@
 				D1E8B1972C4E3649009B3D81 /* ProfileViewModel.swift */,
 				D1E8B1AD2C4E81E0009B3D81 /* ProfileImageViewModel.swift */,
 				D1E8B1E92C4F9557009B3D81 /* SearchPhotoViewModel.swift */,
+				D1E8B1EF2C4FE21E009B3D81 /* TopicPhotoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -381,14 +390,17 @@
 				D1E8B1BB2C4F71FA009B3D81 /* Photos.swift in Sources */,
 				D1E8B18E2C4E2D53009B3D81 /* CustomButton.swift in Sources */,
 				D1E8B19B2C4E367C009B3D81 /* TextFieldState.swift in Sources */,
+				D1E8B1F02C4FE21E009B3D81 /* TopicPhotoViewModel.swift in Sources */,
 				D1E8B14E2C4E1568009B3D81 /* OnBoardingViewController.swift in Sources */,
 				D1E8B17D2C4E1A89009B3D81 /* BaseCollectionViewCell.swift in Sources */,
 				D1E8B1862C4E2463009B3D81 /* UserDefaultsManager.swift in Sources */,
+				D1E8B1EC2C4FD061009B3D81 /* TopicPhotoViewController.swift in Sources */,
 				D1E8B14A2C4E1568009B3D81 /* AppDelegate.swift in Sources */,
 				D1E8B1912C4E315E009B3D81 /* ProfileViewController.swift in Sources */,
 				D1E8B1842C4E2401009B3D81 /* UserDefaults.swift in Sources */,
 				D1E8B1932C4E3250009B3D81 /* CircleImageView.swift in Sources */,
 				D1E8B1B02C4F2867009B3D81 /* SearchPhotoViewController.swift in Sources */,
+				D1E8B1EE2C4FD0A6009B3D81 /* PhotoViewController.swift in Sources */,
 				D1E8B1E42C4F913A009B3D81 /* NetworkManager.swift in Sources */,
 				D1E8B19F2C4E376A009B3D81 /* TabBarController.swift in Sources */,
 				D1E8B1E82C4F9179009B3D81 /* PhotoAPI.swift in Sources */,

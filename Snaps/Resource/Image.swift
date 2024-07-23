@@ -24,7 +24,7 @@ enum Image {
     static let tabSearchInActive = UIImage(named: "tab_search_inactive")
     static let tabSearch = UIImage(named: "tab_search")
     static let tabTrend = UIImage(named: "tab_trend")
-    static let tabTrendInactive = UIImage(named: "tap_trend_inactvie")
+    static let tabTrendInactive = UIImage(named: "tap_trend_inactive")
     
     enum Profile: Int, CaseIterable {
         case one, two, three, four, five, six, seven, eight, nine, ten, eleven, tweleve

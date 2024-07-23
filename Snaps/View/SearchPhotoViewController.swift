@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 import Toast
 
-final class SearchPhotoViewController: BaseViewController {
+final class SearchPhotoViewController: PhotoViewController {
     private let viewModel = SearchPhotoViewModel()
-    private var dataSource: DataSource!
+    private var dataSource: DataSource<Section>!
     
     private let searchController = UISearchController(searchResultsController: nil)
     
@@ -98,7 +98,7 @@ private extension SearchPhotoViewController {
 // MARK: DataSource
 private extension SearchPhotoViewController {
     func configureDataSource() {
-        let cellRegistration = SearchCellRegistration { cell, indexPath, itemIdentifier in
+        let cellRegistration = CellRegistration { cell, indexPath, itemIdentifier in
             cell.configure(data: itemIdentifier, category: .search)
         }
         
@@ -109,7 +109,7 @@ private extension SearchPhotoViewController {
     }
     
     func updateSnapshot(items: [PhotoItem]) {
-        var snapshot = Snapshot()
+        var snapshot = Snapshot<Section>()
         snapshot.appendSections(Section.allCases)
         snapshot.appendItems(items, toSection: .main)
         
@@ -158,14 +158,4 @@ extension SearchPhotoViewController: UICollectionViewDataSourcePrefetching {
             }
         }
     }
-}
-
-private extension SearchPhotoViewController {
-    enum Section: CaseIterable {
-        case main
-    }
-    
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, PhotoItem>
-    typealias SearchCellRegistration = UICollectionView.CellRegistration<PhotoCell, PhotoItem>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, PhotoItem>
 }
