@@ -39,6 +39,19 @@ private extension TopicPhotoViewController {
     func setNavi() {
         navigationItem.title = "OUR TOPIC"
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let profileImageView = CircleImageView(borderWidth: Image.Border.active, borderColor: Color.main, cornerRadius: 20, alpha: Image.Alpha.active)
+        profileImageView.snp.makeConstraints {
+            $0.size.equalTo(40)
+        }
+        if let image = UIImage(named: Image.Profile.allCases[UserDefaultsManager.user.image].profileImage) { profileImageView.image = image }
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(profileButtonTapped))
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(tap)
+        
+        let profileButton = UIBarButtonItem(customView: profileImageView)
+        navigationItem.rightBarButtonItem = profileButton
     }
     
     func createLayout() -> UICollectionViewLayout {
@@ -49,43 +62,34 @@ private extension TopicPhotoViewController {
                 elementKind: UICollectionView.elementKindSectionHeader,
                 alignment: .top)
             
-            let sectionType = TopicSection.allCases[sectionIndex]
-            
-            switch sectionType {
-            case .goldenHour:
-                let section = self?.createSection()
-                section?.boundarySupplementaryItems = [header]
-                return section
-            case .businessAndWork:
-                let section = self?.createSection()
-                section?.boundarySupplementaryItems = [header]
-                return section
-            case .architectureAndInterior:
-                let section = self?.createSection()
-                section?.boundarySupplementaryItems = [header]
-                return section
-            }
+            let section = self?.createSection()
+            section?.boundarySupplementaryItems = [header]
+            return section
         }
         return layout
     }
     
     func createSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
-                                             heightDimension: .fractionalHeight(1.0))
+                                              heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .fractionalWidth(0.5))
+                                               heightDimension: .fractionalWidth(0.6))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                         subitems: [item])
+                                                       subitems: [item])
         group.interItemSpacing = .fixed(8)
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 8
         section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 0)
         section.orthogonalScrollingBehavior = .continuous
         
         return section
+    }
+    
+    @objc func profileButtonTapped() {
+        print(#function)
     }
 }
 
