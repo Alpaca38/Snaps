@@ -11,7 +11,7 @@ import Toast
 
 final class SearchPhotoViewController: PhotoViewController {
     private let viewModel = SearchPhotoViewModel()
-    private var dataSource: DataSource<Section>!
+    private var dataSource: DataSource<Section, PhotoItem>!
     
     private let searchController = UISearchController(searchResultsController: nil)
     
@@ -52,6 +52,11 @@ final class SearchPhotoViewController: PhotoViewController {
         setSearchController()
         configureDataSource()
         bindData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
     }
     
     override func configureLayout() {
@@ -111,12 +116,13 @@ private extension SearchPhotoViewController {
 // MARK: DataSource
 private extension SearchPhotoViewController {
     func configureDataSource() {
-        let cellRegistration = CellRegistration { cell, indexPath, itemIdentifier in
+        let cellRegistration = CellRegistration<PhotoItem> { cell, indexPath, itemIdentifier in
             cell.likeButtonTapped = { [weak self] in
                 if UserDefaultsManager.likeList.contains(itemIdentifier.id) {
-                    UserDefaultsManager.likeList.remove(itemIdentifier.id)
+                    
+                    self?.viewModel.inputLikeItemRemove.value = LikeItems(from: itemIdentifier)
                 } else {
-                    UserDefaultsManager.likeList.insert(itemIdentifier.id)
+                    self?.viewModel.inputLikeItemAdd.value = LikeItems(from: itemIdentifier)
                 }
                 self?.collectionView.reloadData()
             }
@@ -130,7 +136,7 @@ private extension SearchPhotoViewController {
     }
     
     func updateSnapshot() {
-        var snapshot = Snapshot<Section>()
+        var snapshot = Snapshot<Section, PhotoItem>()
         snapshot.appendSections(Section.allCases)
         snapshot.appendItems(viewModel.outputList.value, toSection: .main)
         

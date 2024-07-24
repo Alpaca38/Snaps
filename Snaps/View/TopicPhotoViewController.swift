@@ -10,7 +10,7 @@ import SnapKit
 
 final class TopicPhotoViewController: PhotoViewController {
     private let viewModel = TopicPhotoViewModel()
-    private var dataSource: DataSource<TopicSection>!
+    private var dataSource: DataSource<TopicSection, PhotoItem>!
     
     private lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -113,7 +113,7 @@ private extension TopicPhotoViewController {
 // MARK: DataSource
 private extension TopicPhotoViewController {
     func configureDataSource() {
-        let cellRegistration = CellRegistration { cell, indexPath, itemIdentifier in
+        let cellRegistration = CellRegistration<PhotoItem> { cell, indexPath, itemIdentifier in
             cell.configure(data: itemIdentifier, category: .trend)
         }
         
@@ -140,7 +140,7 @@ private extension TopicPhotoViewController {
     }
     
     func updateSnapshot() {
-        var snapshot = Snapshot<TopicSection>()
+        var snapshot = Snapshot<TopicSection, PhotoItem>()
         snapshot.appendSections(TopicSection.allCases)
         
         snapshot.appendItems(viewModel.outputGoldenHour.value, toSection: .goldenHour)

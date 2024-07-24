@@ -11,7 +11,7 @@ struct Photos: Decodable, Hashable {
     let results: [PhotoItem]
 }
 
-struct PhotoItem: Decodable, Hashable, Identifiable {
+struct PhotoItem: Decodable, Hashable, Identifiable, SectionItem {
     let id: String
     let created_at: String
     let width: Int

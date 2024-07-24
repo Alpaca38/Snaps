@@ -10,7 +10,6 @@ import RealmSwift
 
 final class LikeRepository {
     private let realm = try! Realm()
-    private var notificationToken: NotificationToken?
     
     func createItem(data: LikeItems) {
         do {
@@ -32,6 +31,12 @@ final class LikeRepository {
         return Array(results)
     }
     
+    func fetchItemFromProduct(id: String) -> LikeItems? {
+        return realm.objects(LikeItems.self).where {
+            $0.id == id
+        }.first
+    }
+    
     func deleteItem(data: LikeItems) {
         do {
             try realm.write {
@@ -44,23 +49,5 @@ final class LikeRepository {
     
     func printRealmURL() {
         print(realm.configuration.fileURL!)
-    }
-    
-    func observe(completion: @escaping (RealmCollectionChange<Results<LikeItems>>) -> Void) {
-        let results = realm.objects(LikeItems.self)
-        notificationToken = results.observe { changes in
-            switch changes {
-            case .initial:
-                completion(.initial(results))
-            case .update(_, _, _, _):
-                completion(.update(results, deletions: [], insertions: [], modifications: []))
-            case .error(let error):
-                completion(.error(error))
-            }
-        }
-    }
-    
-    deinit {
-        notificationToken?.invalidate()
     }
 }

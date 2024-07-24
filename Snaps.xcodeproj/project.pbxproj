@@ -10,6 +10,7 @@
 		D16D8BC32C50D84E00AF7677 /* LikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC22C50D84E00AF7677 /* LikesViewController.swift */; };
 		D16D8BC52C50DDE000AF7677 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC42C50DDE000AF7677 /* RealmModel.swift */; };
 		D16D8BC72C50E1C700AF7677 /* LikeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC62C50E1C700AF7677 /* LikeRepository.swift */; };
+		D16D8BCA2C512DE900AF7677 /* LikesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */; };
 		D1E8B14A2C4E1568009B3D81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */; };
 		D1E8B14C2C4E1568009B3D81 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */; };
 		D1E8B14E2C4E1568009B3D81 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */; };
@@ -78,6 +79,7 @@
 		D16D8BC22C50D84E00AF7677 /* LikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesViewController.swift; sourceTree = "<group>"; };
 		D16D8BC42C50DDE000AF7677 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
 		D16D8BC62C50E1C700AF7677 /* LikeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeRepository.swift; sourceTree = "<group>"; };
+		D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesViewModel.swift; sourceTree = "<group>"; };
 		D1E8B1462C4E1568009B3D81 /* Snaps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snaps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				D1E8B1AD2C4E81E0009B3D81 /* ProfileImageViewModel.swift */,
 				D1E8B1E92C4F9557009B3D81 /* SearchPhotoViewModel.swift */,
 				D1E8B1EF2C4FE21E009B3D81 /* TopicPhotoViewModel.swift */,
+				D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				D1E8B1AC2C4E8123009B3D81 /* NaviTitle.swift in Sources */,
 				D1E8B17B2C4E19C4009B3D81 /* Color.swift in Sources */,
 				D1E8B1A32C4E3FBA009B3D81 /* BaseView.swift in Sources */,
+				D16D8BCA2C512DE900AF7677 /* LikesViewModel.swift in Sources */,
 				D1E8B1A82C4E7FCA009B3D81 /* ProfileImageViewController.swift in Sources */,
 				D1E8B1AE2C4E81E0009B3D81 /* ProfileImageViewModel.swift in Sources */,
 				D16D8BC52C50DDE000AF7677 /* RealmModel.swift in Sources */,

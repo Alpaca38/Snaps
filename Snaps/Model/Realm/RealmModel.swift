@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-final class LikeItems: Object {
+final class LikeItems: Object, SectionItem {
     @Persisted(primaryKey: true) var identifier: ObjectId
     @Persisted var id: String
     @Persisted var width: Int
@@ -22,6 +22,15 @@ final class LikeItems: Object {
         self.width = width
         self.height = height
         self.imageURL = imageURL
+        self.regDate = Date()
+    }
+    
+    convenience init(from photoItem: PhotoItem) {
+        self.init()
+        self.id = photoItem.id
+        self.width = photoItem.width
+        self.height = photoItem.height
+        self.imageURL = photoItem.urls.small
         self.regDate = Date()
     }
 }

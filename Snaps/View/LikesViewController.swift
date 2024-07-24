@@ -8,7 +8,8 @@
 import UIKit
 
 final class LikesViewController: PhotoViewController {
-    private var dataSource: DataSource<Section>!
+    private var dataSource: DataSource<Section, LikeItems>!
+    private let viewModel = LikesViewModel()
     
     private lazy var sortButton = {
         var config = UIButton.Configuration.gray()
@@ -31,11 +32,24 @@ final class LikesViewController: PhotoViewController {
         return view
     }()
     
+    private lazy var emptyResultLabel = {
+        let view = UILabel()
+        view.textAlignment = .center
+        view.text = "저장한 사진이 없습니다."
+        self.view.addSubview(view)
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavi()
         configureDataSource()
         bindData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.inputViewWillAppearEvent.value = ()
     }
     
     override func configureLayout() {
@@ -48,6 +62,10 @@ final class LikesViewController: PhotoViewController {
             $0.top.equalTo(sortButton.snp.bottom).offset(10)
             $0.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
+        
+        emptyResultLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
 }
 
@@ -59,7 +77,7 @@ private extension LikesViewController {
     
     @objc func sortButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
-//        viewModel.inputSortButton.value = sender.isSelected
+        viewModel.inputSortButton.value = sender.isSelected
     }
     
     func createLayout() -> UICollectionViewLayout {
@@ -84,8 +102,11 @@ private extension LikesViewController {
 // MARK: DataSource
 private extension LikesViewController {
     func configureDataSource() {
-        let cellRegistration = CellRegistration { cell, indexPath, itemIdentifier in
-            cell.configure(data: itemIdentifier, category: .search)
+        let cellRegistration = CellRegistration<LikeItems> { cell, indexPath, itemIdentifier in
+            cell.configure(data: itemIdentifier)
+            cell.likeButtonTapped = { [weak self] in
+                self?.viewModel.inputLikeButtonTapped.value = itemIdentifier
+            }
         }
         
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
@@ -94,10 +115,10 @@ private extension LikesViewController {
         })
     }
     
-    func updateSnapshot(items: [PhotoItem]) {
-        var snapshot = Snapshot<Section>()
+    func updateSnapshot() {
+        var snapshot = Snapshot<Section, LikeItems>()
         snapshot.appendSections(Section.allCases)
-        snapshot.appendItems(items, toSection: .main)
+        snapshot.appendItems(viewModel.outputList.value, toSection: .main)
         
         dataSource.apply(snapshot)
     }
@@ -106,6 +127,9 @@ private extension LikesViewController {
 // MARK: Data Bind
 private extension LikesViewController {
     func bindData() {
-        
+        viewModel.outputList.bind(false) { [weak self] items in
+            items.isEmpty ? (self?.emptyResultLabel.isHidden = false) : (self?.emptyResultLabel.isHidden = true)
+            self?.updateSnapshot()
+        }
     }
 }

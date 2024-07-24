@@ -8,6 +8,8 @@
 import Foundation
 
 final class SearchPhotoViewModel {
+    private let repository = LikeRepository()
+    
     private(set) var outputList = Observable<[PhotoItem]>([])
     private(set) var outputNetworkError = Observable<APIError?>(nil)
     private(set) var outputSort = Observable<SortOrder>(.relevant)
@@ -16,6 +18,8 @@ final class SearchPhotoViewModel {
     var inputText = Observable<String?>(nil)
     var inputSortButton = Observable<Bool>(false)
     var inputPage = Observable<Int>(1)
+    var inputLikeItemRemove = Observable<LikeItems?>(nil)
+    var inputLikeItemAdd = Observable<LikeItems?>(nil)
     
     init() {
         inputText.bind(false) { [weak self] searchText in
@@ -30,6 +34,19 @@ final class SearchPhotoViewModel {
         inputPage.bind(false) { [weak self] page in
             guard let self, let searchText = inputText.value else { return }
             getSearchPhotos(searchText: searchText, orderBy: outputSort.value.rawValue)
+        }
+        
+        inputLikeItemAdd.bind { [weak self] item in
+            guard let item else { return }
+            UserDefaultsManager.likeList.insert(item.id)
+            self?.repository.createItem(data: item)
+        }
+        
+        inputLikeItemRemove.bind { [weak self] item in
+            guard let item, let deleteItem = self?.repository.fetchItemFromProduct(id: item.id) else { return }
+            UserDefaultsManager.likeList.remove(item.id)
+            NotificationCenter.default.post(name: .likeItemWillBeRemoved, object: item)
+            self?.repository.deleteItem(data: deleteItem)
         }
     }
 }

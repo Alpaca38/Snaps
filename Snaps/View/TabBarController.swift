@@ -19,7 +19,10 @@ final class TabBarController: UITabBarController {
         let search = UINavigationController(rootViewController: SearchPhotoViewController())
         search.tabBarItem = UITabBarItem(title: "검색", image: Image.tabSearchInActive, selectedImage: Image.tabSearch)
         
-        setViewControllers([topic, search], animated: true)
+        let like = UINavigationController(rootViewController: LikesViewController())
+        like.tabBarItem = UITabBarItem(title: "찜", image: Image.tabLikeInactive, selectedImage: Image.tabLike)
+        
+        setViewControllers([topic, search, like], animated: true)
     }
     
 }

@@ -96,6 +96,7 @@ final class PhotoCell: BaseCollectionViewCell {
         let url = URL(string: data.imageURL)
         mainImageView.kf.setImage(with: url)
         likeCountView.isHidden = true
+        likeButton.setImage(Image.likeCircle, for: .normal)
     }
 }
 
