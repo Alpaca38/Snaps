@@ -10,6 +10,8 @@ import SnapKit
 import Kingfisher
 
 final class PhotoCell: BaseCollectionViewCell {
+    var likeButtonTapped: (() -> Void)?
+    
     private lazy var mainImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
@@ -42,8 +44,8 @@ final class PhotoCell: BaseCollectionViewCell {
         config.title = nil
         let view = UIButton(configuration: config)
         view.addTarget(self, action: #selector(likeButtonTapped(_:)), for: .touchUpInside)
-        view.setImage(Image.likeCircle, for: .selected)
-        view.setImage(Image.likeCircleInactive, for: .normal)
+//        view.setImage(Image.likeCircle, for: .selected)
+//        view.setImage(Image.likeCircleInactive, for: .normal)
         contentView.addSubview(view)
         return view
     }()
@@ -72,6 +74,12 @@ final class PhotoCell: BaseCollectionViewCell {
             .foregroundColor: Color.white
         ]), for: .normal)
                 
+        if UserDefaultsManager.likeList.contains(data.id) {
+            likeButton.setImage(Image.likeCircle, for: .normal)
+        } else {
+            likeButton.setImage(Image.likeCircleInactive, for: .normal)
+        }
+        
         switch category {
         case .trend:
             mainImageView.layer.cornerRadius = 12
@@ -83,12 +91,17 @@ final class PhotoCell: BaseCollectionViewCell {
             likeCountView.isHidden = true
         }
     }
+    
+    func configure(data: LikeItems) {
+        let url = URL(string: data.imageURL)
+        mainImageView.kf.setImage(with: url)
+        likeCountView.isHidden = true
+    }
 }
 
 private extension PhotoCell {
     @objc func likeButtonTapped(_ sender: UIButton) {
-        // inputSelectedButton
-        sender.isSelected.toggle()
+        likeButtonTapped?()
     }
 }
 

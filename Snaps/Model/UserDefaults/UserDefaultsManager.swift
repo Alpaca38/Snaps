@@ -15,4 +15,7 @@ final class UserDefaultsManager {
     
     @UserDefault(key: .user, defaultValue: User(image: Int.random(in: 0..<Image.Profile.allCases.count)), isCustomObject: true)
     static var user: User
+    
+    @UserDefault(key: .likeList, defaultValue: Set<String>(), isCustomObject: true)
+    static var likeList: Set<String>
 }

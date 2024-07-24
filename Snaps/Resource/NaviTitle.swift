@@ -11,4 +11,5 @@ enum NaviTitle {
     static let editProfile = "EDIT PROFILE"
     static let profileSetting = "PROFILE SETTING"
     static let searchPhoto = "SEARCH PHOTO"
+    static let mySnaps = "MY SNAPS"
 }

@@ -37,6 +37,15 @@ final class SearchPhotoViewController: PhotoViewController {
         return view
     }()
     
+    private lazy var emptyResultLabel = {
+        let view = UILabel()
+        view.textAlignment = .center
+        view.text = "검색 결과가 없습니다."
+        view.isHidden = true
+        self.view.addSubview(view)
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavi()
@@ -54,6 +63,10 @@ final class SearchPhotoViewController: PhotoViewController {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(sortButton.snp.bottom).offset(10)
             $0.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
+        
+        emptyResultLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 }
@@ -99,6 +112,14 @@ private extension SearchPhotoViewController {
 private extension SearchPhotoViewController {
     func configureDataSource() {
         let cellRegistration = CellRegistration { cell, indexPath, itemIdentifier in
+            cell.likeButtonTapped = { [weak self] in
+                if UserDefaultsManager.likeList.contains(itemIdentifier.id) {
+                    UserDefaultsManager.likeList.remove(itemIdentifier.id)
+                } else {
+                    UserDefaultsManager.likeList.insert(itemIdentifier.id)
+                }
+                self?.collectionView.reloadData()
+            }
             cell.configure(data: itemIdentifier, category: .search)
         }
         
@@ -108,10 +129,10 @@ private extension SearchPhotoViewController {
         })
     }
     
-    func updateSnapshot(items: [PhotoItem]) {
+    func updateSnapshot() {
         var snapshot = Snapshot<Section>()
         snapshot.appendSections(Section.allCases)
-        snapshot.appendItems(items, toSection: .main)
+        snapshot.appendItems(viewModel.outputList.value, toSection: .main)
         
         dataSource.apply(snapshot)
     }
@@ -121,10 +142,8 @@ private extension SearchPhotoViewController {
 private extension SearchPhotoViewController {
     func bindData() {
         viewModel.outputList.bind(false) { [weak self] items in
-            if items.isEmpty {
-                self?.view.makeToast("검색 결과가 없습니다.", position: .center)
-            }
-            self?.updateSnapshot(items: items)
+            items.isEmpty ? (self?.emptyResultLabel.isHidden = false) : (self?.emptyResultLabel.isHidden = true)
+            self?.updateSnapshot()
         }
         
         viewModel.outputListIsNotEmpty.bind(false) { [weak self] _ in
