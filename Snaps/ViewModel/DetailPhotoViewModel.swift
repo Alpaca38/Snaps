@@ -37,6 +37,7 @@ private extension DetailPhotoViewModel {
             self?.outputPhotoData.value = PhotoItem.toPhotoItem(likeItem: likeItem)
             self?.getStatistics(imageID: PhotoItem.toPhotoItem(likeItem: likeItem).id)
         }
+        
         inputLikeButtonTapped.bind { [weak self] photoItem in
             guard let photoItem else { return }
             if UserDefaultsManager.likeList.contains(photoItem.id) {

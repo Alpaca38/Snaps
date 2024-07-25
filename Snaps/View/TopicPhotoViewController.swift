@@ -94,7 +94,11 @@ private extension TopicPhotoViewController {
     }
     
     @objc func profileButtonTapped() {
-        print(#function)
+        let vc = ProfileViewController()
+        vc.updateImage = { [weak self] in
+            self?.setNavi()
+        }
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

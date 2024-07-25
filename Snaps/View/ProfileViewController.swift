@@ -10,6 +10,8 @@ import SnapKit
 import Toast
 
 final class ProfileViewController: BaseViewController {
+    var updateImage: (() -> Void)?
+    
     private lazy var profileImageView = {
         let view = CircleImageView(borderWidth: Image.Border.active, borderColor: Color.main, cornerRadius: Image.Size.bigProfile / 2, alpha: Image.Alpha.active)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
@@ -112,6 +114,17 @@ private extension ProfileViewController {
         } else {
             completeButton.isHidden = false
         }
+        
+        if !UserDefaultsManager.user.nickname.isEmpty {
+            profileImageView.image = UIImage(named: Image.Profile.allCases[UserDefaultsManager.user.image].profileImage)
+            
+            nicknameTextField.text = UserDefaultsManager.user.nickname
+            viewModel.inputText.value = UserDefaultsManager.user.nickname
+            
+            mbtiView.mbtiItems = UserDefaultsManager.user.mbti
+            viewModel.inputMBTI.value = UserDefaultsManager.user.mbti
+            mbtiView.updateSnapshot()
+        }
     }
     
     func setNavi() {
@@ -120,9 +133,9 @@ private extension ProfileViewController {
             setRandomImage()
         } else {
             navigationItem.title = NaviTitle.editProfile
+            navigationController?.navigationBar.prefersLargeTitles = false
             let saveButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
             navigationItem.rightBarButtonItem = saveButton
-            profileImageView.image = UIImage(named: Image.Profile.allCases[UserDefaultsManager.user.image].profileImage)
         }
     }
     
@@ -133,14 +146,17 @@ private extension ProfileViewController {
     }
     
     @objc func saveButtonTapped() {
-        if nicknameTextField.text == UserDefaultsManager.user.nickname || viewModel.outputTotalValid.value {
+        if viewModel.outputTotalValid.value {
             guard let nickname = nicknameTextField.text else { return }
             UserDefaultsManager.user.nickname = nickname
             UserDefaultsManager.user.mbti = mbtiView.mbtiItems
+            viewModel.inputSaveImage.value = viewModel.outputImageIndex.value
+            
+            updateImage?()
             
             navigationController?.popViewController(animated: true)
         } else {
-            view.makeToast("사용할 수 없는 닉네임입니다.", duration: 2.0, position: .center)
+            view.makeToast("닉네임과 mbti를 다시 확인해주세요.", duration: 2.0, position: .center)
         }
     }
     
