@@ -13,7 +13,6 @@ final class TopicPhotoViewController: PhotoViewController {
     private var dataSource: DataSource<TopicSection, PhotoItem>!
     
     private var randomTopicList: [Topic] = []
-    private var randomTopicStringList: [String] = []
     
     private lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -25,10 +24,9 @@ final class TopicPhotoViewController: PhotoViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavi()
-        setRandomTopic()
+        fetchRandomTopic()
         configureDataSource()
         bindData()
-        viewModel.inputViewDidLoadTrigger.value = randomTopicStringList
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -105,10 +103,10 @@ private extension TopicPhotoViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func setRandomTopic() {
+    func fetchRandomTopic() {
         let topicList = Topic.allCases.shuffled()
         randomTopicList = topicList
-        randomTopicStringList = topicList.map({ $0.rawValue })
+        viewModel.inputTopic.value = topicList.map({ $0.rawValue })
     }
 }
 

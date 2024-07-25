@@ -13,11 +13,11 @@ final class TopicPhotoViewModel {
     var outputThirdSectonData = Observable<[PhotoItem]>([])
     var outputNetworkError = Observable<APIError?>(nil)
     
-    var inputViewDidLoadTrigger = Observable<[String]?>(nil)
+    var inputTopic = Observable<[String]?>(nil)
     var randomTopicList = Topic.allCases.shuffled().map { $0.rawValue }
     
     init() {
-        inputViewDidLoadTrigger.bind(false) { [weak self] topicList in
+        inputTopic.bind(false) { [weak self] topicList in
             guard let topicList else { return }
             self?.getTopicPhoto(topicList: topicList)
         }
