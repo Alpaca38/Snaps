@@ -12,6 +12,9 @@ final class TopicPhotoViewController: PhotoViewController {
     private let viewModel = TopicPhotoViewModel()
     private var dataSource: DataSource<TopicSection, PhotoItem>!
     
+    private var randomTopicList: [Topic] = []
+    private var randomTopicStringList: [String] = []
+    
     private lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         view.delegate = self
@@ -22,9 +25,10 @@ final class TopicPhotoViewController: PhotoViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavi()
+        setRandomTopic()
         configureDataSource()
         bindData()
-        viewModel.inputViewDidLoadTrigger.value = ()
+        viewModel.inputViewDidLoadTrigger.value = randomTopicStringList
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,7 +92,7 @@ private extension TopicPhotoViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 8
         section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 0)
-        section.orthogonalScrollingBehavior = .continuous
+        section.orthogonalScrollingBehavior = .groupPaging
         
         return section
     }
@@ -100,20 +104,26 @@ private extension TopicPhotoViewController {
         }
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func setRandomTopic() {
+        let topicList = Topic.allCases.shuffled()
+        randomTopicList = topicList
+        randomTopicStringList = topicList.map({ $0.rawValue })
+    }
 }
 
 // MARK: Bind Data
 private extension TopicPhotoViewController {
     func bindData() {
-        viewModel.outputGoldenHour.bind(false) { [weak self] _ in
+        viewModel.outputFirstSectionData.bind(false) { [weak self] _ in
             self?.updateSnapshot()
         }
         
-        viewModel.outputBusiness.bind(false) { [weak self] _ in
+        viewModel.outputSecondSectionData.bind(false) { [weak self] _ in
             self?.updateSnapshot()
         }
         
-        viewModel.outputArchitecture.bind(false) { [weak self] _ in
+        viewModel.outputThirdSectonData.bind(false) { [weak self] _ in
             self?.updateSnapshot()
         }
     }
@@ -133,10 +143,9 @@ private extension TopicPhotoViewController {
         let headerRegistration = UICollectionView.SupplementaryRegistration
         <UICollectionViewListCell>(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] supplementaryView, elementKind, indexPath in
             guard let self else { return }
-            let section = dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            
+            let topic = randomTopicList[indexPath.section]
             var content = UIListContentConfiguration.groupedHeader()
-            content.text = section.headerTitle
+            content.text = topic.headerTitle
             content.textProperties.font = .boldSystemFont(ofSize: 17)
             content.textProperties.color = Color.black
             
@@ -152,9 +161,9 @@ private extension TopicPhotoViewController {
         var snapshot = Snapshot<TopicSection, PhotoItem>()
         snapshot.appendSections(TopicSection.allCases)
         
-        snapshot.appendItems(viewModel.outputGoldenHour.value, toSection: .goldenHour)
-        snapshot.appendItems(viewModel.outputBusiness.value, toSection: .businessAndWork)
-        snapshot.appendItems(viewModel.outputArchitecture.value, toSection: .architectureAndInterior)
+        snapshot.appendItems(viewModel.outputFirstSectionData.value, toSection: .first)
+        snapshot.appendItems(viewModel.outputSecondSectionData.value, toSection: .second)
+        snapshot.appendItems(viewModel.outputThirdSectonData.value, toSection: .third)
         
         dataSource.apply(snapshot)
     }

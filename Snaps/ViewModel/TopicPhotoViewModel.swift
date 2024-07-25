@@ -8,54 +8,56 @@
 import Foundation
 
 final class TopicPhotoViewModel {
-    var outputGoldenHour = Observable<[PhotoItem]>([])
-    var outputBusiness = Observable<[PhotoItem]>([])
-    var outputArchitecture = Observable<[PhotoItem]>([])
+    var outputFirstSectionData = Observable<[PhotoItem]>([])
+    var outputSecondSectionData = Observable<[PhotoItem]>([])
+    var outputThirdSectonData = Observable<[PhotoItem]>([])
     var outputNetworkError = Observable<APIError?>(nil)
     
-    var inputViewDidLoadTrigger = Observable<Void?>(nil)
+    var inputViewDidLoadTrigger = Observable<[String]?>(nil)
+    var randomTopicList = Topic.allCases.shuffled().map { $0.rawValue }
     
     init() {
-        inputViewDidLoadTrigger.bind(false) { [weak self] _ in
-            self?.getTopicPhoto()
+        inputViewDidLoadTrigger.bind(false) { [weak self] topicList in
+            guard let topicList else { return }
+            self?.getTopicPhoto(topicList: topicList)
         }
     }
 }
 
 private extension TopicPhotoViewModel {
-    func getTopicPhoto() {
-        getGoldenHourPhoto()
-        getBusinessPhoto()
-        getArchitecturePhoto()
+    func getTopicPhoto(topicList: [String]) {
+        getFirstTopicPhoto(topicList: topicList)
+        getSecondTopicPhoto(topicList: topicList)
+        getThirdTopicPhoto(topicList: topicList)
     }
     
-    func getGoldenHourPhoto() {
-        NetworkManager.shared.getPhotoData(api: .goldenHour, responseType: [PhotoItem].self) { [weak self] result in
+    func getFirstTopicPhoto(topicList: [String]) {
+        NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[0]), responseType: [PhotoItem].self) { [weak self] result in
             switch result {
             case .success(let success):
-                self?.outputGoldenHour.value = success
+                self?.outputFirstSectionData.value = success
             case .failure(let failure):
                 self?.outputNetworkError.value = failure
             }
         }
     }
     
-    func getBusinessPhoto() {
-        NetworkManager.shared.getPhotoData(api: .businessAndWork, responseType: [PhotoItem].self) { [weak self] result in
+    func getSecondTopicPhoto(topicList: [String]) {
+        NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[1]), responseType: [PhotoItem].self) { [weak self] result in
             switch result {
             case .success(let success):
-                self?.outputBusiness.value = success
+                self?.outputSecondSectionData.value = success
             case .failure(let failure):
                 self?.outputNetworkError.value = failure
             }
         }
     }
     
-    func getArchitecturePhoto() {
-        NetworkManager.shared.getPhotoData(api: .architectureAndInterior, responseType: [PhotoItem].self) { [weak self] result in
+    func getThirdTopicPhoto(topicList: [String]) {
+        NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[2]), responseType: [PhotoItem].self) { [weak self] result in
             switch result {
             case .success(let success):
-                self?.outputArchitecture.value = success
+                self?.outputThirdSectonData.value = success
             case .failure(let failure):
                 self?.outputNetworkError.value = failure
             }
