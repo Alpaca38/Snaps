@@ -7,14 +7,15 @@
 
 import UIKit
 
+protocol SectionType: Hashable {}
 protocol SectionItem: Hashable {}
 
-class PhotoViewController: BaseViewController {
-    protocol SectionType: Hashable {}
+enum Section: CaseIterable, SectionType {
+    case main
+}
 
-    enum Section: CaseIterable, SectionType {
-        case main
-    }
+class PhotoViewController: BaseViewController {
+
 
     enum TopicSection: CaseIterable, SectionType {
         case goldenHour

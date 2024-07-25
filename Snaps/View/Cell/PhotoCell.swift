@@ -22,14 +22,10 @@ final class PhotoCell: BaseCollectionViewCell {
     }()
     
     private lazy var likeCountView = {
-        var titleContainer = AttributeContainer()
-        titleContainer.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        titleContainer.foregroundColor = Color.white
-        
         var config = UIButton.Configuration.tinted()
         config.cornerStyle = .capsule
         config.image = Image.star?.withRenderingMode(.alwaysOriginal).withTintColor(.yellow)
-        config.attributedTitle = AttributedString("1,643", attributes: titleContainer)
+        config.imagePadding = 8
         
         let view = UIButton(configuration: config)
         view.isEnabled = false
@@ -66,7 +62,6 @@ final class PhotoCell: BaseCollectionViewCell {
     func configure(data: PhotoItem, category: Category) {
         let url = URL(string: data.urls.small)
         mainImageView.kf.setImage(with: url)
-        likeCountView.setTitle(data.likes.formatted(), for: .normal)
         likeCountView.setAttributedTitle(NSAttributedString(string: data.likes.formatted(), attributes: [
             .font: UIFont.systemFont(ofSize: 13, weight: .regular),
             .foregroundColor: Color.white

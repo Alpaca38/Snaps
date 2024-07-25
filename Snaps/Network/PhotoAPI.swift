@@ -14,6 +14,7 @@ enum PhotoAPI {
     case businessAndWork
     case architectureAndInterior
     case statistics(imageID: String)
+    case random
     
     var baseURL: String {
         return "https://api.unsplash.com/"
@@ -31,6 +32,8 @@ enum PhotoAPI {
             return URL(string: baseURL + "topics/architecture-interior/photos")
         case .statistics(let imageID):
             return URL(string: baseURL + "photos/\(imageID)/statistics")
+        case .random:
+            return URL(string: baseURL + "photos/random")
         }
     }
     
@@ -40,6 +43,8 @@ enum PhotoAPI {
             return ["query": query, "page": page, "per_page": perPage, "order_by": orderBy, "client_id": APIKey.unsplashAccessKey]
         case .goldenHour, .businessAndWork, .architectureAndInterior, .statistics:
             return ["client_id": APIKey.unsplashAccessKey]
+        case .random:
+            return ["count": 10, "client_id": APIKey.unsplashAccessKey]
         }
     }
     

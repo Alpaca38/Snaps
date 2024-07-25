@@ -186,7 +186,6 @@ private extension DetailPhotoViewController {
 // MARK: Action
 private extension DetailPhotoViewController {
     @objc func likeButtonTapped(_ sender: UIButton) {
-        print(#function)
         viewModel.inputLikeButtonTapped.value = viewModel.outputPhotoData.value
     }
 }
