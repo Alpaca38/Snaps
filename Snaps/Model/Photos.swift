@@ -21,6 +21,15 @@ struct PhotoItem: Decodable, Hashable, Identifiable, SectionItem {
     let likes: Int
     let user: PhotoGrapher
     
+    var koreanDate: String {
+        guard let koreanDate = created_at.formattedToKoreanDate() else { return created_at }
+        return koreanDate
+    }
+    
+    var size: String {
+        return "\(width) x \(height)"
+    }
+    
     static func toPhotoItem(likeItem: LikeItems) -> PhotoItem {
         return PhotoItem(id: likeItem.id, created_at: likeItem.created_at, width: likeItem.width, height: likeItem.height, urls: Link(raw: likeItem.rawImageURL, small: likeItem.smallImageURL), likes: likeItem.likes, user: PhotoGrapher(name: likeItem.photoGrapherName, profileImage: ProfileImage(medium: likeItem.photoGrapherProfileImage)))
     }

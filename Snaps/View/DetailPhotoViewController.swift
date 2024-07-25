@@ -69,6 +69,72 @@ final class DetailPhotoViewController: BaseViewController {
         return view
     }()
     
+    private let sizeLabel = {
+        let view = UILabel()
+        view.font = .boldSystemFont(ofSize: 15)
+        view.text = "크기"
+        return view
+    }()
+    
+    private let sizeValueLabel = {
+        let view = UILabel()
+        view.font = .systemFont(ofSize: 15)
+        return view
+    }()
+    
+    private lazy var sizeStackView = {
+        let view = UIStackView(arrangedSubviews: [sizeLabel, sizeValueLabel])
+        view.axis = .horizontal
+        view.spacing = 120
+        return view
+    }()
+    
+    private let viewsLabel = {
+        let view = UILabel()
+        view.font = .boldSystemFont(ofSize: 15)
+        view.text = "조회수"
+        return view
+    }()
+    
+    private let viewsValueLabel = {
+        let view = UILabel()
+        view.font = .systemFont(ofSize: 15)
+        return view
+    }()
+    
+    private lazy var viewsStackView = {
+        let view = UIStackView(arrangedSubviews: [viewsLabel, viewsValueLabel])
+        view.axis = .horizontal
+        return view
+    }()
+    
+    private let downloadsLabel = {
+        let view = UILabel()
+        view.font = .boldSystemFont(ofSize: 15)
+        view.text = "다운로드"
+        return view
+    }()
+    
+    private let downloadsValueLabel = {
+        let view = UILabel()
+        view.font = .systemFont(ofSize: 15)
+        return view
+    }()
+    
+    private lazy var downloadsStackView = {
+        let view = UIStackView(arrangedSubviews: [downloadsLabel, downloadsValueLabel])
+        view.axis = .horizontal
+        return view
+    }()
+    
+    private lazy var infoStackView = {
+        let view = UIStackView(arrangedSubviews: [sizeStackView, viewsStackView, downloadsStackView])
+        view.axis = .vertical
+        view.spacing = 10
+        self.view.addSubview(view)
+        return view
+    }()
+    
     override func configureLayout() {
         profileImage.snp.makeConstraints {
             $0.top.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -95,6 +161,11 @@ final class DetailPhotoViewController: BaseViewController {
         infoLabel.snp.makeConstraints {
             $0.top.equalTo(photoImageView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(20)
+        }
+        
+        infoStackView.snp.makeConstraints {
+            $0.top.equalTo(infoLabel)
+            $0.trailing.equalToSuperview().inset(20)
         }
     }
     
@@ -139,7 +210,7 @@ private extension DetailPhotoViewController {
         
         profileLabel.text = photoItem.user.name
         
-        photoCreatedLabel.text = photoItem.created_at
+        photoCreatedLabel.text = photoItem.koreanDate
         
         if UserDefaultsManager.likeList.contains(photoItem.id) {
             likeButton.setImage(Image.like, for: .normal)
@@ -149,5 +220,7 @@ private extension DetailPhotoViewController {
         
         let photoImageURL = URL(string: photoItem.urls.small)
         photoImageView.kf.setImage(with: photoImageURL)
+        
+        sizeValueLabel.text = photoItem.size
     }
 }

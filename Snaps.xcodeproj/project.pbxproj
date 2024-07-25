@@ -13,6 +13,7 @@
 		D16D8BCA2C512DE900AF7677 /* LikesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */; };
 		D16D8BCF2C514D3000AF7677 /* DetailPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BCE2C514D3000AF7677 /* DetailPhotoViewController.swift */; };
 		D16D8BD12C51D4FC00AF7677 /* DetailPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BD02C51D4FC00AF7677 /* DetailPhotoViewModel.swift */; };
+		D16D8BEE2C52392A00AF7677 /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BED2C52392A00AF7677 /* Extension+String.swift */; };
 		D1E8B14A2C4E1568009B3D81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */; };
 		D1E8B14C2C4E1568009B3D81 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */; };
 		D1E8B14E2C4E1568009B3D81 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */; };
@@ -84,6 +85,7 @@
 		D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesViewModel.swift; sourceTree = "<group>"; };
 		D16D8BCE2C514D3000AF7677 /* DetailPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPhotoViewController.swift; sourceTree = "<group>"; };
 		D16D8BD02C51D4FC00AF7677 /* DetailPhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPhotoViewModel.swift; sourceTree = "<group>"; };
+		D16D8BED2C52392A00AF7677 /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
 		D1E8B1462C4E1568009B3D81 /* Snaps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snaps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				D1E8B1752C4E18DB009B3D81 /* ReuseIdentifier.swift */,
 				D1E8B17E2C4E1F85009B3D81 /* Observable.swift */,
 				D1E8B1802C4E236E009B3D81 /* SceneManger.swift */,
+				D16D8BED2C52392A00AF7677 /* Extension+String.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				D1E8B1E82C4F9179009B3D81 /* PhotoAPI.swift in Sources */,
 				D1E8B1AC2C4E8123009B3D81 /* NaviTitle.swift in Sources */,
 				D1E8B17B2C4E19C4009B3D81 /* Color.swift in Sources */,
+				D16D8BEE2C52392A00AF7677 /* Extension+String.swift in Sources */,
 				D16D8BCF2C514D3000AF7677 /* DetailPhotoViewController.swift in Sources */,
 				D1E8B1A32C4E3FBA009B3D81 /* BaseView.swift in Sources */,
 				D16D8BCA2C512DE900AF7677 /* LikesViewModel.swift in Sources */,
