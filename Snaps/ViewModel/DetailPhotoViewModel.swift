@@ -12,6 +12,8 @@ final class DetailPhotoViewModel {
     
     var outputPhotoData = Observable<PhotoItem?>(nil)
     var outputSetLike = Observable<Bool?>(nil)
+    var outputStatistics = Observable<Statistics?>(nil)
+    var outputStatisticsError = Observable<APIError?>(nil)
     
     var inputSelectedPhoto = Observable<PhotoItem?>(nil)
     var inputLikedPhoto = Observable<LikeItems?>(nil)
@@ -25,12 +27,15 @@ final class DetailPhotoViewModel {
 private extension DetailPhotoViewModel {
     func transform() {
         inputSelectedPhoto.bind(false) { [weak self] photoItem in
+            guard let photoItem else { return }
             self?.outputPhotoData.value = photoItem
+            self?.getStatistics(imageID: photoItem.id)
         }
         
         inputLikedPhoto.bind { [weak self] likeItem in
             guard let likeItem else { return }
             self?.outputPhotoData.value = PhotoItem.toPhotoItem(likeItem: likeItem)
+            self?.getStatistics(imageID: PhotoItem.toPhotoItem(likeItem: likeItem).id)
         }
         inputLikeButtonTapped.bind { [weak self] photoItem in
             guard let photoItem else { return }
@@ -46,6 +51,16 @@ private extension DetailPhotoViewModel {
                 self?.outputSetLike.value = true
             }
         }
-        
+    }
+    
+    func getStatistics(imageID: String) {
+        NetworkManager.shared.getPhotoData(api: .statistics(imageID: imageID), responseType: Statistics.self) { [weak self] result in
+            switch result {
+            case .success(let success):
+                self?.outputStatistics.value = success
+            case .failure(let failure):
+                self?.outputStatisticsError.value = failure
+            }
+        }
     }
 }

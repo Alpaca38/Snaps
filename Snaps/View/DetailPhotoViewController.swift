@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Kingfisher
+import Toast
 
 final class DetailPhotoViewController: BaseViewController {
     let viewModel = DetailPhotoViewModel()
@@ -202,6 +203,15 @@ private extension DetailPhotoViewController {
             guard let self, let isLike else { return }
             isLike ? likeButton.setImage(Image.like, for: .normal) : likeButton.setImage(Image.likeInactive, for: .normal)
         }
+        
+        viewModel.outputStatistics.bind { [weak self] data in
+            guard let data else { return }
+            self?.configureInfo(data: data)
+        }
+        
+        viewModel.outputStatisticsError.bind { [weak self] error in
+            self?.view.makeToast(error?.rawValue, position: .center)
+        }
     }
     
     func configureUI(photoItem: PhotoItem) {
@@ -222,5 +232,10 @@ private extension DetailPhotoViewController {
         photoImageView.kf.setImage(with: photoImageURL)
         
         sizeValueLabel.text = photoItem.size
+    }
+    
+    func configureInfo(data: Statistics) {
+        viewsValueLabel.text = data.views.total.formatted()
+        downloadsValueLabel.text = data.downloads.total.formatted()
     }
 }
