@@ -10,10 +10,10 @@ import Foundation
 final class SearchPhotoViewModel {
     private let repository = LikeRepository()
     
-    private(set) var outputList = Observable<[PhotoItem]>([])
-    private(set) var outputNetworkError = Observable<APIError?>(nil)
-    private(set) var outputSort = Observable<SortOrder>(.relevant)
-    private(set) var outputListIsNotEmpty = Observable<Void?>(nil)
+    var outputList = Observable<[PhotoItem]>([])
+    var outputNetworkError = Observable<APIError?>(nil)
+    var outputSort = Observable<SortOrder>(.relevant)
+    var outputListIsNotEmpty = Observable<Void?>(nil)
     
     var inputText = Observable<String?>(nil)
     var inputSortButton = Observable<Bool>(false)

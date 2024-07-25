@@ -44,8 +44,6 @@ final class PhotoCell: BaseCollectionViewCell {
         config.title = nil
         let view = UIButton(configuration: config)
         view.addTarget(self, action: #selector(likeButtonTapped(_:)), for: .touchUpInside)
-//        view.setImage(Image.likeCircle, for: .selected)
-//        view.setImage(Image.likeCircleInactive, for: .normal)
         contentView.addSubview(view)
         return view
     }()
@@ -93,7 +91,7 @@ final class PhotoCell: BaseCollectionViewCell {
     }
     
     func configure(data: LikeItems) {
-        let url = URL(string: data.imageURL)
+        let url = URL(string: data.smallImageURL)
         mainImageView.kf.setImage(with: url)
         likeCountView.isHidden = true
         likeButton.setImage(Image.likeCircle, for: .normal)

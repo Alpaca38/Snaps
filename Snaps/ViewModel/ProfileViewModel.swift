@@ -8,14 +8,14 @@
 import Foundation
 
 final class ProfileViewModel {
-    private(set) var outputValidText = Observable("")
-    private(set) var outputNickname = Observable<String?>(nil)
-    private(set) var outputTextValid = Observable(false)
-    private(set) var outputImageIndex = Observable<Int?>(nil)
-    private(set) var outputMBTIValid = Observable(false)
-    private(set) var outputTotalValid = Observable(false)
-    private(set) var outputMBTI = Observable<[MBTIItem]?>(nil)
-    private(set) var outputSaveImageIndex = Observable<Int?>(nil)
+    var outputValidText = Observable("")
+    var outputNickname = Observable<String?>(nil)
+    var outputTextValid = Observable(false)
+    var outputImageIndex = Observable<Int?>(nil)
+    var outputMBTIValid = Observable(false)
+    var outputTotalValid = Observable(false)
+    var outputMBTI = Observable<[MBTIItem]?>(nil)
+    var outputSaveImageIndex = Observable<Int?>(nil)
     
     var inputText: Observable<String?> = Observable("")
     var inputValidNickname = Observable<String?>(nil)

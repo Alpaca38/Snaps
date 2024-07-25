@@ -8,10 +8,10 @@
 import Foundation
 
 final class TopicPhotoViewModel {
-    private(set) var outputGoldenHour = Observable<[PhotoItem]>([])
-    private(set) var outputBusiness = Observable<[PhotoItem]>([])
-    private(set) var outputArchitecture = Observable<[PhotoItem]>([])
-    private(set) var outputNetworkError = Observable<APIError?>(nil)
+    var outputGoldenHour = Observable<[PhotoItem]>([])
+    var outputBusiness = Observable<[PhotoItem]>([])
+    var outputArchitecture = Observable<[PhotoItem]>([])
+    var outputNetworkError = Observable<APIError?>(nil)
     
     var inputViewDidLoadTrigger = Observable<Void?>(nil)
     

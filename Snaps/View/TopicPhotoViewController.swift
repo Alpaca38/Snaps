@@ -14,6 +14,7 @@ final class TopicPhotoViewController: PhotoViewController {
     
     private lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        view.delegate = self
         self.view.addSubview(view)
         return view
     }()
@@ -24,6 +25,11 @@ final class TopicPhotoViewController: PhotoViewController {
         configureDataSource()
         bindData()
         viewModel.inputViewDidLoadTrigger.value = ()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func configureLayout() {
@@ -38,7 +44,6 @@ final class TopicPhotoViewController: PhotoViewController {
 private extension TopicPhotoViewController {
     func setNavi() {
         navigationItem.title = "OUR TOPIC"
-        navigationController?.navigationBar.prefersLargeTitles = true
         
         let profileImageView = CircleImageView(borderWidth: Image.Border.active, borderColor: Color.main, cornerRadius: 20, alpha: Image.Alpha.active)
         profileImageView.snp.makeConstraints {
@@ -148,5 +153,14 @@ private extension TopicPhotoViewController {
         snapshot.appendItems(viewModel.outputArchitecture.value, toSection: .architectureAndInterior)
         
         dataSource.apply(snapshot)
+    }
+}
+
+extension TopicPhotoViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailPhotoViewController()
+        let data = dataSource.itemIdentifier(for: indexPath)
+        vc.viewModel.inputSelectedPhoto.value = data
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

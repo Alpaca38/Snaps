@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct Photos: Decodable, Hashable {
     let results: [PhotoItem]
@@ -19,6 +20,10 @@ struct PhotoItem: Decodable, Hashable, Identifiable, SectionItem {
     let urls: Link
     let likes: Int
     let user: PhotoGrapher
+    
+    static func toPhotoItem(likeItem: LikeItems) -> PhotoItem {
+        return PhotoItem(id: likeItem.id, created_at: likeItem.created_at, width: likeItem.width, height: likeItem.height, urls: Link(raw: likeItem.rawImageURL, small: likeItem.smallImageURL), likes: likeItem.likes, user: PhotoGrapher(name: likeItem.photoGrapherName, profileImage: ProfileImage(medium: likeItem.photoGrapherProfileImage)))
+    }
 }
 
 struct Link: Decodable, Hashable {

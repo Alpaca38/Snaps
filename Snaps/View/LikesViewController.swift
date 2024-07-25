@@ -28,6 +28,7 @@ final class LikesViewController: PhotoViewController {
     
     private lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        view.delegate = self
         self.view.addSubview(view)
         return view
     }()
@@ -131,5 +132,14 @@ private extension LikesViewController {
             items.isEmpty ? (self?.emptyResultLabel.isHidden = false) : (self?.emptyResultLabel.isHidden = true)
             self?.updateSnapshot()
         }
+    }
+}
+
+extension LikesViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailPhotoViewController()
+        let data = dataSource.itemIdentifier(for: indexPath)
+        vc.viewModel.inputLikedPhoto.value = data
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

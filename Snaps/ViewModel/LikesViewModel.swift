@@ -10,7 +10,7 @@ import Foundation
 final class LikesViewModel {
     let repository = LikeRepository()
     
-    private(set) var outputList = Observable<[LikeItems]>([])
+    var outputList = Observable<[LikeItems]>([])
     
     var inputViewWillAppearEvent = Observable<Void?>(nil)
     var inputLikeButtonTapped = Observable<LikeItems?>(nil)
@@ -54,7 +54,9 @@ private extension LikesViewModel {
     }
     
     @objc func handleLikeItemWillBeRemoved(_ notification: Notification) {
-        guard let item = notification.object as? LikeItems else { return }
+        guard let item = notification.object as? LikeItems else {
+            return
+        }
         outputList.value.removeAll { $0.id == item.id }
     }
 }

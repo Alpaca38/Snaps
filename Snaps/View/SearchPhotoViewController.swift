@@ -32,6 +32,7 @@ final class SearchPhotoViewController: PhotoViewController {
     
     private lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        view.delegate = self
         view.prefetchDataSource = self
         self.view.addSubview(view)
         return view
@@ -171,6 +172,15 @@ extension SearchPhotoViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty else { return }
         viewModel.inputText.value = text
+    }
+}
+
+extension SearchPhotoViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailPhotoViewController()
+        let data = dataSource.itemIdentifier(for: indexPath)
+        vc.viewModel.inputSelectedPhoto.value = data
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class UserDefaultsManager {
+struct UserDefaultsManager {
     private init() { }
 
     @UserDefault(key: .isLogin, defaultValue: false, isCustomObject: false)
