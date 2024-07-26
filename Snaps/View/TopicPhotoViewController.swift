@@ -11,6 +11,7 @@ import SnapKit
 final class TopicPhotoViewController: PhotoViewController {
     private let viewModel = TopicPhotoViewModel()
     private var dataSource: DataSource<TopicSection, PhotoItem>!
+    private var lastRefreshTime: Date?
     
     private var randomTopicList: [Topic] = []
     
@@ -27,6 +28,7 @@ final class TopicPhotoViewController: PhotoViewController {
         fetchRandomTopic()
         configureDataSource()
         bindData()
+        configureRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -95,6 +97,20 @@ private extension TopicPhotoViewController {
         return section
     }
     
+    func fetchRandomTopic() {
+        let topicList = Topic.allCases.shuffled()
+        randomTopicList = topicList
+        viewModel.inputTopic.value = topicList.map({ $0.rawValue })
+    }
+    
+    func configureRefreshControl() {
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+}
+
+// MARK: Action
+private extension TopicPhotoViewController {
     @objc func profileButtonTapped() {
         let vc = ProfileViewController()
         vc.updateImage = { [weak self] in
@@ -103,10 +119,22 @@ private extension TopicPhotoViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func fetchRandomTopic() {
-        let topicList = Topic.allCases.shuffled()
-        randomTopicList = topicList
-        viewModel.inputTopic.value = topicList.map({ $0.rawValue })
+    @objc func handleRefreshControl() {
+        let currentTime = Date()
+        
+        if let lastTime = lastRefreshTime, currentTime.timeIntervalSince(lastTime) < 60 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
+                self?.collectionView.refreshControl?.endRefreshing()
+            }
+        } else {
+            lastRefreshTime = currentTime
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
+                self?.fetchRandomTopic()
+                self?.collectionView.reloadData()
+                self?.collectionView.refreshControl?.endRefreshing()
+            }
+        }
     }
 }
 
