@@ -11,7 +11,6 @@ import SnapKit
 final class TopicPhotoViewController: PhotoViewController {
     private let viewModel = TopicPhotoViewModel()
     private var dataSource: DataSource<TopicSection, PhotoItem>!
-    private var lastRefreshTime: Date?
     
     private var randomTopicList: [Topic] = []
     
@@ -120,21 +119,7 @@ private extension TopicPhotoViewController {
     }
     
     @objc func handleRefreshControl() {
-        let currentTime = Date()
-        
-        if let lastTime = lastRefreshTime, currentTime.timeIntervalSince(lastTime) < 60 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
-                self?.collectionView.refreshControl?.endRefreshing()
-            }
-        } else {
-            lastRefreshTime = currentTime
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
-                self?.fetchRandomTopic()
-                self?.collectionView.reloadData()
-                self?.collectionView.refreshControl?.endRefreshing()
-            }
-        }
+        viewModel.inputRefresh.value = ()
     }
 }
 
@@ -151,6 +136,15 @@ private extension TopicPhotoViewController {
         
         viewModel.outputThirdSectonData.bind(false) { [weak self] _ in
             self?.updateSnapshot()
+        }
+        
+        viewModel.isRefreshing.bind { [weak self] _ in
+            self?.fetchRandomTopic()
+            self?.collectionView.reloadData()
+        }
+        
+        viewModel.refreshCompleted.bind { [weak self] _ in
+            self?.collectionView.refreshControl?.endRefreshing()
         }
     }
 }

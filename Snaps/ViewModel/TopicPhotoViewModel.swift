@@ -8,23 +8,35 @@
 import Foundation
 
 final class TopicPhotoViewModel {
+    private var lastRefreshTime: Date?
+    var isRefreshing = Observable<Void?>(nil)
+    var refreshCompleted = Observable<Void?>(nil)
+    
     var outputFirstSectionData = Observable<[PhotoItem]>([])
     var outputSecondSectionData = Observable<[PhotoItem]>([])
     var outputThirdSectonData = Observable<[PhotoItem]>([])
     var outputNetworkError = Observable<APIError?>(nil)
     
     var inputTopic = Observable<[String]?>(nil)
-    var randomTopicList = Topic.allCases.shuffled().map { $0.rawValue }
+    var inputRefresh = Observable<Void?>(nil)
     
     init() {
-        inputTopic.bind(false) { [weak self] topicList in
-            guard let topicList else { return }
-            self?.getTopicPhoto(topicList: topicList)
-        }
+        transform()
     }
 }
 
 private extension TopicPhotoViewModel {
+    func transform() {
+        inputTopic.bind(false) { [weak self] topicList in
+            guard let topicList else { return }
+            self?.getTopicPhoto(topicList: topicList)
+        }
+        
+        inputRefresh.bind(false) { [weak self] _ in
+            self?.handleRefreshControl()
+        }
+    }
+    
     func getTopicPhoto(topicList: [String]) {
         getFirstTopicPhoto(topicList: topicList)
         getSecondTopicPhoto(topicList: topicList)
@@ -60,6 +72,23 @@ private extension TopicPhotoViewModel {
                 self?.outputThirdSectonData.value = success
             case .failure(let failure):
                 self?.outputNetworkError.value = failure
+            }
+        }
+    }
+    
+    func handleRefreshControl() {
+        let currentTime = Date()
+        
+        if let lastTime = lastRefreshTime, currentTime.timeIntervalSince(lastTime) < 60 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
+                self?.refreshCompleted.value = ()
+            }
+        } else {
+            lastRefreshTime = currentTime
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
+                self?.isRefreshing.value = ()
+                self?.refreshCompleted.value = ()
             }
         }
     }
