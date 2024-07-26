@@ -47,6 +47,14 @@ final class SearchPhotoViewController: PhotoViewController {
         return view
     }()
     
+    private lazy var searchIndicateLabel = {
+        let view = UILabel()
+        view.textAlignment = .center
+        view.text = "사진을 검색해보세요."
+        self.view.addSubview(view)
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavi()
@@ -72,6 +80,10 @@ final class SearchPhotoViewController: PhotoViewController {
         }
         
         emptyResultLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        searchIndicateLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
     }
@@ -149,7 +161,8 @@ private extension SearchPhotoViewController {
 private extension SearchPhotoViewController {
     func bindData() {
         viewModel.outputList.bind(false) { [weak self] items in
-            items.isEmpty ? (self?.emptyResultLabel.isHidden = false) : (self?.emptyResultLabel.isHidden = true)
+            guard let text = self?.searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+            !text.isEmpty && items.isEmpty ? (self?.emptyResultLabel.isHidden = false) : (self?.emptyResultLabel.isHidden = true)
             self?.updateSnapshot()
         }
         
@@ -165,12 +178,20 @@ private extension SearchPhotoViewController {
         viewModel.outputSort.bind { [weak self] _ in
             self?.viewModel.inputPage.value = 1
         }
+        
+        viewModel.outputSearchTextIsEmpty.bind(false) { [weak self] _ in
+            self?.searchIndicateLabel.isHidden = false
+        }
+        
+        viewModel.outputSearchTextIsNotEmpty.bind(false) { [weak self] _ in
+            self?.searchIndicateLabel.isHidden = true
+        }
     }
 }
 
 extension SearchPhotoViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty else { return }
+        guard let text = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         viewModel.inputText.value = text
     }
 }

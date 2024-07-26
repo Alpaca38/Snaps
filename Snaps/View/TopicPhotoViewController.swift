@@ -140,7 +140,7 @@ private extension TopicPhotoViewController {
         
         viewModel.isRefreshing.bind { [weak self] _ in
             self?.fetchRandomTopic()
-            self?.collectionView.reloadData()
+            self?.collectionView.reloadData() // 리로드 안하고 헤더 업데이트 가능한가?
         }
         
         viewModel.refreshCompleted.bind { [weak self] _ in

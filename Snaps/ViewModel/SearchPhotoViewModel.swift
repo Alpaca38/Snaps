@@ -14,6 +14,8 @@ final class SearchPhotoViewModel {
     var outputNetworkError = Observable<APIError?>(nil)
     var outputSort = Observable<SortOrder>(.relevant)
     var outputListIsNotEmpty = Observable<Void?>(nil)
+    var outputSearchTextIsEmpty = Observable<Void?>(nil)
+    var outputSearchTextIsNotEmpty = Observable<Void?>(nil)
     
     var inputText = Observable<String?>(nil)
     var inputSortButton = Observable<Bool>(false)
@@ -24,7 +26,13 @@ final class SearchPhotoViewModel {
     init() {
         inputText.bind(false) { [weak self] searchText in
             guard let self, let searchText else { return }
-            getSearchPhotos(searchText: searchText, orderBy: outputSort.value.rawValue)
+            if searchText.isEmpty {
+                outputSearchTextIsEmpty.value = ()
+                outputList.value = []
+            } else {
+                outputSearchTextIsNotEmpty.value = ()
+                getSearchPhotos(searchText: searchText, orderBy: outputSort.value.rawValue)
+            }
         }
         
         inputSortButton.bind(false) { [weak self] selected in
