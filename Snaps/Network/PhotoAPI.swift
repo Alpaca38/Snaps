@@ -10,6 +10,7 @@ import Alamofire
 
 enum PhotoAPI {
     case search(query: String, page: Int, perPage: Int, orderBy: SortOrder.RawValue)
+    case searchColor(query: String, page: Int, perPage: Int, orderBy: SortOrder.RawValue, color: PhotoColor.RawValue)
     case topic(topicID: String)
     case statistics(imageID: String)
     case random
@@ -20,7 +21,7 @@ enum PhotoAPI {
     
     var endpoint: URL? {
         switch self {
-        case .search:
+        case .search, .searchColor:
             return URL(string: baseURL + "search/photos")
         case .topic(let topicID):
             return URL(string: baseURL + "topics/\(topicID)/photos")
@@ -39,6 +40,8 @@ enum PhotoAPI {
             return ["client_id": APIKey.unsplashAccessKey]
         case .random:
             return ["count": 10, "client_id": APIKey.unsplashAccessKey]
+        case .searchColor(let query, let page, let perPage, let orderBy, let color):
+            return ["query": query, "page": page, "per_page": perPage, "order_by": orderBy, "color": color, "client_id": APIKey.unsplashAccessKey]
         }
     }
     

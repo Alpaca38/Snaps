@@ -11,19 +11,32 @@ final class SearchPhotoViewModel {
     private let repository = LikeRepository()
     
     var outputList = Observable<[PhotoItem]>([])
+    var outputColor = Observable<[PhotoColorItem]>([])
     var outputNetworkError = Observable<APIError?>(nil)
     var outputSort = Observable<SortOrder>(.relevant)
     var outputListIsNotEmpty = Observable<Void?>(nil)
     var outputSearchTextIsEmpty = Observable<Void?>(nil)
     var outputSearchTextIsNotEmpty = Observable<Void?>(nil)
     
+    var inputViewDidLoadTrigger = Observable<Void?>(nil)
     var inputText = Observable<String?>(nil)
     var inputSortButton = Observable<Bool>(false)
     var inputPage = Observable<Int>(1)
     var inputLikeItemRemove = Observable<LikeItems?>(nil)
     var inputLikeItemAdd = Observable<LikeItems?>(nil)
+    var inputColor = Observable<PhotoColor?>(nil)
     
     init() {
+        transform()
+    }
+}
+
+private extension SearchPhotoViewModel {
+    func transform() {
+        inputViewDidLoadTrigger.bind(false) { [weak self] _ in
+            self?.outputColor.value = PhotoColor.allCases.map({ PhotoColorItem(photoColor: $0)})
+        }
+        
         inputText.bind(false) { [weak self] searchText in
             guard let self, let searchText else { return }
             if searchText.isEmpty {
@@ -41,7 +54,11 @@ final class SearchPhotoViewModel {
         
         inputPage.bind(false) { [weak self] page in
             guard let self, let searchText = inputText.value else { return }
-            getSearchPhotos(searchText: searchText, orderBy: outputSort.value.rawValue)
+            if let color = inputColor.value {
+                getSearchColorPhotos(searchText: searchText, orderBy: outputSort.value.rawValue, color: color.rawValue)
+            } else {
+                getSearchPhotos(searchText: searchText, orderBy: outputSort.value.rawValue)
+            }
         }
         
         inputLikeItemAdd.bind { [weak self] item in
@@ -56,12 +73,38 @@ final class SearchPhotoViewModel {
             NotificationCenter.default.post(name: .likeItemWillBeRemoved, object: item)
             self?.repository.deleteItem(data: deleteItem)
         }
+        
+        inputColor.bind(false) { [weak self] color in
+            guard let self else { return }
+            if let color {
+                getSearchColorPhotos(searchText: inputText.value ?? "", orderBy: outputSort.value.rawValue, color: color.rawValue)
+            } else {
+                getSearchPhotos(searchText: inputText.value ?? "", orderBy: outputSort.value.rawValue)
+            }
+        }
     }
-}
-
-private extension SearchPhotoViewModel {
+    
     func getSearchPhotos(searchText: String, orderBy: SortOrder.RawValue) {
         NetworkManager.shared.getPhotoData(api: .search(query: searchText, page: inputPage.value, perPage: 20, orderBy: orderBy), responseType: Photos.self) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let success):
+                if inputPage.value == 1 {
+                    outputList.value = success.results
+                    if !outputList.value.isEmpty {
+                        outputListIsNotEmpty.value = ()
+                    }
+                } else {
+                    outputList.value.append(contentsOf: success.results)
+                }
+            case .failure(let failure):
+                outputNetworkError.value = failure
+            }
+        }
+    }
+    
+    func getSearchColorPhotos(searchText: String, orderBy: SortOrder.RawValue, color: PhotoColor.RawValue) {
+        NetworkManager.shared.getPhotoData(api: .searchColor(query: searchText, page: inputPage.value, perPage: 20, orderBy: orderBy, color: color), responseType: Photos.self) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let success):
