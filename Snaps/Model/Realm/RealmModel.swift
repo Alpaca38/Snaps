@@ -20,6 +20,7 @@ final class LikeItems: Object, SectionItem {
     @Persisted var likes: Int
     @Persisted var photoGrapherName: String
     @Persisted var photoGrapherProfileImage: String
+    @Persisted var color: String
     
     convenience init(from photoItem: PhotoItem) {
         self.init()
@@ -33,5 +34,6 @@ final class LikeItems: Object, SectionItem {
         self.likes = photoItem.likes
         self.photoGrapherName = photoItem.user.name
         self.photoGrapherProfileImage = photoItem.user.profileImage.medium
+        self.color = photoItem.color
     }
 }
