@@ -18,17 +18,6 @@ enum TopicSection: CaseIterable, SectionType {
     case first
     case second
     case third
-    
-    var headerTitle: String {
-        switch self {
-        case .first:
-            return "골든 아워"
-        case .second:
-            return "비지니스 및 업무"
-        case .third:
-            return "건축 및 인테리어"
-        }
-    }
 }
 
 enum Topic: String, CaseIterable {

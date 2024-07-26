@@ -19,6 +19,7 @@
 		D16D8BF42C5266E900AF7677 /* RandomPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BF32C5266E900AF7677 /* RandomPhotoCell.swift */; };
 		D16D8BF62C526DE100AF7677 /* RandomPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BF52C526DE100AF7677 /* RandomPhotoViewModel.swift */; };
 		D16D8BF82C527F5800AF7677 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BF72C527F5800AF7677 /* Topic.swift */; };
+		D16D8BFA2C534DF100AF7677 /* PhotoColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BF92C534DF100AF7677 /* PhotoColor.swift */; };
 		D1E8B14A2C4E1568009B3D81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */; };
 		D1E8B14C2C4E1568009B3D81 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */; };
 		D1E8B14E2C4E1568009B3D81 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */; };
@@ -96,6 +97,7 @@
 		D16D8BF32C5266E900AF7677 /* RandomPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPhotoCell.swift; sourceTree = "<group>"; };
 		D16D8BF52C526DE100AF7677 /* RandomPhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPhotoViewModel.swift; sourceTree = "<group>"; };
 		D16D8BF72C527F5800AF7677 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
+		D16D8BF92C534DF100AF7677 /* PhotoColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoColor.swift; sourceTree = "<group>"; };
 		D1E8B1462C4E1568009B3D81 /* Snaps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snaps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				D1E8B1BA2C4F71FA009B3D81 /* Photos.swift */,
 				D16D8BEF2C524D8000AF7677 /* Statistics.swift */,
 				D16D8BF72C527F5800AF7677 /* Topic.swift */,
+				D16D8BF92C534DF100AF7677 /* PhotoColor.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				D1E8B1A12C4E3F5D009B3D81 /* MBTIView.swift in Sources */,
 				D1E8B1602C4E16A7009B3D81 /* APIKey.swift in Sources */,
 				D1E8B1762C4E18DB009B3D81 /* ReuseIdentifier.swift in Sources */,
+				D16D8BFA2C534DF100AF7677 /* PhotoColor.swift in Sources */,
 				D1E8B14C2C4E1568009B3D81 /* SceneDelegate.swift in Sources */,
 				D1E8B1812C4E236E009B3D81 /* SceneManger.swift in Sources */,
 				D1E8B1782C4E1996009B3D81 /* BaseViewController.swift in Sources */,

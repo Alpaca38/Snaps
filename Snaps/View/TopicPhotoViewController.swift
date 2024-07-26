@@ -140,7 +140,6 @@ private extension TopicPhotoViewController {
         
         viewModel.isRefreshing.bind { [weak self] _ in
             self?.fetchRandomTopic()
-            self?.collectionView.reloadData() // 리로드 안하고 헤더 업데이트 가능한가?
         }
         
         viewModel.refreshCompleted.bind { [weak self] _ in
@@ -180,6 +179,7 @@ private extension TopicPhotoViewController {
     func updateSnapshot() {
         var snapshot = Snapshot<TopicSection, PhotoItem>()
         snapshot.appendSections(TopicSection.allCases)
+        snapshot.reloadSections(TopicSection.allCases)
         
         snapshot.appendItems(viewModel.outputFirstSectionData.value, toSection: .first)
         snapshot.appendItems(viewModel.outputSecondSectionData.value, toSection: .second)
