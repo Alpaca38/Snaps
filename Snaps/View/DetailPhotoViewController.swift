@@ -13,12 +13,34 @@ import Toast
 final class DetailPhotoViewController: BaseViewController {
     let viewModel = DetailPhotoViewModel()
     
+    private lazy var scrollView = {
+        let view = UIScrollView()
+        view.addSubview(contentView)
+        view.alwaysBounceVertical = true
+        view.showsVerticalScrollIndicator = false
+        self.view.addSubview(view)
+        return view
+    }()
+    
+    private lazy var contentView = {
+        let view = UIView()
+        view.addSubview(profileImage)
+        view.addSubview(labelStackView)
+        view.addSubview(likeButton)
+        view.addSubview(photoImageView)
+        view.addSubview(infoLabel)
+        view.addSubview(sizeStackView)
+        view.addSubview(viewsStackView)
+        view.addSubview(downloadsStackView)
+        view.addSubview(infoStackView)
+        return view
+    }()
+    
     private lazy var profileImage = {
         let view = UIImageView()
         view.clipsToBounds = true
         view.layer.cornerRadius = 20
         view.contentMode = .scaleAspectFit
-        self.view.addSubview(view)
         return view
     }()
     
@@ -39,7 +61,6 @@ final class DetailPhotoViewController: BaseViewController {
         view.axis = .vertical
         view.alignment = .leading
         view.spacing = 2
-        self.view.addSubview(view)
         return view
     }()
     
@@ -50,7 +71,6 @@ final class DetailPhotoViewController: BaseViewController {
         config.title = nil
         let view = UIButton(configuration: config)
         view.addTarget(self, action: #selector(likeButtonTapped(_:)), for: .touchUpInside)
-        self.view.addSubview(view)
         return view
     }()
     
@@ -58,7 +78,6 @@ final class DetailPhotoViewController: BaseViewController {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        self.view.addSubview(view)
         return view
     }()
     
@@ -66,7 +85,6 @@ final class DetailPhotoViewController: BaseViewController {
         let view = UILabel()
         view.font = .boldSystemFont(ofSize: 17)
         view.text = "정보"
-        self.view.addSubview(view)
         return view
     }()
     
@@ -132,13 +150,21 @@ final class DetailPhotoViewController: BaseViewController {
         let view = UIStackView(arrangedSubviews: [sizeStackView, viewsStackView, downloadsStackView])
         view.axis = .vertical
         view.spacing = 10
-        self.view.addSubview(view)
         return view
     }()
     
     override func configureLayout() {
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
+        }
+        
         profileImage.snp.makeConstraints {
-            $0.top.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.leading.equalToSuperview().offset(20)
             $0.size.equalTo(40)
         }
         
@@ -149,7 +175,7 @@ final class DetailPhotoViewController: BaseViewController {
         }
         
         likeButton.snp.makeConstraints {
-            $0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.top.trailing.equalToSuperview().inset(20)
             $0.size.equalTo(40)
         }
         
@@ -166,7 +192,7 @@ final class DetailPhotoViewController: BaseViewController {
         
         infoStackView.snp.makeConstraints {
             $0.top.equalTo(infoLabel)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.bottom.equalToSuperview().inset(20)
         }
     }
     
@@ -229,6 +255,11 @@ private extension DetailPhotoViewController {
         
         let photoImageURL = URL(string: photoItem.urls.small)
         photoImageView.kf.setImage(with: photoImageURL)
+        
+        let dynamicHeight = UIScreen.main.bounds.width * CGFloat(photoItem.height) / CGFloat(photoItem.width)
+        photoImageView.snp.updateConstraints {
+            $0.height.equalTo(dynamicHeight)
+        }
         
         sizeValueLabel.text = photoItem.size
     }
