@@ -29,6 +29,7 @@ final class LikesViewController: PhotoViewController {
     private lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         view.delegate = self
+        view.showsVerticalScrollIndicator = false
         self.view.addSubview(view)
         return view
     }()

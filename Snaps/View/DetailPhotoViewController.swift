@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 import SnapKit
 import Kingfisher
 import Toast
@@ -33,6 +34,8 @@ final class DetailPhotoViewController: BaseViewController {
         view.addSubview(viewsStackView)
         view.addSubview(downloadsStackView)
         view.addSubview(infoStackView)
+        view.addSubview(chartLabel)
+        view.addSubview(segmentedControl)
         return view
     }()
     
@@ -74,14 +77,14 @@ final class DetailPhotoViewController: BaseViewController {
         return view
     }()
     
-    private lazy var photoImageView = {
+    private let photoImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         return view
     }()
     
-    private lazy var infoLabel = {
+    private let infoLabel = {
         let view = UILabel()
         view.font = .boldSystemFont(ofSize: 17)
         view.text = "정보"
@@ -153,6 +156,23 @@ final class DetailPhotoViewController: BaseViewController {
         return view
     }()
     
+    private let chartLabel = {
+        let view = UILabel()
+        view.font = .boldSystemFont(ofSize: 17)
+        view.text = "차트"
+        return view
+    }()
+    
+    private lazy var segmentedControl = {
+        let items = ["조회", "다운로드"]
+        let control = UISegmentedControl(items: items)
+        control.addTarget(self, action: #selector(segmentControlValueChanged), for: .valueChanged)
+        control.selectedSegmentIndex = 0
+        return control
+    }()
+    
+    private let chartController = UIHostingController(rootView: AreaChart())
+    
     override func configureLayout() {
         scrollView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
@@ -199,6 +219,7 @@ final class DetailPhotoViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavi()
+        setupChart() // if iOS 16+
         bindData()
     }
 }
@@ -207,12 +228,58 @@ private extension DetailPhotoViewController {
     func setNavi() {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
+    
+    func setupChart() {
+        if #available(iOS 16.0, *) {
+            infoStackView.snp.remakeConstraints {
+                $0.top.equalTo(infoLabel)
+                $0.trailing.equalToSuperview().inset(20)
+            }
+            
+            chartLabel.snp.makeConstraints {
+                $0.top.equalTo(infoStackView.snp.bottom).offset(20)
+                $0.leading.equalTo(infoLabel)
+            }
+            
+            segmentedControl.snp.makeConstraints {
+                $0.top.equalTo(chartLabel)
+                $0.leading.equalTo(infoStackView)
+            }
+            
+            addChild(chartController)
+            contentView.addSubview(chartController.view)
+            chartController.view.snp.makeConstraints {
+                $0.top.equalTo(segmentedControl.snp.bottom).offset(20)
+                $0.horizontalEdges.equalTo(infoStackView)
+                $0.bottom.equalToSuperview().inset(20)
+            }
+            chartController.didMove(toParent: self)
+        }
+    }
 }
 
 // MARK: Action
 private extension DetailPhotoViewController {
     @objc func likeButtonTapped(_ sender: UIButton) {
         viewModel.inputLikeButtonTapped.value = viewModel.outputPhotoData.value
+    }
+    
+    @objc func segmentControlValueChanged() {
+        guard let data = viewModel.outputStatistics.value else { return }
+        updateChartData(data: data)
+    }
+    
+    private func updateChartData(data: Statistics) {
+        var chartData: [ChartData] = []
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            chartData = data.views.historical.chartData
+        case 1:
+            chartData = data.downloads.historical.chartData
+        default:
+            chartData = []
+        }
+        chartController.rootView = AreaChart(data: chartData)
     }
 }
 
@@ -230,8 +297,9 @@ private extension DetailPhotoViewController {
         }
         
         viewModel.outputStatistics.bind { [weak self] data in
-            guard let data else { return }
-            self?.configureInfo(data: data)
+            guard let self, let data else { return }
+            configureInfo(data: data)
+            updateChartData(data: data)
         }
         
         viewModel.outputStatisticsError.bind { [weak self] error in

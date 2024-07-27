@@ -20,9 +20,19 @@ struct PhotoStatistics: Decodable {
 
 struct Historical: Decodable {
     let values: [ValueStatistics] // 30일간 통계
+    
+    var chartData: [ChartData] {
+        return values.map { ChartData(date: $0.date, value: $0.value) }
+    }
 }
 
 struct ValueStatistics: Decodable {
+    let date: String
+    let value: Int
+}
+
+struct ChartData: Identifiable {
+    let id = UUID().uuidString
     let date: String
     let value: Int
 }

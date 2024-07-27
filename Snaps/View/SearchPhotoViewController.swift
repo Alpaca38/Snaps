@@ -40,6 +40,7 @@ final class SearchPhotoViewController: PhotoViewController {
     private lazy var colorCollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createColorCollectionViewLayout())
         view.delegate = self
+        view.showsVerticalScrollIndicator = false
         self.view.addSubview(view)
         return view
     }()
