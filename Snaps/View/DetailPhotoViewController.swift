@@ -261,18 +261,33 @@ private extension DetailPhotoViewController {
 // MARK: Action
 private extension DetailPhotoViewController {
     @objc func likeButtonTapped(_ sender: UIButton) {
-        guard let photoItem = viewModel.outputPhotoData.value, let photoImage = photoImageView.image, let profileImage = profileImage.image else { return }
-        viewModel.inputLikeButtonTapped.value = photoItem
-        
-        if UserDefaultsManager.likeList.contains(photoItem.id) {
-            UserDefaultsManager.likeList.remove(photoItem.id)
-            removeImageFromDocument(filename: photoItem.id)
-            removeImageFromDocument(filename: photoItem.user.id)
-        } else {
-            UserDefaultsManager.likeList.insert(photoItem.id)
-            saveImageToDocument(image: photoImage, filename: photoItem.id)
-            saveImageToDocument(image: profileImage, filename: photoItem.user.id)
+        guard let photoImage = photoImageView.image, let profileImage = profileImage.image else { return }
+        if let photoItem = viewModel.outputPhotoData.value {
+            viewModel.inputLikeButtonTapped.value = photoItem
+            
+            if UserDefaultsManager.likeList.contains(photoItem.id) {
+                UserDefaultsManager.likeList.remove(photoItem.id)
+                removeImageFromDocument(filename: photoItem.id)
+                removeImageFromDocument(filename: photoItem.user.id)
+            } else {
+                UserDefaultsManager.likeList.insert(photoItem.id)
+                saveImageToDocument(image: photoImage, filename: photoItem.id)
+                saveImageToDocument(image: profileImage, filename: photoItem.user.id)
+            }
+        } else if let likedItem = viewModel.outputLikedPhotoData.value {
+            viewModel.inputLikeButtonTapped.value = likedItem
+            
+            if UserDefaultsManager.likeList.contains(likedItem.id) {
+                UserDefaultsManager.likeList.remove(likedItem.id)
+                removeImageFromDocument(filename: likedItem.id)
+                removeImageFromDocument(filename: likedItem.user.id)
+            } else {
+                UserDefaultsManager.likeList.insert(likedItem.id)
+                saveImageToDocument(image: photoImage, filename: likedItem.id)
+                saveImageToDocument(image: profileImage, filename: likedItem.user.id)
+            }
         }
+        
         
     }
     
