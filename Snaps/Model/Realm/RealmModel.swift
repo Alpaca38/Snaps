@@ -22,6 +22,15 @@ final class LikeItems: Object, SectionItem {
     @Persisted var photoGrapherProfileImage: String
     @Persisted var color: String
     
+    var koreanDate: String {
+        guard let koreanDate = created_at.formattedToKoreanDate() else { return created_at }
+        return koreanDate
+    }
+    
+    var size: String {
+        return "\(width) x \(height)"
+    }
+    
     convenience init(from photoItem: PhotoItem) {
         self.init()
         self.id = photoItem.id

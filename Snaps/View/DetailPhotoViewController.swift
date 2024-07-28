@@ -299,6 +299,11 @@ private extension DetailPhotoViewController {
             self?.configureUI(photoItem: photoItem)
         }
         
+        viewModel.outputLikedPhotoData.bind { [weak self] likedItem in
+            guard let likedItem else { return }
+            self?.configureUI(likedItem: likedItem)
+        }
+        
         viewModel.outputSetLike.bind { [weak self] isLike in
             guard let self, let isLike else { return }
             isLike ? likeButton.setImage(Image.like, for: .normal) : likeButton.setImage(Image.likeInactive, for: .normal)
@@ -338,6 +343,30 @@ private extension DetailPhotoViewController {
         }
         
         sizeValueLabel.text = photoItem.size
+    }
+    
+    func configureUI(likedItem: LikeItems) {
+//        let profileURL = URL(string: lik.user.profileImage.medium)
+//        profileImage.kf.setImage(with: profileURL)
+        
+        profileLabel.text = likedItem.photoGrapherName
+        
+        photoCreatedLabel.text = likedItem.koreanDate
+        
+        if UserDefaultsManager.likeList.contains(likedItem.id) {
+            likeButton.setImage(Image.like, for: .normal)
+        } else {
+            likeButton.setImage(Image.likeInactive, for: .normal)
+        }
+        
+        photoImageView.image = loadImageToDocument(filename: likedItem.id)
+        
+        let dynamicHeight = UIScreen.main.bounds.width * CGFloat(likedItem.height) / CGFloat(likedItem.width)
+        photoImageView.snp.updateConstraints {
+            $0.height.equalTo(dynamicHeight)
+        }
+        
+        sizeValueLabel.text = likedItem.size
     }
     
     func configureInfo(data: Statistics) {

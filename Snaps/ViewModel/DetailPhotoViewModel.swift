@@ -14,6 +14,7 @@ final class DetailPhotoViewModel {
     var outputSetLike = Observable<Bool?>(nil)
     var outputStatistics = Observable<Statistics?>(nil)
     var outputStatisticsError = Observable<APIError?>(nil)
+    var outputLikedPhotoData = Observable<LikeItems?>(nil)
     
     var inputSelectedPhoto = Observable<PhotoItem?>(nil)
     var inputLikedPhoto = Observable<LikeItems?>(nil)
@@ -34,8 +35,8 @@ private extension DetailPhotoViewModel {
         
         inputLikedPhoto.bind { [weak self] likeItem in
             guard let likeItem else { return }
-            self?.outputPhotoData.value = PhotoItem.toPhotoItem(likeItem: likeItem)
-            self?.getStatistics(imageID: PhotoItem.toPhotoItem(likeItem: likeItem).id)
+            self?.outputLikedPhotoData.value = likeItem
+            self?.getStatistics(imageID: likeItem.id)
         }
         
         inputLikeButtonTapped.bind { [weak self] photoItem in
