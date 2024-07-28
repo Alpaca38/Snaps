@@ -173,12 +173,13 @@ private extension SearchPhotoViewController {
 private extension SearchPhotoViewController {
     func configurePhotoDataSource() {
         let cellRegistration = CellRegistration<PhotoItem> { cell, indexPath, itemIdentifier in
-            cell.likeButtonTapped = { [weak self] in
+            cell.likeButtonTapped = { [weak self] image in
                 if UserDefaultsManager.likeList.contains(itemIdentifier.id) {
-                    
                     self?.viewModel.inputLikeItemRemove.value = LikeItems(from: itemIdentifier)
+                    self?.removeImageFromDocument(filename: itemIdentifier.id)
                 } else {
                     self?.viewModel.inputLikeItemAdd.value = LikeItems(from: itemIdentifier)
+                    self?.saveImageToDocument(image: image, filename: itemIdentifier.id)
                 }
                 self?.photoCollectionView.reloadData()
             }

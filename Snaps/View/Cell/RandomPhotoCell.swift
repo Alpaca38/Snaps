@@ -10,7 +10,7 @@ import SnapKit
 import Kingfisher
 
 final class RandomPhotoCell: BaseCollectionViewCell {
-    var likeButtonTapped: (() -> Void)?
+    var likeButtonTapped: ((UIImage) -> Void)?
     
     private lazy var photoImageView = {
         let view = UIImageView()
@@ -125,6 +125,8 @@ final class RandomPhotoCell: BaseCollectionViewCell {
 
 private extension RandomPhotoCell {
     @objc func likeButtonTapped(_ sender: UIButton) {
-        likeButtonTapped?()
+        if let image = photoImageView.image {
+            likeButtonTapped?(image)
+        }
     }
 }

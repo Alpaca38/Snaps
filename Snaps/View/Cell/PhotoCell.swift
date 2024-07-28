@@ -10,7 +10,7 @@ import SnapKit
 import Kingfisher
 
 final class PhotoCell: BaseCollectionViewCell {
-    var likeButtonTapped: (() -> Void)?
+    var likeButtonTapped: ((UIImage) -> Void)?
     
     private lazy var mainImageView = {
         let view = UIImageView()
@@ -86,8 +86,7 @@ final class PhotoCell: BaseCollectionViewCell {
     }
     
     func configure(data: LikeItems) {
-        let url = URL(string: data.smallImageURL)
-        mainImageView.kf.setImage(with: url)
+        mainImageView.image = loadImageToDocument(filename: data.id)
         likeCountView.isHidden = true
         likeButton.setImage(Image.likeCircle, for: .normal)
     }
@@ -95,7 +94,9 @@ final class PhotoCell: BaseCollectionViewCell {
 
 private extension PhotoCell {
     @objc func likeButtonTapped(_ sender: UIButton) {
-        likeButtonTapped?()
+        if let image = mainImageView.image {
+            likeButtonTapped?(image)
+        }
     }
 }
 

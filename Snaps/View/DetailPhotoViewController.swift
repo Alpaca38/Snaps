@@ -262,6 +262,14 @@ private extension DetailPhotoViewController {
 private extension DetailPhotoViewController {
     @objc func likeButtonTapped(_ sender: UIButton) {
         viewModel.inputLikeButtonTapped.value = viewModel.outputPhotoData.value
+        guard let photoItem = viewModel.outputPhotoData.value, let image = photoImageView.image else { return }
+        if UserDefaultsManager.likeList.contains(photoItem.id) {
+            UserDefaultsManager.likeList.remove(photoItem.id)
+            removeImageFromDocument(filename: photoItem.id)
+        } else {
+            UserDefaultsManager.likeList.insert(photoItem.id)
+            saveImageToDocument(image: image, filename: photoItem.id)
+        }
     }
     
     @objc func segmentControlValueChanged() {

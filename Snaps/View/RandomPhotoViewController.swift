@@ -67,12 +67,13 @@ private extension RandomPhotoViewController {
 private extension RandomPhotoViewController {
     func configureDataSource() {
         let cellRegistration = CellRegistration { cell, indexPath, itemIdentifier in
-            cell.likeButtonTapped = { [weak self] in
+            cell.likeButtonTapped = { [weak self] image in
                 if UserDefaultsManager.likeList.contains(itemIdentifier.id) {
-                    
                     self?.viewModel.inputLikeItemRemove.value = LikeItems(from: itemIdentifier)
+                    self?.removeImageFromDocument(filename: itemIdentifier.id)
                 } else {
                     self?.viewModel.inputLikeItemAdd.value = LikeItems(from: itemIdentifier)
+                    self?.saveImageToDocument(image: image, filename: itemIdentifier.id)
                 }
                 self?.collectionView.reloadData()
             }

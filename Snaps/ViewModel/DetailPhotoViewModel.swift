@@ -41,13 +41,11 @@ private extension DetailPhotoViewModel {
         inputLikeButtonTapped.bind { [weak self] photoItem in
             guard let photoItem else { return }
             if UserDefaultsManager.likeList.contains(photoItem.id) {
-                UserDefaultsManager.likeList.remove(photoItem.id)
                 NotificationCenter.default.post(name: .likeItemWillBeRemoved, object: LikeItems(from: photoItem))
                 guard let deleteItem = self?.repository.fetchItemFromProduct(id: photoItem.id) else { return }
                 self?.repository.deleteItem(data: deleteItem)
                 self?.outputSetLike.value = false
             } else {
-                UserDefaultsManager.likeList.insert(photoItem.id)
                 self?.repository.createItem(data: LikeItems(from: photoItem))
                 self?.outputSetLike.value = true
             }
