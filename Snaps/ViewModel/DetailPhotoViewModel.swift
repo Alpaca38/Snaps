@@ -11,14 +11,15 @@ final class DetailPhotoViewModel {
     private let repository = LikeRepository()
     
     var outputPhotoData = Observable<PhotoItem?>(nil)
+    var outputLikedPhotoData = Observable<PhotoItem?>(nil)
     var outputSetLike = Observable<Bool?>(nil)
     var outputStatistics = Observable<Statistics?>(nil)
     var outputStatisticsError = Observable<APIError?>(nil)
-    var outputLikedPhotoData = Observable<LikeItems?>(nil)
     
     var inputSelectedPhoto = Observable<PhotoItem?>(nil)
-    var inputLikedPhoto = Observable<LikeItems?>(nil)
+    var inputLikedPhoto = Observable<PhotoItem?>(nil)
     var inputLikeButtonTapped = Observable<PhotoItem?>(nil)
+    var inputLikedButtonTapped = Observable<LikeItems?>(nil)
     
     init() {
         transform()
@@ -33,21 +34,34 @@ private extension DetailPhotoViewModel {
             self?.getStatistics(imageID: photoItem.id)
         }
         
-        inputLikedPhoto.bind { [weak self] likeItem in
-            guard let likeItem else { return }
-            self?.outputLikedPhotoData.value = likeItem
-            self?.getStatistics(imageID: likeItem.id)
+        inputLikedPhoto.bind(false) { [weak self] likedItem in
+            guard let likedItem else { return }
+            self?.outputLikedPhotoData.value = likedItem
+            self?.getStatistics(imageID: likedItem.id)
         }
         
         inputLikeButtonTapped.bind { [weak self] photoItem in
             guard let photoItem else { return }
             if UserDefaultsManager.likeList.contains(photoItem.id) {
-                NotificationCenter.default.post(name: .likeItemWillBeRemoved, object: LikeItems(from: photoItem))
                 guard let deleteItem = self?.repository.fetchItemFromProduct(id: photoItem.id) else { return }
+                NotificationCenter.default.post(name: .likeItemWillBeRemoved, object: LikeItems(from: photoItem))
                 self?.repository.deleteItem(data: deleteItem)
                 self?.outputSetLike.value = false
             } else {
                 self?.repository.createItem(data: LikeItems(from: photoItem))
+                self?.outputSetLike.value = true
+            }
+        }
+        
+        inputLikedButtonTapped.bind { [weak self] likedItem in
+            guard let likedItem else { return }
+            if UserDefaultsManager.likeList.contains(likedItem.id) {
+                guard let deleteItem = self?.repository.fetchItemFromProduct(id: likedItem.id) else { return }
+                NotificationCenter.default.post(name: .likeItemWillBeRemoved, object: likedItem)
+                self?.repository.deleteItem(data: deleteItem)
+                self?.outputSetLike.value = false
+            } else {
+                self?.repository.createItem(data: likedItem)
                 self?.outputSetLike.value = true
             }
         }

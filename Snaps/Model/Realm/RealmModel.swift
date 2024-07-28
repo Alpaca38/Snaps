@@ -9,8 +9,7 @@ import Foundation
 import RealmSwift
 
 final class LikeItems: Object, SectionItem {
-    @Persisted(primaryKey: true) var identifier: ObjectId
-    @Persisted var id: String
+    @Persisted(primaryKey: true) var id: String
     @Persisted var created_at: String
     @Persisted var width: Int
     @Persisted var height: Int

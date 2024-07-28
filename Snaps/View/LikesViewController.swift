@@ -47,6 +47,7 @@ final class LikesViewController: PhotoViewController {
         setNavi()
         configureDataSource()
         bindData()
+        viewModel.inputViewWillAppearEvent.value = ()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -105,12 +106,12 @@ private extension LikesViewController {
 private extension LikesViewController {
     func configureDataSource() {
         let cellRegistration = CellRegistration<LikeItems> { cell, indexPath, itemIdentifier in
-            cell.configure(data: itemIdentifier)
             cell.likeButtonTapped = { [weak self] image in
                 self?.removeImageFromDocument(filename: itemIdentifier.id)
                 self?.removeImageFromDocument(filename: itemIdentifier.photoGrapherID)
                 self?.viewModel.inputLikeButtonTapped.value = itemIdentifier
             }
+            cell.configure(data: itemIdentifier)
         }
         
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
@@ -119,10 +120,10 @@ private extension LikesViewController {
         })
     }
     
-    func updateSnapshot() {
+    func updateSnapshot(items: [LikeItems]) {
         var snapshot = Snapshot<Section, LikeItems>()
         snapshot.appendSections(Section.allCases)
-        snapshot.appendItems(viewModel.outputList.value, toSection: .main)
+        snapshot.appendItems(items, toSection: .main)
         
         dataSource.apply(snapshot)
     }
@@ -133,7 +134,7 @@ private extension LikesViewController {
     func bindData() {
         viewModel.outputList.bind(false) { [weak self] items in
             items.isEmpty ? (self?.emptyResultLabel.isHidden = false) : (self?.emptyResultLabel.isHidden = true)
-            self?.updateSnapshot()
+            self?.updateSnapshot(items: items)
         }
     }
 }
@@ -141,8 +142,8 @@ private extension LikesViewController {
 extension LikesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailPhotoViewController()
-        let data = dataSource.itemIdentifier(for: indexPath)
-        vc.viewModel.inputLikedPhoto.value = data
+        guard let data = dataSource.itemIdentifier(for: indexPath) else { return }
+        vc.viewModel.inputLikedPhoto.value = PhotoItem.toPhotoItem(likeItem: data)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
