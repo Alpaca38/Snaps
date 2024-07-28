@@ -262,13 +262,15 @@ private extension DetailPhotoViewController {
 private extension DetailPhotoViewController {
     @objc func likeButtonTapped(_ sender: UIButton) {
         viewModel.inputLikeButtonTapped.value = viewModel.outputPhotoData.value
-        guard let photoItem = viewModel.outputPhotoData.value, let image = photoImageView.image else { return }
+        guard let photoItem = viewModel.outputPhotoData.value, let photoImage = photoImageView.image, let profileImage = profileImage.image else { return }
         if UserDefaultsManager.likeList.contains(photoItem.id) {
             UserDefaultsManager.likeList.remove(photoItem.id)
             removeImageFromDocument(filename: photoItem.id)
+            removeImageFromDocument(filename: photoItem.user.name)
         } else {
             UserDefaultsManager.likeList.insert(photoItem.id)
-            saveImageToDocument(image: image, filename: photoItem.id)
+            saveImageToDocument(image: photoImage, filename: photoItem.id)
+            saveImageToDocument(image: profileImage, filename: photoItem.user.name)
         }
     }
     
@@ -346,8 +348,7 @@ private extension DetailPhotoViewController {
     }
     
     func configureUI(likedItem: LikeItems) {
-//        let profileURL = URL(string: lik.user.profileImage.medium)
-//        profileImage.kf.setImage(with: profileURL)
+        profileImage.image = loadImageToDocument(filename: likedItem.photoGrapherName)
         
         profileLabel.text = likedItem.photoGrapherName
         
