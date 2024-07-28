@@ -30,24 +30,6 @@ struct PhotoItem: Decodable, Hashable, Identifiable, SectionItem {
     var size: String {
         return "\(width) x \(height)"
     }
-    
-    static func toPhotoItem(likeItem: LikeItems) -> PhotoItem {
-        return PhotoItem(
-            id: likeItem.id,
-            created_at: likeItem.created_at,
-            width: likeItem.width,
-            height: likeItem.height,
-            urls: Link(
-                raw: likeItem.rawImageURL, small: likeItem.smallImageURL
-            ),
-            likes: likeItem.likes,
-            user: PhotoGrapher(
-                name: likeItem.photoGrapherName,
-                profileImage: ProfileImage(medium: likeItem.photoGrapherProfileImage)
-            ),
-            color: likeItem.color
-        )
-    }
 }
 
 struct Link: Decodable, Hashable {
@@ -56,10 +38,12 @@ struct Link: Decodable, Hashable {
 }
 
 struct PhotoGrapher: Decodable, Hashable {
+    let id: String
     let name: String
     let profileImage: ProfileImage
     
     enum CodingKeys: String, CodingKey {
+        case id
         case name
         case profileImage = "profile_image"
     }

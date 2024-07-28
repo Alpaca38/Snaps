@@ -18,6 +18,7 @@ final class LikeItems: Object, SectionItem {
     @Persisted var smallImageURL: String
     @Persisted var regDate: Date
     @Persisted var likes: Int
+    @Persisted var photoGrapherID: String
     @Persisted var photoGrapherName: String
     @Persisted var photoGrapherProfileImage: String
     @Persisted var color: String
@@ -41,6 +42,7 @@ final class LikeItems: Object, SectionItem {
         self.smallImageURL = photoItem.urls.small
         self.regDate = Date()
         self.likes = photoItem.likes
+        self.photoGrapherID = photoItem.user.id
         self.photoGrapherName = photoItem.user.name
         self.photoGrapherProfileImage = photoItem.user.profileImage.medium
         self.color = photoItem.color

@@ -108,6 +108,7 @@ private extension LikesViewController {
             cell.configure(data: itemIdentifier)
             cell.likeButtonTapped = { [weak self] image in
                 self?.removeImageFromDocument(filename: itemIdentifier.id)
+                self?.removeImageFromDocument(filename: itemIdentifier.photoGrapherID)
                 self?.viewModel.inputLikeButtonTapped.value = itemIdentifier
             }
         }
