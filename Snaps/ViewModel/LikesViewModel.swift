@@ -8,7 +8,7 @@
 import Foundation
 
 final class LikesViewModel {
-    let repository = LikeRepository()
+    private let repository = LikeRepository()
     
     var outputList = Observable<[LikeItems]>([])
     
