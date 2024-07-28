@@ -141,10 +141,9 @@ private extension SearchPhotoViewController {
                                                heightDimension: .fractionalHeight(1.0))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                          subitems: [item])
-        group.interItemSpacing = .fixed(8)
+        group.interItemSpacing = .fixed(4)
         
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 8
         section.orthogonalScrollingBehavior = .groupPaging
         
         let layout = UICollectionViewCompositionalLayout(section: section)
