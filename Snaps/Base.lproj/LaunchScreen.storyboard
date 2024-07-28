@@ -43,11 +43,10 @@
                             <constraint firstItem="cP8-oX-xWm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="23" id="7CQ-h6-r6i"/>
                             <constraint firstItem="eIv-Mn-3pc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="49" id="OZt-Ia-B7M"/>
                             <constraint firstItem="eIv-Mn-3pc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="76" id="PRm-lL-7z0"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TK1-23-ZZa" secondAttribute="trailing" constant="161" id="UBe-NY-lc2"/>
-                            <constraint firstItem="TK1-23-ZZa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="161" id="W5x-By-sum"/>
                             <constraint firstItem="TK1-23-ZZa" firstAttribute="top" secondItem="cP8-oX-xWm" secondAttribute="bottom" constant="8" symbolic="YES" id="a80-ig-Kab"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cP8-oX-xWm" secondAttribute="trailing" constant="23" id="dZ6-Eg-CtV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eIv-Mn-3pc" secondAttribute="trailing" constant="77" id="xh5-ZQ-AoP"/>
+                            <constraint firstItem="TK1-23-ZZa" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="yao-O4-uwx"/>
                         </constraints>
                     </view>
                 </viewController>

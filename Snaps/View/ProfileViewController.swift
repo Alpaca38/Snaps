@@ -94,7 +94,7 @@ final class ProfileViewController: BaseViewController {
         mbtiView.snp.makeConstraints {
             $0.top.equalTo(textFieldStateLabel.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(200)
+            $0.height.equalTo(180)
         }
         
         completeButton.snp.makeConstraints {
