@@ -16,6 +16,7 @@ final class TopicPhotoViewModel {
     var outputSecondSectionData = Observable<[PhotoItem]>([])
     var outputThirdSectonData = Observable<[PhotoItem]>([])
     var outputNetworkError = Observable<APIError?>(nil)
+    var outputUpdateSnapshot = Observable<Void?>(nil)
     
     var inputTopic = Observable<[String]?>(nil)
     var inputRefresh = Observable<Void?>(nil)
@@ -38,41 +39,45 @@ private extension TopicPhotoViewModel {
     }
     
     func getTopicPhoto(topicList: [String]) {
-        getFirstTopicPhoto(topicList: topicList)
-        getSecondTopicPhoto(topicList: topicList)
-        getThirdTopicPhoto(topicList: topicList)
-    }
-    
-    func getFirstTopicPhoto(topicList: [String]) {
-        NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[0]), responseType: [PhotoItem].self) { [weak self] result in
-            switch result {
-            case .success(let success):
-                self?.outputFirstSectionData.value = success
-            case .failure(let failure):
-                self?.outputNetworkError.value = failure
+        let waitGroup = DispatchGroup()
+        waitGroup.enter()
+        DispatchQueue.global().async(group: waitGroup) { [weak self] in
+            NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[0]), responseType: [PhotoItem].self) { [weak self] result in
+                switch result {
+                case .success(let success):
+                    self?.outputFirstSectionData.value = success
+                case .failure(let failure):
+                    self?.outputNetworkError.value = failure
+                }
+                waitGroup.leave()
             }
         }
-    }
-    
-    func getSecondTopicPhoto(topicList: [String]) {
-        NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[1]), responseType: [PhotoItem].self) { [weak self] result in
-            switch result {
-            case .success(let success):
-                self?.outputSecondSectionData.value = success
-            case .failure(let failure):
-                self?.outputNetworkError.value = failure
+        waitGroup.enter()
+        DispatchQueue.global().async(group: waitGroup) { [weak self] in
+            NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[1]), responseType: [PhotoItem].self) { [weak self] result in
+                switch result {
+                case .success(let success):
+                    self?.outputSecondSectionData.value = success
+                case .failure(let failure):
+                    self?.outputNetworkError.value = failure
+                }
+                waitGroup.leave()
             }
         }
-    }
-    
-    func getThirdTopicPhoto(topicList: [String]) {
-        NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[2]), responseType: [PhotoItem].self) { [weak self] result in
-            switch result {
-            case .success(let success):
-                self?.outputThirdSectonData.value = success
-            case .failure(let failure):
-                self?.outputNetworkError.value = failure
+        waitGroup.enter()
+        DispatchQueue.global().async(group: waitGroup) { [weak self] in
+            NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[2]), responseType: [PhotoItem].self) { [weak self] result in
+                switch result {
+                case .success(let success):
+                    self?.outputThirdSectonData.value = success
+                case .failure(let failure):
+                    self?.outputNetworkError.value = failure
+                }
+                waitGroup.leave()
             }
+        }
+        waitGroup.notify(queue: .main) { [weak self] in
+            self?.outputUpdateSnapshot.value = ()
         }
     }
     

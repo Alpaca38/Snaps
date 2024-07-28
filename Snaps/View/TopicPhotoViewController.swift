@@ -127,15 +127,7 @@ private extension TopicPhotoViewController {
 // MARK: Bind Data
 private extension TopicPhotoViewController {
     func bindData() {
-        viewModel.outputFirstSectionData.bind(false) { [weak self] _ in
-            self?.updateSnapshot()
-        }
-        
-        viewModel.outputSecondSectionData.bind(false) { [weak self] _ in
-            self?.updateSnapshot()
-        }
-        
-        viewModel.outputThirdSectonData.bind(false) { [weak self] _ in
+        viewModel.outputUpdateSnapshot.bind { [weak self] _ in
             self?.updateSnapshot()
         }
         
