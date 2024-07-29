@@ -59,6 +59,21 @@ final class ProfileViewController: BaseViewController {
         return view
     }()
     
+    private lazy var withdrawalButton = {
+        var config = UIButton.Configuration.borderless()
+        config.titleAlignment = .center
+        config.baseBackgroundColor = .clear
+        let view = UIButton(configuration: config)
+        view.setAttributedTitle(NSAttributedString(string: "회원탈퇴", attributes: [
+            .font: UIFont.systemFont(ofSize: 13, weight: .light),
+            .foregroundColor: UIColor.systemBlue,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]), for: .normal)
+        view.addTarget(self, action: #selector(withdrawalButtonTaped), for: .touchUpInside)
+        self.view.addSubview(view)
+        return view
+    }()
+    
     private let viewModel = ProfileViewModel()
     
     override func viewDidLoad() {
@@ -100,6 +115,11 @@ final class ProfileViewController: BaseViewController {
         completeButton.snp.makeConstraints {
             $0.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
+        
+        withdrawalButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            $0.centerX.equalToSuperview()
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -111,8 +131,10 @@ private extension ProfileViewController {
     func configureView() {
         if UserDefaultsManager.isLogin {
             completeButton.isHidden = true
+            withdrawalButton.isHidden = false
         } else {
             completeButton.isHidden = false
+            withdrawalButton.isHidden = true
         }
         
         if !UserDefaultsManager.user.nickname.isEmpty {
@@ -145,21 +167,6 @@ private extension ProfileViewController {
         profileImageView.image = UIImage(named: Image.Profile.allCases[random].profileImage)
     }
     
-    @objc func saveButtonTapped() {
-        if viewModel.outputTotalValid.value {
-            guard let nickname = nicknameTextField.text else { return }
-            UserDefaultsManager.user.nickname = nickname
-            UserDefaultsManager.user.mbti = mbtiView.mbtiItems
-            viewModel.inputSaveImage.value = viewModel.outputImageIndex.value
-            
-            updateImage?()
-            
-            navigationController?.popViewController(animated: true)
-        } else {
-            view.makeToast("닉네임과 mbti를 다시 확인해주세요.", duration: 2.0, position: .center)
-        }
-    }
-    
     func bindData() {
         viewModel.outputValidText.bind { [weak self] in
             guard let self else { return }
@@ -190,6 +197,21 @@ private extension ProfileViewController {
 }
 
 private extension ProfileViewController {
+    @objc func saveButtonTapped() {
+        if viewModel.outputTotalValid.value {
+            guard let nickname = nicknameTextField.text else { return }
+            UserDefaultsManager.user.nickname = nickname
+            UserDefaultsManager.user.mbti = mbtiView.mbtiItems
+            viewModel.inputSaveImage.value = viewModel.outputImageIndex.value
+            
+            updateImage?()
+            
+            navigationController?.popViewController(animated: true)
+        } else {
+            view.makeToast("닉네임과 mbti를 다시 확인해주세요.", duration: 2.0, position: .center)
+        }
+    }
+    
     @objc func completeButtonTapped() {
         guard let nickname = nicknameTextField.text else { return }
         viewModel.inputValidNickname.value = nickname
@@ -208,6 +230,15 @@ private extension ProfileViewController {
             self?.viewModel.inputSelectedImageIndex.value = Image.Profile.allCases.firstIndex(where: { $0.profileImage == image })
         }
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func withdrawalButtonTaped() {
+        showAlert(title: "회원을 탈퇴하시겠습니까?", message: "회원을 탈퇴하면 저장된 모든 정보가 사라집니다. 정말로 탈퇴하시겠습니까?", buttonTitle: "네") {
+            UserDefaultsManager.isLogin = false
+            UserDefaultsManager.user = User(nickname: "", image: Int.random(in: 0...11), mbti: [])
+            UserDefaultsManager.likeList = []
+            SceneManager.shared.setNaviScene(viewController: OnBoardingViewController())
+        }
     }
 }
 
