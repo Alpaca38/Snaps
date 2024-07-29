@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Toast
+import SkeletonView
 
 final class SearchPhotoViewController: PhotoViewController {
     private let viewModel = SearchPhotoViewModel()
@@ -49,6 +50,8 @@ final class SearchPhotoViewController: PhotoViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createPhotoCollectionViewLayout())
         view.delegate = self
         view.prefetchDataSource = self
+        view.dataSource = self
+        view.isSkeletonable = true
         self.view.addSubview(view)
         return view
     }()
@@ -238,6 +241,7 @@ private extension SearchPhotoViewController {
         viewModel.outputList.bind(false) { [weak self] items in
             guard let text = self?.searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
             !text.isEmpty && items.isEmpty ? (self?.emptyResultLabel.isHidden = false) : (self?.emptyResultLabel.isHidden = true)
+            self?.photoCollectionView.hideSkeleton()
             self?.updatePhotoSnapshot()
         }
         
@@ -271,6 +275,7 @@ private extension SearchPhotoViewController {
 extension SearchPhotoViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        photoCollectionView.showSkeleton()
         viewModel.inputText.value = text
     }
 }
@@ -311,4 +316,25 @@ extension SearchPhotoViewController: UICollectionViewDataSourcePrefetching {
 
 extension SearchPhotoViewController {
     typealias ColorCellRegistration = UICollectionView.CellRegistration<ColorFilterCell, PhotoColorItem>
+}
+
+extension SearchPhotoViewController: SkeletonCollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.outputList.value.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.identifier, for: indexPath)
+        return cell
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        return PhotoCell.identifier
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let list = viewModel.outputList.value
+        return list.count
+    }
+    
 }

@@ -23,6 +23,7 @@
 		D16D8BFC2C53610000AF7677 /* ColorFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BFB2C53610000AF7677 /* ColorFilterCell.swift */; };
 		D16D8C672C54C29500AF7677 /* AreaChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C662C54C29500AF7677 /* AreaChart.swift */; };
 		D16D8C692C561A3E00AF7677 /* Extension+FileManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C682C561A3E00AF7677 /* Extension+FileManger.swift */; };
+		D16D8C6E2C575CC700AF7677 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = D16D8C6D2C575CC700AF7677 /* SkeletonView */; };
 		D1E8B14A2C4E1568009B3D81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */; };
 		D1E8B14C2C4E1568009B3D81 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */; };
 		D1E8B14E2C4E1568009B3D81 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */; };
@@ -159,6 +160,7 @@
 				D1E8B16C2C4E1778009B3D81 /* Alamofire in Frameworks */,
 				D1E8B1662C4E1764009B3D81 /* Toast in Frameworks */,
 				D1E8B16F2C4E17A9009B3D81 /* RealmSwift in Frameworks */,
+				D16D8C6E2C575CC700AF7677 /* SkeletonView in Frameworks */,
 				D1E8B1632C4E175C009B3D81 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +377,7 @@
 				D1E8B1682C4E176E009B3D81 /* Kingfisher */,
 				D1E8B16B2C4E1778009B3D81 /* Alamofire */,
 				D1E8B16E2C4E17A9009B3D81 /* RealmSwift */,
+				D16D8C6D2C575CC700AF7677 /* SkeletonView */,
 			);
 			productName = Snaps;
 			productReference = D1E8B1462C4E1568009B3D81 /* Snaps.app */;
@@ -410,6 +413,7 @@
 				D1E8B1672C4E176E009B3D81 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				D1E8B16A2C4E1778009B3D81 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				D1E8B16D2C4E17A9009B3D81 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				D16D8C6C2C575CC700AF7677 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = D1E8B1472C4E1568009B3D81 /* Products */;
 			projectDirPath = "";
@@ -719,6 +723,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D16D8C6C2C575CC700AF7677 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.31.0;
+			};
+		};
 		D1E8B1612C4E175C009B3D81 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -762,6 +774,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D16D8C6D2C575CC700AF7677 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D16D8C6C2C575CC700AF7677 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
 		D1E8B1622C4E175C009B3D81 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D1E8B1612C4E175C009B3D81 /* XCRemoteSwiftPackageReference "SnapKit" */;

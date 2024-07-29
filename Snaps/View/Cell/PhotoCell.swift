@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Kingfisher
+import SkeletonView
 
 final class PhotoCell: BaseCollectionViewCell {
     var likeButtonTapped: ((UIImage) -> Void)?
@@ -17,6 +18,7 @@ final class PhotoCell: BaseCollectionViewCell {
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.backgroundColor = Color.lightGray
+        view.isSkeletonable = true
         contentView.addSubview(view)
         return view
     }()
@@ -29,6 +31,7 @@ final class PhotoCell: BaseCollectionViewCell {
         
         let view = UIButton(configuration: config)
         view.isEnabled = false
+        view.isSkeletonable = true
         contentView.addSubview(view)
         return view
     }()
@@ -40,9 +43,15 @@ final class PhotoCell: BaseCollectionViewCell {
         config.title = nil
         let view = UIButton(configuration: config)
         view.addTarget(self, action: #selector(likeButtonTapped(_:)), for: .touchUpInside)
+        view.isSkeletonable = true
         contentView.addSubview(view)
         return view
     }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.isSkeletonable = true
+    }
     
     override func configureLayout() {
         mainImageView.snp.makeConstraints {
