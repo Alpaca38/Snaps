@@ -168,7 +168,7 @@ private extension TopicPhotoViewController {
             } else {
                 content.text = topic.headerTitle
             }
-//            content.text = topic.headerTitle
+            //            content.text = topic.headerTitle
             content.textProperties.font = .boldSystemFont(ofSize: 17)
             content.textProperties.color = Color.black
             
@@ -185,9 +185,6 @@ private extension TopicPhotoViewController {
         snapshot.appendSections([
             TopicSection.first, TopicSection.second, TopicSection.third
         ])
-        snapshot.reloadSections([
-            TopicSection.first, TopicSection.second, TopicSection.third
-        ])
         
         snapshot.appendItems(viewModel.outputFirstSectionData.value, toSection: .first)
         snapshot.appendItems(viewModel.outputSecondSectionData.value, toSection: .second)
@@ -195,15 +192,10 @@ private extension TopicPhotoViewController {
         
         if viewModel.outputLikedSectionData.value.count >= 3 {
             snapshot.appendSections([TopicSection.fourth])
-            snapshot.reloadSections([TopicSection.fourth])
             snapshot.appendItems(viewModel.outputLikedSectionData.value, toSection: .fourth)
         }
         
-        if #available(iOS 17.0, *) {
-            dataSource.apply(snapshot)
-        } else {
-            dataSource.apply(snapshot, animatingDifferences: false) // 15에서 animatingDifferences true면 앱 터짐
-        }
+        dataSource.applySnapshotUsingReloadData(snapshot)
     }
 }
 
