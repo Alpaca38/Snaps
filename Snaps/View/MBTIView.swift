@@ -57,11 +57,11 @@ final class MBTIView: BaseView {
 // MARK: CollectionView Layout
 private extension MBTIView {
     func createLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.25), heightDimension: .fractionalHeight(1.0))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.22))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 4)
         group.interItemSpacing = .fixed(10)
         
         let section = NSCollectionLayoutSection(group: group)

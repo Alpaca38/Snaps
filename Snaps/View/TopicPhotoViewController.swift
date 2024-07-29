@@ -172,7 +172,7 @@ private extension TopicPhotoViewController {
     func updateSnapshot() {
         var snapshot = Snapshot<TopicSection, PhotoItem>()
         snapshot.appendSections(TopicSection.allCases)
-//        snapshot.reloadSections(TopicSection.allCases)
+        snapshot.reloadSections(TopicSection.allCases)
         
         snapshot.appendItems(viewModel.outputFirstSectionData.value, toSection: .first)
         snapshot.appendItems(viewModel.outputSecondSectionData.value, toSection: .second)
