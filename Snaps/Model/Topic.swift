@@ -18,6 +18,7 @@ enum TopicSection: CaseIterable, SectionType {
     case first
     case second
     case third
+    case fourth
 }
 
 enum Topic: String, CaseIterable {

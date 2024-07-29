@@ -8,6 +8,8 @@
 import Foundation
 
 final class TopicPhotoViewModel {
+    private let repository = LikeRepository()
+    
     private var lastRefreshTime: Date?
     var isRefreshing = Observable<Void?>(nil)
     var refreshCompleted = Observable<Bool?>(nil)
@@ -15,6 +17,7 @@ final class TopicPhotoViewModel {
     var outputFirstSectionData = Observable<[PhotoItem]>([])
     var outputSecondSectionData = Observable<[PhotoItem]>([])
     var outputThirdSectonData = Observable<[PhotoItem]>([])
+    var outputLikedSectionData = Observable<[PhotoItem]>([])
     var outputNetworkError = Observable<APIError?>(nil)
     var outputUpdateSnapshot = Observable<Void?>(nil)
     
@@ -31,11 +34,27 @@ private extension TopicPhotoViewModel {
         inputTopic.bind(false) { [weak self] topicList in
             guard let topicList else { return }
             self?.getTopicPhoto(topicList: topicList)
+            self?.getLikedPhoto()
         }
         
         inputRefresh.bind(false) { [weak self] _ in
             self?.handleRefreshControl()
         }
+    }
+    
+    func getLikedPhoto() {
+        outputLikedSectionData.value = repository.fetchSort(keyPath: "regDate", ascending: false).prefix(10).map({
+            PhotoItem(id: $0.id,
+                      created_at: $0.created_at,
+                      width: $0.width,
+                      height: $0.height,
+                      urls: Link(raw: $0.rawImageURL, small: $0.smallImageURL),
+                      likes: $0.likes,
+                      user: PhotoGrapher(id: $0.photoGrapherID,
+                                         name: $0.photoGrapherName,
+                                         profileImage: ProfileImage(medium: $0.photoGrapherProfileImage)),
+                      color: $0.color)
+        })
     }
     
     func getTopicPhoto(topicList: [String]) {

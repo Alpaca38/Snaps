@@ -162,7 +162,13 @@ private extension TopicPhotoViewController {
             guard let self else { return }
             let topic = randomTopicList[indexPath.section]
             var content = UIListContentConfiguration.groupedHeader()
-            content.text = topic.headerTitle
+            
+            if indexPath.section == 3 {
+                content.text = "좋아요한 사진"
+            } else {
+                content.text = topic.headerTitle
+            }
+//            content.text = topic.headerTitle
             content.textProperties.font = .boldSystemFont(ofSize: 17)
             content.textProperties.color = Color.black
             
@@ -176,12 +182,22 @@ private extension TopicPhotoViewController {
     
     func updateSnapshot() {
         var snapshot = Snapshot<TopicSection, PhotoItem>()
-        snapshot.appendSections(TopicSection.allCases)
-        snapshot.reloadSections(TopicSection.allCases)
+        snapshot.appendSections([
+            TopicSection.first, TopicSection.second, TopicSection.third
+        ])
+        snapshot.reloadSections([
+            TopicSection.first, TopicSection.second, TopicSection.third
+        ])
         
         snapshot.appendItems(viewModel.outputFirstSectionData.value, toSection: .first)
         snapshot.appendItems(viewModel.outputSecondSectionData.value, toSection: .second)
         snapshot.appendItems(viewModel.outputThirdSectonData.value, toSection: .third)
+        
+        if viewModel.outputLikedSectionData.value.count >= 3 {
+            snapshot.appendSections([TopicSection.fourth])
+            snapshot.reloadSections([TopicSection.fourth])
+            snapshot.appendItems(viewModel.outputLikedSectionData.value, toSection: .fourth)
+        }
         
         if #available(iOS 17.0, *) {
             dataSource.apply(snapshot)
