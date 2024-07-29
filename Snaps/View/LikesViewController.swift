@@ -11,6 +11,8 @@ final class LikesViewController: PhotoViewController {
     private var dataSource: DataSource<Section, LikeItems>!
     private let viewModel = LikesViewModel()
     
+    private let searchController = UISearchController(searchResultsController: nil)
+    
     private lazy var sortButton = {
         var config = UIButton.Configuration.gray()
         config.baseForegroundColor = Color.black
@@ -45,6 +47,7 @@ final class LikesViewController: PhotoViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavi()
+        setSearchController()
         configureDataSource()
         bindData()
         viewModel.inputViewWillAppearEvent.value = ()
@@ -76,6 +79,13 @@ final class LikesViewController: PhotoViewController {
 private extension LikesViewController {
     func setNavi() {
         navigationItem.title = NaviTitle.mySnaps
+    }
+    
+    func setSearchController() {
+        searchController.searchBar.placeholder = "작가를 검색할 수 있습니다."
+        searchController.searchResultsUpdater = self
+        self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     @objc func sortButtonTapped(_ sender: UIButton) {
@@ -145,5 +155,12 @@ extension LikesViewController: UICollectionViewDelegate {
         guard let data = dataSource.itemIdentifier(for: indexPath) else { return }
         vc.viewModel.inputLikedPhoto.value = PhotoItem.toPhotoItem(likeItem: data)
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension LikesViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        viewModel.inputText.value = text
     }
 }

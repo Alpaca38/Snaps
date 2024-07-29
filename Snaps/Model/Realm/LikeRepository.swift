@@ -31,6 +31,11 @@ final class LikeRepository {
         return Array(results)
     }
     
+    func fetchFilter(searchText: String) -> [LikeItems] {
+        let results = realm.objects(LikeItems.self).where { $0.photoGrapherName.contains(searchText, options: .caseInsensitive) }
+        return Array(results)
+    }
+    
     func fetchItemFromProduct(id: String) -> LikeItems? {
         return realm.objects(LikeItems.self).where {
             $0.id == id
