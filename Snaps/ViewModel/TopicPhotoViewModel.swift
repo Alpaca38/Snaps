@@ -10,7 +10,7 @@ import Foundation
 final class TopicPhotoViewModel {
     private var lastRefreshTime: Date?
     var isRefreshing = Observable<Void?>(nil)
-    var refreshCompleted = Observable<Void?>(nil)
+    var refreshCompleted = Observable<Bool?>(nil)
     
     var outputFirstSectionData = Observable<[PhotoItem]>([])
     var outputSecondSectionData = Observable<[PhotoItem]>([])
@@ -86,14 +86,14 @@ private extension TopicPhotoViewModel {
         
         if let lastTime = lastRefreshTime, currentTime.timeIntervalSince(lastTime) < 60 {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
-                self?.refreshCompleted.value = ()
+                self?.refreshCompleted.value = false
             }
         } else {
             lastRefreshTime = currentTime
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
                 self?.isRefreshing.value = ()
-                self?.refreshCompleted.value = ()
+                self?.refreshCompleted.value = true
             }
         }
     }

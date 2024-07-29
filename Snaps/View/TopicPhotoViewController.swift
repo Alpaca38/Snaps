@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Toast
 
 final class TopicPhotoViewController: PhotoViewController {
     private let viewModel = TopicPhotoViewModel()
@@ -135,7 +136,11 @@ private extension TopicPhotoViewController {
             self?.fetchRandomTopic()
         }
         
-        viewModel.refreshCompleted.bind { [weak self] _ in
+        viewModel.refreshCompleted.bind { [weak self] isRefresh in
+            guard let isRefresh else { return }
+            if isRefresh == false {
+                self?.view.makeToast("1분 후에 다시 시도해주세요.")
+            }
             self?.collectionView.refreshControl?.endRefreshing()
         }
     }
