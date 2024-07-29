@@ -168,7 +168,6 @@ private extension TopicPhotoViewController {
             } else {
                 content.text = topic.headerTitle
             }
-            //            content.text = topic.headerTitle
             content.textProperties.font = .boldSystemFont(ofSize: 17)
             content.textProperties.color = Color.black
             
