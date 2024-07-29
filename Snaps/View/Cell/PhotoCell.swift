@@ -95,7 +95,7 @@ final class PhotoCell: BaseCollectionViewCell {
     }
     
     func configure(data: LikeItems) {
-        mainImageView.image = loadImageToDocument(filename: data.id)
+        mainImageView.image = FileUtility.shared.loadImageToDocument(filename: data.id)
         likeCountView.isHidden = true
         likeButton.setImage(Image.likeCircle, for: .normal)
     }

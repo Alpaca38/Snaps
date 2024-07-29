@@ -52,6 +52,20 @@ final class LikeRepository {
         }
     }
     
+    func deleteAll() {
+        let photos = realm.objects(LikeItems.self)
+        photos.forEach { FileUtility.shared.removeImageFromDocument(filename: $0.id)
+            FileUtility.shared.removeImageFromDocument(filename: $0.photoGrapherID)
+        }
+        do {
+            try realm.write {
+                realm.deleteAll()
+            }
+        } catch {
+            print("DeleteAll Error")
+        }
+    }
+    
     func printRealmURL() {
         print(realm.configuration.fileURL!)
     }

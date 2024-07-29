@@ -8,6 +8,8 @@
 import Foundation
 
 final class ProfileViewModel {
+    private let repository = LikeRepository()
+    
     var outputValidText = Observable("")
     var outputNickname = Observable<String?>(nil)
     var outputTextValid = Observable(false)
@@ -23,6 +25,7 @@ final class ProfileViewModel {
     var inputMBTI = Observable<[MBTIItem]?>(nil)
     var inputValidMBTI = Observable<[MBTIItem]?>(nil)
     var inputSaveImage = Observable<Int?>(nil)
+    var inputWithdrawal = Observable<Void?>(nil)
     
     init() {
         inputText.bind { [weak self] value in
@@ -78,9 +81,20 @@ final class ProfileViewModel {
             guard let index else { return }
             self?.outputSaveImageIndex.value = index
         }
+        
+        inputWithdrawal.bind(false) { [weak self] _ in
+            UserDefaultsManager.isLogin = false
+            UserDefaultsManager.user = User(nickname: "", image: Int.random(in: 0...11), mbti: [])
+            UserDefaultsManager.likeList = []
+            
+            self?.repository.deleteAll()
+        }
     }
     
-    private func validateProfileName(text: String) throws -> Bool {
+}
+
+private extension ProfileViewModel {
+    func validateProfileName(text: String) throws -> Bool {
         guard !text.contains(where: { "@#$%".contains($0) }) else {
             throw NicknameValidationError.includeSpecial
         }
@@ -93,14 +107,14 @@ final class ProfileViewModel {
         return true
     }
     
-    private func validateMBTI(mbti: [MBTIItem]) throws -> Bool {
+    func validateMBTI(mbti: [MBTIItem]) throws -> Bool {
         guard mbti.filter({ $0.selected }).count == 4 else {
             throw MBTIValidationError.isNotValidCount
         }
         return true
     }
     
-    private func updateTotalValid() {
+    func updateTotalValid() {
         outputTotalValid.value = outputTextValid.value && outputMBTIValid.value
     }
 }

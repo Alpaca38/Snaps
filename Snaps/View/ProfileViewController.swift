@@ -132,12 +132,7 @@ private extension ProfileViewController {
         if UserDefaultsManager.isLogin {
             completeButton.isHidden = true
             withdrawalButton.isHidden = false
-        } else {
-            completeButton.isHidden = false
-            withdrawalButton.isHidden = true
-        }
-        
-        if !UserDefaultsManager.user.nickname.isEmpty {
+            
             profileImageView.image = UIImage(named: Image.Profile.allCases[UserDefaultsManager.user.image].profileImage)
             
             nicknameTextField.text = UserDefaultsManager.user.nickname
@@ -146,18 +141,21 @@ private extension ProfileViewController {
             mbtiView.mbtiItems = UserDefaultsManager.user.mbti
             viewModel.inputMBTI.value = UserDefaultsManager.user.mbti
             mbtiView.updateSnapshot()
+        } else {
+            completeButton.isHidden = false
+            withdrawalButton.isHidden = true
         }
     }
     
     func setNavi() {
-        if UserDefaultsManager.user.nickname == "" {
-            navigationItem.title = NaviTitle.profileSetting
-            setRandomImage()
-        } else {
+        if UserDefaultsManager.isLogin {
             navigationItem.title = NaviTitle.editProfile
             navigationController?.navigationBar.prefersLargeTitles = false
             let saveButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
             navigationItem.rightBarButtonItem = saveButton
+        } else {
+            navigationItem.title = NaviTitle.profileSetting
+            setRandomImage()
         }
     }
     
@@ -233,10 +231,9 @@ private extension ProfileViewController {
     }
     
     @objc func withdrawalButtonTaped() {
-        showAlert(title: "회원을 탈퇴하시겠습니까?", message: "회원을 탈퇴하면 저장된 모든 정보가 사라집니다. 정말로 탈퇴하시겠습니까?", buttonTitle: "네") {
-            UserDefaultsManager.isLogin = false
-            UserDefaultsManager.user = User(nickname: "", image: Int.random(in: 0...11), mbti: [])
-            UserDefaultsManager.likeList = []
+        showAlert(title: "회원을 탈퇴하시겠습니까?", message: "회원을 탈퇴하면 저장된 모든 정보가 사라집니다. 정말로 탈퇴하시겠습니까?", buttonTitle: "네") { [weak self] in
+            self?.viewModel.inputWithdrawal.value = ()
+            
             SceneManager.shared.setNaviScene(viewController: OnBoardingViewController())
         }
     }

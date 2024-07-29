@@ -70,12 +70,12 @@ private extension RandomPhotoViewController {
             cell.likeButtonTapped = { [weak self] profileImage, photoImage in
                 if UserDefaultsManager.likeList.contains(itemIdentifier.id) {
                     self?.viewModel.inputLikeItemRemove.value = LikeItems(from: itemIdentifier)
-                    self?.removeImageFromDocument(filename: itemIdentifier.user.id)
-                    self?.removeImageFromDocument(filename: itemIdentifier.id)
+                    FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.user.id)
+                    FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.id)
                 } else {
                     self?.viewModel.inputLikeItemAdd.value = LikeItems(from: itemIdentifier)
-                    self?.saveImageToDocument(image: profileImage, filename: itemIdentifier.user.id)
-                    self?.saveImageToDocument(image: photoImage, filename: itemIdentifier.id)
+                    FileUtility.shared.saveImageToDocument(image: profileImage, filename: itemIdentifier.user.id)
+                    FileUtility.shared.saveImageToDocument(image: photoImage, filename: itemIdentifier.id)
                 }
                 self?.collectionView.reloadData()
             }

@@ -180,17 +180,17 @@ private extension SearchPhotoViewController {
             cell.likeButtonTapped = { [weak self] image in
                 if UserDefaultsManager.likeList.contains(itemIdentifier.id) {
                     self?.viewModel.inputLikeItemRemove.value = LikeItems(from: itemIdentifier)
-                    self?.removeImageFromDocument(filename: itemIdentifier.id)
-                    self?.removeImageFromDocument(filename: itemIdentifier.user.id)
+                    FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.id)
+                    FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.user.id)
                 } else {
                     self?.viewModel.inputLikeItemAdd.value = LikeItems(from: itemIdentifier)
-                    self?.saveImageToDocument(image: image, filename: itemIdentifier.id)
+                    FileUtility.shared.saveImageToDocument(image: image, filename: itemIdentifier.id)
                     DispatchQueue.global().async {
                         do {
                             guard let profileImageURL = URL(string: itemIdentifier.user.profileImage.medium) else { return }
                             let profileData = try Data(contentsOf: profileImageURL)
                             guard let profileImage = UIImage(data: profileData) else { return }
-                            self?.saveImageToDocument(image: profileImage, filename: itemIdentifier.user.id)
+                            FileUtility.shared.saveImageToDocument(image: profileImage, filename: itemIdentifier.user.id)
                         } catch {
                             print("Image Data Error")
                         }
