@@ -177,7 +177,12 @@ private extension TopicPhotoViewController {
         snapshot.appendItems(viewModel.outputFirstSectionData.value, toSection: .first)
         snapshot.appendItems(viewModel.outputSecondSectionData.value, toSection: .second)
         snapshot.appendItems(viewModel.outputThirdSectonData.value, toSection: .third)
-        dataSource.apply(snapshot)
+        
+        if #available(iOS 17.0, *) {
+            dataSource.apply(snapshot)
+        } else {
+            dataSource.apply(snapshot, animatingDifferences: false) // 15에서 animatingDifferences true면 앱 터짐
+        }
     }
 }
 
