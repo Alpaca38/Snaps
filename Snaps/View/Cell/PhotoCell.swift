@@ -17,7 +17,7 @@ final class PhotoCell: BaseCollectionViewCell {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        view.backgroundColor = Color.lightGray
+//        view.backgroundColor = Color.lightGray
         view.isSkeletonable = true
         contentView.addSubview(view)
         return view

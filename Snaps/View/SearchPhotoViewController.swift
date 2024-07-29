@@ -283,6 +283,7 @@ extension SearchPhotoViewController: UISearchBarDelegate {
 extension SearchPhotoViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == colorCollectionView {
+            photoCollectionView.showSkeleton()
             guard let data = colorDataSource.itemIdentifier(for: indexPath) else { return }
             // 선택한 셀 상태 저장
             let isSelected = data.isSelected
