@@ -74,6 +74,8 @@ final class ProfileViewController: BaseViewController {
         return view
     }()
     
+    private lazy var saveButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
+    
     private let viewModel = ProfileViewModel()
     
     override func viewDidLoad() {
@@ -151,7 +153,6 @@ private extension ProfileViewController {
         if UserDefaultsManager.isLogin {
             navigationItem.title = NaviTitle.editProfile
             navigationController?.navigationBar.prefersLargeTitles = false
-            let saveButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
             navigationItem.rightBarButtonItem = saveButton
         } else {
             navigationItem.title = NaviTitle.profileSetting
@@ -180,6 +181,8 @@ private extension ProfileViewController {
             guard let self else { return }
             completeButton.backgroundColor = $0 ? Color.main : Color.gray
             completeButton.isEnabled = $0
+            $0 ? saveButton.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal) : saveButton.setTitleTextAttributes([.foregroundColor: UIColor.lightGray], for: .normal)
+            saveButton.isEnabled = $0
         }
         
         viewModel.outputSaveImageIndex.bind { index in
@@ -196,18 +199,14 @@ private extension ProfileViewController {
 
 private extension ProfileViewController {
     @objc func saveButtonTapped() {
-        if viewModel.outputTotalValid.value {
-            guard let nickname = nicknameTextField.text else { return }
-            UserDefaultsManager.user.nickname = nickname
-            UserDefaultsManager.user.mbti = mbtiView.mbtiItems
-            viewModel.inputSaveImage.value = viewModel.outputImageIndex.value
-            
-            updateImage?()
-            
-            navigationController?.popViewController(animated: true)
-        } else {
-            view.makeToast("닉네임과 mbti를 다시 확인해주세요.", duration: 2.0, position: .center)
-        }
+        guard let nickname = nicknameTextField.text else { return }
+        UserDefaultsManager.user.nickname = nickname
+        UserDefaultsManager.user.mbti = mbtiView.mbtiItems
+        viewModel.inputSaveImage.value = viewModel.outputImageIndex.value
+        
+        updateImage?()
+        
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func completeButtonTapped() {
