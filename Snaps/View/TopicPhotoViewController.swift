@@ -79,14 +79,14 @@ private extension TopicPhotoViewController {
     }
     
     func createSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                heightDimension: .fractionalWidth(0.6))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                       subitems: [item])
+                                                       subitem: item, count: 2)
         group.interItemSpacing = .fixed(8)
         
         let section = NSCollectionLayoutSection(group: group)
@@ -172,12 +172,11 @@ private extension TopicPhotoViewController {
     func updateSnapshot() {
         var snapshot = Snapshot<TopicSection, PhotoItem>()
         snapshot.appendSections(TopicSection.allCases)
-        snapshot.reloadSections(TopicSection.allCases)
+//        snapshot.reloadSections(TopicSection.allCases)
         
         snapshot.appendItems(viewModel.outputFirstSectionData.value, toSection: .first)
         snapshot.appendItems(viewModel.outputSecondSectionData.value, toSection: .second)
         snapshot.appendItems(viewModel.outputThirdSectonData.value, toSection: .third)
-        
         dataSource.apply(snapshot)
     }
 }

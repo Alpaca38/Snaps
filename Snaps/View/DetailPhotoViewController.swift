@@ -35,7 +35,6 @@ final class DetailPhotoViewController: BaseViewController {
         view.addSubview(downloadsStackView)
         view.addSubview(infoStackView)
         view.addSubview(chartLabel)
-        view.addSubview(segmentedControl)
         return view
     }()
     
@@ -241,6 +240,7 @@ private extension DetailPhotoViewController {
                 $0.leading.equalTo(infoLabel)
             }
             
+            contentView.addSubview(segmentedControl)
             segmentedControl.snp.makeConstraints {
                 $0.top.equalTo(chartLabel)
                 $0.leading.equalTo(infoStackView)
