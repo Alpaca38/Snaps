@@ -66,8 +66,8 @@ private extension RandomPhotoViewController {
 // MARK: DataSource
 private extension RandomPhotoViewController {
     func configureDataSource() {
-        let cellRegistration = CellRegistration { cell, indexPath, itemIdentifier in
-            cell.likeButtonTapped = { [weak self] profileImage, photoImage in
+        let cellRegistration = CellRegistration { [weak self] cell, indexPath, itemIdentifier in
+            cell.likeButtonTapped = { profileImage, photoImage in
                 if UserDefaultsManager.likeList.contains(itemIdentifier.id) {
                     self?.viewModel.inputLikeItemRemove.value = LikeItems(from: itemIdentifier)
                     FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.user.id)

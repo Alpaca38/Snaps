@@ -50,7 +50,6 @@ final class LikesViewController: PhotoViewController {
         setSearchController()
         configureDataSource()
         bindData()
-        viewModel.inputViewWillAppearEvent.value = ()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,8 +114,8 @@ private extension LikesViewController {
 // MARK: DataSource
 private extension LikesViewController {
     func configureDataSource() {
-        let cellRegistration = CellRegistration<LikeItems> { cell, indexPath, itemIdentifier in
-            cell.likeButtonTapped = { [weak self] image in
+        let cellRegistration = CellRegistration<LikeItems> { [weak self] cell, indexPath, itemIdentifier in
+            cell.likeButtonTapped = { image in
                 FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.id)
                 FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.photoGrapherID)
                 self?.viewModel.inputLikeButtonTapped.value = itemIdentifier

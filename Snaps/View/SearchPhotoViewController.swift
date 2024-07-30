@@ -176,8 +176,8 @@ private extension SearchPhotoViewController {
 // MARK: DataSource
 private extension SearchPhotoViewController {
     func configurePhotoDataSource() {
-        let cellRegistration = CellRegistration<PhotoItem> { cell, indexPath, itemIdentifier in
-            cell.likeButtonTapped = { [weak self] image in
+        let cellRegistration = CellRegistration<PhotoItem> { [weak self] cell, indexPath, itemIdentifier in
+            cell.likeButtonTapped = { image in
                 if UserDefaultsManager.likeList.contains(itemIdentifier.id) {
                     self?.viewModel.inputLikeItemRemove.value = LikeItems(from: itemIdentifier)
                     FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.id)
