@@ -25,6 +25,8 @@
 		D16D8C692C561A3E00AF7677 /* Extension+FileManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C682C561A3E00AF7677 /* Extension+FileManger.swift */; };
 		D16D8C6E2C575CC700AF7677 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = D16D8C6D2C575CC700AF7677 /* SkeletonView */; };
 		D16D8C702C577D4200AF7677 /* Extension+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C6F2C577D4200AF7677 /* Extension+UIViewController.swift */; };
+		D16D8C722C58714400AF7677 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C712C58714400AF7677 /* NetworkMonitor.swift */; };
+		D16D8C742C58724800AF7677 /* NetworkErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C732C58724800AF7677 /* NetworkErrorView.swift */; };
 		D1E8B14A2C4E1568009B3D81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */; };
 		D1E8B14C2C4E1568009B3D81 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */; };
 		D1E8B14E2C4E1568009B3D81 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */; };
@@ -107,6 +109,8 @@
 		D16D8C662C54C29500AF7677 /* AreaChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChart.swift; sourceTree = "<group>"; };
 		D16D8C682C561A3E00AF7677 /* Extension+FileManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+FileManger.swift"; sourceTree = "<group>"; };
 		D16D8C6F2C577D4200AF7677 /* Extension+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIViewController.swift"; sourceTree = "<group>"; };
+		D16D8C712C58714400AF7677 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		D16D8C732C58724800AF7677 /* NetworkErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorView.swift; sourceTree = "<group>"; };
 		D1E8B1462C4E1568009B3D81 /* Snaps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snaps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -236,6 +240,7 @@
 				D16D8BED2C52392A00AF7677 /* Extension+String.swift */,
 				D16D8C682C561A3E00AF7677 /* Extension+FileManger.swift */,
 				D16D8C6F2C577D4200AF7677 /* Extension+UIViewController.swift */,
+				D16D8C712C58714400AF7677 /* NetworkMonitor.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -297,6 +302,7 @@
 				D1E8B19E2C4E376A009B3D81 /* TabBarController.swift */,
 				D1E8B1A02C4E3F5D009B3D81 /* MBTIView.swift */,
 				D16D8C662C54C29500AF7677 /* AreaChart.swift */,
+				D16D8C732C58724800AF7677 /* NetworkErrorView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -461,6 +467,7 @@
 				D1E8B17D2C4E1A89009B3D81 /* BaseCollectionViewCell.swift in Sources */,
 				D16D8BC32C50D84E00AF7677 /* LikesViewController.swift in Sources */,
 				D1E8B1862C4E2463009B3D81 /* UserDefaultsManager.swift in Sources */,
+				D16D8C722C58714400AF7677 /* NetworkMonitor.swift in Sources */,
 				D1E8B1EC2C4FD061009B3D81 /* TopicPhotoViewController.swift in Sources */,
 				D16D8BF82C527F5800AF7677 /* Topic.swift in Sources */,
 				D1E8B14A2C4E1568009B3D81 /* AppDelegate.swift in Sources */,
@@ -490,6 +497,7 @@
 				D1E8B1AA2C4E80B5009B3D81 /* ProfileImageCell.swift in Sources */,
 				D1E8B1EA2C4F9557009B3D81 /* SearchPhotoViewModel.swift in Sources */,
 				D1E8B18B2C4E25C8009B3D81 /* Image.swift in Sources */,
+				D16D8C742C58724800AF7677 /* NetworkErrorView.swift in Sources */,
 				D1E8B17F2C4E1F85009B3D81 /* Observable.swift in Sources */,
 				D1E8B1A62C4E4845009B3D81 /* MBTICell.swift in Sources */,
 				D1E8B1B22C4F3902009B3D81 /* PhotoCell.swift in Sources */,
