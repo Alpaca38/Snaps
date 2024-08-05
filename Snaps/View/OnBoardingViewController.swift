@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class OnBoardingViewController: BaseViewController {
     private lazy var appTitle = {
@@ -27,10 +29,17 @@ class OnBoardingViewController: BaseViewController {
     
     private lazy var startButton = {
         let button = CustomButton(title: "시작하기")
-        button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         self.view.addSubview(button)
         return button
     }()
+    
+    private let viewModel = OnBoardingViewModel()
+    private let disposeBag = DisposeBag()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        bind()
+    }
     
     override func configureLayout() {
         appTitle.snp.makeConstraints {
@@ -52,8 +61,15 @@ class OnBoardingViewController: BaseViewController {
 }
 
 private extension OnBoardingViewController {
-    @objc func startButtonTapped() {
-        let vc = ProfileViewController()
-        navigationController?.pushViewController(vc, animated: true)
+    func bind() {
+        let input = OnBoardingViewModel.Input(startTap: startButton.rx.tap)
+        
+        let output = viewModel.transform(input: input)
+        
+        output.startTap
+            .bind(with: self) { owner, _ in
+                owner.navigationController?.pushViewController(ProfileViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }

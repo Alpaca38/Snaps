@@ -27,6 +27,9 @@
 		D16D8C702C577D4200AF7677 /* Extension+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C6F2C577D4200AF7677 /* Extension+UIViewController.swift */; };
 		D16D8C722C58714400AF7677 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C712C58714400AF7677 /* NetworkMonitor.swift */; };
 		D16D8C742C58724800AF7677 /* NetworkErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C732C58724800AF7677 /* NetworkErrorView.swift */; };
+		D16D8D072C60BE1600AF7677 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D16D8D062C60BE1600AF7677 /* RxCocoa */; };
+		D16D8D092C60BE1600AF7677 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D16D8D082C60BE1600AF7677 /* RxSwift */; };
+		D16D8D0B2C60BE4400AF7677 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8D0A2C60BE4400AF7677 /* OnBoardingViewModel.swift */; };
 		D1E8B14A2C4E1568009B3D81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */; };
 		D1E8B14C2C4E1568009B3D81 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */; };
 		D1E8B14E2C4E1568009B3D81 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B14D2C4E1568009B3D81 /* OnBoardingViewController.swift */; };
@@ -111,6 +114,7 @@
 		D16D8C6F2C577D4200AF7677 /* Extension+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIViewController.swift"; sourceTree = "<group>"; };
 		D16D8C712C58714400AF7677 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		D16D8C732C58724800AF7677 /* NetworkErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorView.swift; sourceTree = "<group>"; };
+		D16D8D0A2C60BE4400AF7677 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		D1E8B1462C4E1568009B3D81 /* Snaps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snaps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E8B1492C4E1568009B3D81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1E8B14B2C4E1568009B3D81 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -165,8 +169,10 @@
 				D1E8B1692C4E176E009B3D81 /* Kingfisher in Frameworks */,
 				D1E8B16C2C4E1778009B3D81 /* Alamofire in Frameworks */,
 				D1E8B1662C4E1764009B3D81 /* Toast in Frameworks */,
+				D16D8D072C60BE1600AF7677 /* RxCocoa in Frameworks */,
 				D1E8B16F2C4E17A9009B3D81 /* RealmSwift in Frameworks */,
 				D16D8C6E2C575CC700AF7677 /* SkeletonView in Frameworks */,
+				D16D8D092C60BE1600AF7677 /* RxSwift in Frameworks */,
 				D1E8B1632C4E175C009B3D81 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,6 +334,7 @@
 				D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */,
 				D16D8BD02C51D4FC00AF7677 /* DetailPhotoViewModel.swift */,
 				D16D8BF52C526DE100AF7677 /* RandomPhotoViewModel.swift */,
+				D16D8D0A2C60BE4400AF7677 /* OnBoardingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -387,6 +394,8 @@
 				D1E8B16B2C4E1778009B3D81 /* Alamofire */,
 				D1E8B16E2C4E17A9009B3D81 /* RealmSwift */,
 				D16D8C6D2C575CC700AF7677 /* SkeletonView */,
+				D16D8D062C60BE1600AF7677 /* RxCocoa */,
+				D16D8D082C60BE1600AF7677 /* RxSwift */,
 			);
 			productName = Snaps;
 			productReference = D1E8B1462C4E1568009B3D81 /* Snaps.app */;
@@ -423,6 +432,7 @@
 				D1E8B16A2C4E1778009B3D81 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				D1E8B16D2C4E17A9009B3D81 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				D16D8C6C2C575CC700AF7677 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				D16D8D052C60BE1600AF7677 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = D1E8B1472C4E1568009B3D81 /* Products */;
 			projectDirPath = "";
@@ -501,6 +511,7 @@
 				D1E8B17F2C4E1F85009B3D81 /* Observable.swift in Sources */,
 				D1E8B1A62C4E4845009B3D81 /* MBTICell.swift in Sources */,
 				D1E8B1B22C4F3902009B3D81 /* PhotoCell.swift in Sources */,
+				D16D8D0B2C60BE4400AF7677 /* OnBoardingViewModel.swift in Sources */,
 				D1E8B1A12C4E3F5D009B3D81 /* MBTIView.swift in Sources */,
 				D1E8B1602C4E16A7009B3D81 /* APIKey.swift in Sources */,
 				D1E8B1762C4E18DB009B3D81 /* ReuseIdentifier.swift in Sources */,
@@ -743,6 +754,14 @@
 				minimumVersion = 1.31.0;
 			};
 		};
+		D16D8D052C60BE1600AF7677 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.7.1;
+			};
+		};
 		D1E8B1612C4E175C009B3D81 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -790,6 +809,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D16D8C6C2C575CC700AF7677 /* XCRemoteSwiftPackageReference "SkeletonView" */;
 			productName = SkeletonView;
+		};
+		D16D8D062C60BE1600AF7677 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D16D8D052C60BE1600AF7677 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		D16D8D082C60BE1600AF7677 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D16D8D052C60BE1600AF7677 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 		D1E8B1622C4E175C009B3D81 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
