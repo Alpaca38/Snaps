@@ -51,6 +51,8 @@ final class LikeRepository {
     }
     
     func deleteItem(data: LikeItems) {
+        FileUtility.shared.removeImageFromDocument(filename: data.id)
+        FileUtility.shared.removeImageFromDocument(filename: data.photoGrapherID)
         do {
             try realm.write {
                 realm.delete(data)

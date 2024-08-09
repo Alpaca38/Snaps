@@ -267,8 +267,6 @@ private extension DetailPhotoViewController {
             
             if UserDefaultsManager.likeList.contains(photoItem.id) {
                 UserDefaultsManager.likeList.remove(photoItem.id)
-                FileUtility.shared.removeImageFromDocument(filename: photoItem.id)
-                FileUtility.shared.removeImageFromDocument(filename: photoItem.user.id)
             } else {
                 UserDefaultsManager.likeList.insert(photoItem.id)
                 FileUtility.shared.saveImageToDocument(image: photoImage, filename: photoItem.id)
@@ -279,8 +277,6 @@ private extension DetailPhotoViewController {
             
             if UserDefaultsManager.likeList.contains(likedItem.id) {
                 UserDefaultsManager.likeList.remove(likedItem.id)
-                FileUtility.shared.removeImageFromDocument(filename: likedItem.id)
-                FileUtility.shared.removeImageFromDocument(filename: likedItem.user.id)
             } else {
                 UserDefaultsManager.likeList.insert(likedItem.id)
                 FileUtility.shared.saveImageToDocument(image: photoImage, filename: likedItem.id)

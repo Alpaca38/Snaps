@@ -180,8 +180,6 @@ private extension SearchPhotoViewController {
             cell.likeButtonTapped = { image in
                 if UserDefaultsManager.likeList.contains(itemIdentifier.id) {
                     self?.viewModel.inputLikeItemRemove.value = LikeItems(from: itemIdentifier)
-                    FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.id)
-                    FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.user.id)
                 } else {
                     self?.viewModel.inputLikeItemAdd.value = LikeItems(from: itemIdentifier)
                     FileUtility.shared.saveImageToDocument(image: image, filename: itemIdentifier.id)

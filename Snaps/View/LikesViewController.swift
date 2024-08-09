@@ -116,8 +116,6 @@ private extension LikesViewController {
     func configureDataSource() {
         let cellRegistration = CellRegistration<LikeItems> { [weak self] cell, indexPath, itemIdentifier in
             cell.likeButtonTapped = { image in
-                FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.id)
-                FileUtility.shared.removeImageFromDocument(filename: itemIdentifier.photoGrapherID)
                 self?.viewModel.inputLikeButtonTapped.value = itemIdentifier
             }
             cell.configure(data: itemIdentifier)
