@@ -356,7 +356,7 @@ private extension DetailPhotoViewController {
         let photoImageURL = URL(string: photoItem.urls.small)
         photoImageView.kf.setImage(with: photoImageURL)
         
-        let dynamicHeight = UIScreen.main.bounds.width * CGFloat(photoItem.height) / CGFloat(photoItem.width)
+        let dynamicHeight = view.frame.width * CGFloat(photoItem.height) / CGFloat(photoItem.width)
         photoImageView.snp.updateConstraints {
             $0.height.equalTo(dynamicHeight)
         }
@@ -379,7 +379,7 @@ private extension DetailPhotoViewController {
         
         photoImageView.image = FileUtility.shared.loadImageToDocument(filename: likedItem.id)
         
-        let dynamicHeight = UIScreen.main.bounds.width * CGFloat(likedItem.height) / CGFloat(likedItem.width)
+        let dynamicHeight = view.frame.width * CGFloat(likedItem.height) / CGFloat(likedItem.width)
         photoImageView.snp.updateConstraints {
             $0.height.equalTo(dynamicHeight)
         }

@@ -61,7 +61,7 @@ private extension ProfileImageViewController {
         let layout = UICollectionViewFlowLayout()
         let sectionSpacing: CGFloat = 20
         let cellSpacing: CGFloat = 10
-        let width = UIScreen.main.bounds.width - sectionSpacing * 2 - cellSpacing * 3
+        let width = view.frame.width - sectionSpacing * 2 - cellSpacing * 3
         layout.itemSize = CGSize(width: width/4, height: width/4)
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = cellSpacing
