@@ -102,7 +102,15 @@ final class RandomPhotoCell: BaseCollectionViewCell {
     
     func configure(data: PhotoItem, indexPath: IndexPath) {
         let photoURL = URL(string: data.urls.raw)
-        photoImageView.kf.setImage(with: photoURL)
+        let photoProcessor = DownsamplingImageProcessor(size: photoImageView.bounds.size)
+        photoImageView.kf.setImage(
+            with: photoURL,
+            options: [
+                .processor(photoProcessor),
+                .scaleFactor(UIScreen.main.scale),
+                .cacheOriginalImage
+            ]
+        )
         
         pageLabel.setAttributedTitle(NSAttributedString(string: "\(indexPath.item + 1) / 10", attributes: [
             .font: UIFont.systemFont(ofSize: 13, weight: .regular),
@@ -110,7 +118,15 @@ final class RandomPhotoCell: BaseCollectionViewCell {
         ]), for: .normal)
         
         let profileURL = URL(string: data.user.profileImage.medium)
-        profileImage.kf.setImage(with: profileURL)
+        let profileProcessor = DownsamplingImageProcessor(size: profileImage.bounds.size)
+        profileImage.kf.setImage(
+            with: profileURL,
+            options: [
+                .processor(profileProcessor),
+                .scaleFactor(UIScreen.main.scale),
+                .cacheOriginalImage
+            ]
+        )
         
         profileLabel.text = data.user.name
         photoCreatedLabel.text = data.koreanDate

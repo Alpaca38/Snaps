@@ -341,7 +341,15 @@ private extension DetailPhotoViewController {
     
     func configureUI(photoItem: PhotoItem) {
         let profileURL = URL(string: photoItem.user.profileImage.medium)
-        profileImage.kf.setImage(with: profileURL)
+        let profileProcessor = DownsamplingImageProcessor(size: profileImage.bounds.size)
+        profileImage.kf.setImage(
+            with: profileURL,
+            options: [
+                .processor(profileProcessor),
+                .scaleFactor(UIScreen.main.scale),
+                .cacheOriginalImage
+            ]
+        )
         
         profileLabel.text = photoItem.user.name
         
@@ -354,7 +362,15 @@ private extension DetailPhotoViewController {
         }
         
         let photoImageURL = URL(string: photoItem.urls.small)
-        photoImageView.kf.setImage(with: photoImageURL)
+        let photoProcessor = DownsamplingImageProcessor(size: photoImageView.bounds.size)
+        photoImageView.kf.setImage(
+            with: photoImageURL,
+            options: [
+                .processor(photoProcessor),
+                .scaleFactor(UIScreen.main.scale),
+                .cacheOriginalImage
+            ]
+        )
         
         let dynamicHeight = view.frame.width * CGFloat(photoItem.height) / CGFloat(photoItem.width)
         photoImageView.snp.updateConstraints {

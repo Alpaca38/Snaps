@@ -70,7 +70,16 @@ final class PhotoCell: BaseCollectionViewCell {
     
     func configure(data: PhotoItem, category: Category) {
         let url = URL(string: data.urls.small)
-        mainImageView.kf.setImage(with: url)
+        let processor = DownsamplingImageProcessor(size: mainImageView.bounds.size)
+        mainImageView.kf.setImage(
+            with: url,
+            options: [
+                .processor(processor),
+                .scaleFactor(UIScreen.main.scale),
+                .cacheOriginalImage
+            ]
+        )
+        
         likeCountView.setAttributedTitle(NSAttributedString(string: data.likes.formatted(), attributes: [
             .font: UIFont.systemFont(ofSize: 13, weight: .regular),
             .foregroundColor: Color.white
