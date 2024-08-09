@@ -12,7 +12,11 @@ final class LikeRepository {
     private let realm: Realm
     
     init() throws {
-        self.realm = try Realm()
+        do {
+            self.realm = try Realm()
+        } catch {
+            throw error
+        }
     }
     
     func createItem(data: LikeItems) {

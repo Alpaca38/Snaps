@@ -8,7 +8,7 @@
 import Foundation
 
 final class LikesViewModel {
-    private let repository = LikeRepository()
+    private let repository = try? LikeRepository()
     
     var outputList = Observable<[LikeItems]>([])
     
@@ -19,7 +19,7 @@ final class LikesViewModel {
     
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleLikeItemWillBeRemoved(_:)), name: .likeItemWillBeRemoved, object: nil)
-        repository.printRealmURL()
+        repository?.printRealmURL()
         transform()
     }
     
@@ -35,10 +35,10 @@ private extension LikesViewModel {
         }
         
         inputLikeButtonTapped.bind { [weak self] item in
-            guard let item, let deleteItem = self?.repository.fetchItemFromProduct(id: item.id) else { return }
+            guard let item, let deleteItem = self?.repository?.fetchItemFromProduct(id: item.id) else { return }
             UserDefaultsManager.likeList.remove(item.id)
             self?.outputList.value.removeAll(where: { $0 == item })
-            self?.repository.deleteItem(data: deleteItem)
+            self?.repository?.deleteItem(data: deleteItem)
         }
         
         inputSortButton.bind(false) { [weak self] isLatest in
@@ -56,15 +56,15 @@ private extension LikesViewModel {
     }
     
     func fetchFilterList(searchText: String) {
-        outputList.value = repository.fetchFilter(searchText: searchText)
+        outputList.value = repository?.fetchFilter(searchText: searchText) ?? []
     }
     
     func fetchList() {
-        outputList.value = repository.fetchSort(keyPath: "regDate", ascending: true)
+        outputList.value = repository?.fetchSort(keyPath: "regDate", ascending: true) ?? []
     }
     
     func fetchLatestList() {
-        outputList.value = repository.fetchSort(keyPath: "regDate", ascending: false)
+        outputList.value = repository?.fetchSort(keyPath: "regDate", ascending: false) ?? []
     }
     
     @objc func handleLikeItemWillBeRemoved(_ notification: Notification) {

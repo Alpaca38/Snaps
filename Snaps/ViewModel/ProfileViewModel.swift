@@ -8,7 +8,7 @@
 import Foundation
 
 final class ProfileViewModel {
-    private let repository = LikeRepository()
+    private let repository = try? LikeRepository()
     
     var outputValidText = Observable("")
     var outputNickname = Observable<String?>(nil)
@@ -87,7 +87,7 @@ final class ProfileViewModel {
             UserDefaultsManager.user = User(nickname: "", image: Int.random(in: 0...11), mbti: [])
             UserDefaultsManager.likeList = []
             
-            self?.repository.deleteAll()
+            self?.repository?.deleteAll()
         }
     }
     

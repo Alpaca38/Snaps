@@ -8,7 +8,7 @@
 import Foundation
 
 final class SearchPhotoViewModel {
-    private let repository = LikeRepository()
+    private let repository = try? LikeRepository()
     
     var outputList = Observable<[PhotoItem]>([])
     var outputColor = Observable<[PhotoColorItem]>([])
@@ -64,14 +64,14 @@ private extension SearchPhotoViewModel {
         inputLikeItemAdd.bind { [weak self] item in
             guard let item else { return }
             UserDefaultsManager.likeList.insert(item.id)
-            self?.repository.createItem(data: item)
+            self?.repository?.createItem(data: item)
         }
         
         inputLikeItemRemove.bind { [weak self] item in
-            guard let item, let deleteItem = self?.repository.fetchItemFromProduct(id: item.id) else { return }
+            guard let item, let deleteItem = self?.repository?.fetchItemFromProduct(id: item.id) else { return }
             UserDefaultsManager.likeList.remove(item.id)
             NotificationCenter.default.post(name: .likeItemWillBeRemoved, object: item)
-            self?.repository.deleteItem(data: deleteItem)
+            self?.repository?.deleteItem(data: deleteItem)
         }
         
         inputColor.bind(false) { [weak self] color in

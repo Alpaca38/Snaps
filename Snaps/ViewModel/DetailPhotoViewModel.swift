@@ -8,7 +8,7 @@
 import Foundation
 
 final class DetailPhotoViewModel {
-    private let repository = LikeRepository()
+    private let repository = try? LikeRepository()
     
     var outputPhotoData = Observable<PhotoItem?>(nil)
     var outputLikedPhotoData = Observable<PhotoItem?>(nil)
@@ -43,12 +43,12 @@ private extension DetailPhotoViewModel {
         inputLikeButtonTapped.bind { [weak self] photoItem in
             guard let photoItem else { return }
             if UserDefaultsManager.likeList.contains(photoItem.id) {
-                guard let deleteItem = self?.repository.fetchItemFromProduct(id: photoItem.id) else { return }
+                guard let deleteItem = self?.repository?.fetchItemFromProduct(id: photoItem.id) else { return }
                 NotificationCenter.default.post(name: .likeItemWillBeRemoved, object: LikeItems(from: photoItem))
-                self?.repository.deleteItem(data: deleteItem)
+                self?.repository?.deleteItem(data: deleteItem)
                 self?.outputSetLike.value = false
             } else {
-                self?.repository.createItem(data: LikeItems(from: photoItem))
+                self?.repository?.createItem(data: LikeItems(from: photoItem))
                 self?.outputSetLike.value = true
             }
         }
@@ -56,12 +56,12 @@ private extension DetailPhotoViewModel {
         inputLikedButtonTapped.bind { [weak self] likedItem in
             guard let likedItem else { return }
             if UserDefaultsManager.likeList.contains(likedItem.id) {
-                guard let deleteItem = self?.repository.fetchItemFromProduct(id: likedItem.id) else { return }
+                guard let deleteItem = self?.repository?.fetchItemFromProduct(id: likedItem.id) else { return }
                 NotificationCenter.default.post(name: .likeItemWillBeRemoved, object: likedItem)
-                self?.repository.deleteItem(data: deleteItem)
+                self?.repository?.deleteItem(data: deleteItem)
                 self?.outputSetLike.value = false
             } else {
-                self?.repository.createItem(data: likedItem)
+                self?.repository?.createItem(data: likedItem)
                 self?.outputSetLike.value = true
             }
         }
