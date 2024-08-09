@@ -9,7 +9,11 @@ import Foundation
 import RealmSwift
 
 final class LikeRepository {
-    private let realm = try! Realm()
+    private let realm: Realm
+    
+    init() throws {
+        self.realm = try Realm()
+    }
     
     func createItem(data: LikeItems) {
         do {

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D16D8BC32C50D84E00AF7677 /* LikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC22C50D84E00AF7677 /* LikesViewController.swift */; };
-		D16D8BC52C50DDE000AF7677 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC42C50DDE000AF7677 /* RealmModel.swift */; };
+		D16D8BC52C50DDE000AF7677 /* LikeItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC42C50DDE000AF7677 /* LikeItems.swift */; };
 		D16D8BC72C50E1C700AF7677 /* LikeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC62C50E1C700AF7677 /* LikeRepository.swift */; };
 		D16D8BCA2C512DE900AF7677 /* LikesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */; };
 		D16D8BCF2C514D3000AF7677 /* DetailPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BCE2C514D3000AF7677 /* DetailPhotoViewController.swift */; };
@@ -22,7 +22,7 @@
 		D16D8BFA2C534DF100AF7677 /* PhotoColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BF92C534DF100AF7677 /* PhotoColor.swift */; };
 		D16D8BFC2C53610000AF7677 /* ColorFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BFB2C53610000AF7677 /* ColorFilterCell.swift */; };
 		D16D8C672C54C29500AF7677 /* AreaChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C662C54C29500AF7677 /* AreaChart.swift */; };
-		D16D8C692C561A3E00AF7677 /* Extension+FileManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C682C561A3E00AF7677 /* Extension+FileManger.swift */; };
+		D16D8C692C561A3E00AF7677 /* FileUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C682C561A3E00AF7677 /* FileUtility.swift */; };
 		D16D8C6E2C575CC700AF7677 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = D16D8C6D2C575CC700AF7677 /* SkeletonView */; };
 		D16D8C702C577D4200AF7677 /* Extension+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C6F2C577D4200AF7677 /* Extension+UIViewController.swift */; };
 		D16D8C722C58714400AF7677 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8C712C58714400AF7677 /* NetworkMonitor.swift */; };
@@ -96,7 +96,7 @@
 
 /* Begin PBXFileReference section */
 		D16D8BC22C50D84E00AF7677 /* LikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesViewController.swift; sourceTree = "<group>"; };
-		D16D8BC42C50DDE000AF7677 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
+		D16D8BC42C50DDE000AF7677 /* LikeItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeItems.swift; sourceTree = "<group>"; };
 		D16D8BC62C50E1C700AF7677 /* LikeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeRepository.swift; sourceTree = "<group>"; };
 		D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesViewModel.swift; sourceTree = "<group>"; };
 		D16D8BCE2C514D3000AF7677 /* DetailPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPhotoViewController.swift; sourceTree = "<group>"; };
@@ -110,7 +110,7 @@
 		D16D8BF92C534DF100AF7677 /* PhotoColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoColor.swift; sourceTree = "<group>"; };
 		D16D8BFB2C53610000AF7677 /* ColorFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorFilterCell.swift; sourceTree = "<group>"; };
 		D16D8C662C54C29500AF7677 /* AreaChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChart.swift; sourceTree = "<group>"; };
-		D16D8C682C561A3E00AF7677 /* Extension+FileManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+FileManger.swift"; sourceTree = "<group>"; };
+		D16D8C682C561A3E00AF7677 /* FileUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtility.swift; sourceTree = "<group>"; };
 		D16D8C6F2C577D4200AF7677 /* Extension+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIViewController.swift"; sourceTree = "<group>"; };
 		D16D8C712C58714400AF7677 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		D16D8C732C58724800AF7677 /* NetworkErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorView.swift; sourceTree = "<group>"; };
@@ -180,10 +180,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D11D80712C663AA600EB8680 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D1E8B1752C4E18DB009B3D81 /* ReuseIdentifier.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		D11D80722C663ACF00EB8680 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				D1E8B1802C4E236E009B3D81 /* SceneManger.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		D11D80732C663AE000EB8680 /* File */ = {
+			isa = PBXGroup;
+			children = (
+				D16D8C682C561A3E00AF7677 /* FileUtility.swift */,
+			);
+			path = File;
+			sourceTree = "<group>";
+		};
 		D16D8BC82C50E55F00AF7677 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
-				D16D8BC42C50DDE000AF7677 /* RealmModel.swift */,
+				D16D8BC42C50DDE000AF7677 /* LikeItems.swift */,
 				D16D8BC62C50E1C700AF7677 /* LikeRepository.swift */,
 			);
 			path = Realm;
@@ -209,7 +233,7 @@
 		D1E8B1482C4E1568009B3D81 /* Snaps */ = {
 			isa = PBXGroup;
 			children = (
-				D1E8B1E22C4F9133009B3D81 /* Network */,
+				D11D80712C663AA600EB8680 /* Protocol */,
 				D1E8B1992C4E3675009B3D81 /* ProfileValidation */,
 				D1E8B1962C4E3642009B3D81 /* ViewModel */,
 				D1E8B18C2C4E2D46009B3D81 /* View */,
@@ -240,13 +264,8 @@
 		D1E8B1732C4E18C2009B3D81 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				D1E8B1752C4E18DB009B3D81 /* ReuseIdentifier.swift */,
-				D1E8B17E2C4E1F85009B3D81 /* Observable.swift */,
-				D1E8B1802C4E236E009B3D81 /* SceneManger.swift */,
 				D16D8BED2C52392A00AF7677 /* Extension+String.swift */,
-				D16D8C682C561A3E00AF7677 /* Extension+FileManger.swift */,
 				D16D8C6F2C577D4200AF7677 /* Extension+UIViewController.swift */,
-				D16D8C712C58714400AF7677 /* NetworkMonitor.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -281,6 +300,9 @@
 		D1E8B1872C4E2511009B3D81 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D11D80732C663AE000EB8680 /* File */,
+				D11D80722C663ACF00EB8680 /* Scene */,
+				D1E8B1E22C4F9133009B3D81 /* Network */,
 				D1E8B1822C4E23DA009B3D81 /* UserDefaults */,
 				D16D8BC82C50E55F00AF7677 /* Realm */,
 				D1E8B1882C4E2520009B3D81 /* User.swift */,
@@ -288,6 +310,7 @@
 				D16D8BEF2C524D8000AF7677 /* Statistics.swift */,
 				D16D8BF72C527F5800AF7677 /* Topic.swift */,
 				D16D8BF92C534DF100AF7677 /* PhotoColor.swift */,
+				D1E8B17E2C4E1F85009B3D81 /* Observable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -366,6 +389,7 @@
 				D1E8B1E32C4F913A009B3D81 /* NetworkManager.swift */,
 				D1E8B1E52C4F914E009B3D81 /* APIError.swift */,
 				D1E8B1E72C4F9179009B3D81 /* PhotoAPI.swift */,
+				D16D8C712C58714400AF7677 /* NetworkMonitor.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -488,7 +512,7 @@
 				D1E8B1EE2C4FD0A6009B3D81 /* PhotoViewController.swift in Sources */,
 				D1E8B1E42C4F913A009B3D81 /* NetworkManager.swift in Sources */,
 				D16D8BD12C51D4FC00AF7677 /* DetailPhotoViewModel.swift in Sources */,
-				D16D8C692C561A3E00AF7677 /* Extension+FileManger.swift in Sources */,
+				D16D8C692C561A3E00AF7677 /* FileUtility.swift in Sources */,
 				D1E8B19F2C4E376A009B3D81 /* TabBarController.swift in Sources */,
 				D1E8B1E82C4F9179009B3D81 /* PhotoAPI.swift in Sources */,
 				D1E8B1AC2C4E8123009B3D81 /* NaviTitle.swift in Sources */,
@@ -501,7 +525,7 @@
 				D1E8B1A82C4E7FCA009B3D81 /* ProfileImageViewController.swift in Sources */,
 				D1E8B1AE2C4E81E0009B3D81 /* ProfileImageViewModel.swift in Sources */,
 				D16D8BF42C5266E900AF7677 /* RandomPhotoCell.swift in Sources */,
-				D16D8BC52C50DDE000AF7677 /* RealmModel.swift in Sources */,
+				D16D8BC52C50DDE000AF7677 /* LikeItems.swift in Sources */,
 				D16D8BF02C524D8000AF7677 /* Statistics.swift in Sources */,
 				D16D8BFC2C53610000AF7677 /* ColorFilterCell.swift in Sources */,
 				D1E8B1AA2C4E80B5009B3D81 /* ProfileImageCell.swift in Sources */,

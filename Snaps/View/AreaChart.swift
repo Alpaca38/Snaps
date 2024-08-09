@@ -5,7 +5,6 @@
 //  Created by 조규연 on 7/27/24.
 //
 
-import Foundation
 import SwiftUI
 import Charts
 
