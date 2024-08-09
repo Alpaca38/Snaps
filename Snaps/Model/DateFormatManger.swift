@@ -7,14 +7,18 @@
 
 import Foundation
 
-extension String {
-    func formattedToKoreanDate() -> String? {
-        let formatter = ISO8601DateFormatter()
+final class DateFormatManager {
+    private init() { }
+    static let shared = DateFormatManager()
+    
+    private let formatter = ISO8601DateFormatter()
+    private let outputDateFormatter = DateFormatter()
+    
+    func formattedToKoreanDate(dateString: String) -> String? {
         formatter.formatOptions = [.withInternetDateTime]
         
-        guard let date = formatter.date(from: self) else { return nil }
+        guard let date = formatter.date(from: dateString) else { return nil }
         
-        let outputDateFormatter = DateFormatter()
         outputDateFormatter.locale = Locale(identifier: "ko_KR")
         outputDateFormatter.dateFormat = "yyyy년 M월 d일 '게시됨'"
         

@@ -18,7 +18,6 @@ final class NetworkMonitor {
     
     func startMonitoring(statusUpdateHandler: @escaping (NWPath.Status) -> Void) {
         monitor.pathUpdateHandler = { path in
-            print(path.debugDescription)
             DispatchQueue.main.async {
                 statusUpdateHandler(path.status)
             }

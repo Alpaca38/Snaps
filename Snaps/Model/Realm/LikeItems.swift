@@ -23,7 +23,7 @@ final class LikeItems: Object, SectionItem {
     @Persisted var color: String
     
     var koreanDate: String {
-        guard let koreanDate = created_at.formattedToKoreanDate() else { return created_at }
+        guard let koreanDate = DateFormatManager.shared.formattedToKoreanDate(dateString: created_at) else { return created_at }
         return koreanDate
     }
     
