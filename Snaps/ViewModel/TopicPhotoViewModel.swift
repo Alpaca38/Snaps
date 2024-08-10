@@ -8,7 +8,7 @@
 import Foundation
 
 final class TopicPhotoViewModel {
-    private let repository = try? LikeRepository()
+    private let repository = try? RealmRepository<LikeItems>()
     
     private var lastRefreshTime: Date?
     var isRefreshing = Observable<Void?>(nil)

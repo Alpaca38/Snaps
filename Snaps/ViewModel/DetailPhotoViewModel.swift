@@ -8,7 +8,7 @@
 import Foundation
 
 final class DetailPhotoViewModel {
-    private let repository = try? LikeRepository()
+    private let repository = try? RealmRepository<LikeItems>()
     
     var outputPhotoData = Observable<PhotoItem?>(nil)
     var outputLikedPhotoData = Observable<PhotoItem?>(nil)

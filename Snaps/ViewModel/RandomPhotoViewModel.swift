@@ -8,7 +8,7 @@
 import Foundation
 
 final class RandomPhotoViewModel {
-    private let repository = try? LikeRepository()
+    private let repository = try? RealmRepository<LikeItems>()
     
     var outputList = Observable<[PhotoItem]>([])
     var outputNetworkError = Observable<APIError?>(nil)

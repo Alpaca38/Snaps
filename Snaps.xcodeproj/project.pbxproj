@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D11D80752C672A7500EB8680 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11D80742C672A7500EB8680 /* RealmRepository.swift */; };
 		D16D8BC32C50D84E00AF7677 /* LikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC22C50D84E00AF7677 /* LikesViewController.swift */; };
 		D16D8BC52C50DDE000AF7677 /* LikeItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC42C50DDE000AF7677 /* LikeItems.swift */; };
-		D16D8BC72C50E1C700AF7677 /* LikeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC62C50E1C700AF7677 /* LikeRepository.swift */; };
 		D16D8BCA2C512DE900AF7677 /* LikesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */; };
 		D16D8BCF2C514D3000AF7677 /* DetailPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BCE2C514D3000AF7677 /* DetailPhotoViewController.swift */; };
 		D16D8BD12C51D4FC00AF7677 /* DetailPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BD02C51D4FC00AF7677 /* DetailPhotoViewModel.swift */; };
@@ -95,9 +95,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D11D80742C672A7500EB8680 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		D16D8BC22C50D84E00AF7677 /* LikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesViewController.swift; sourceTree = "<group>"; };
 		D16D8BC42C50DDE000AF7677 /* LikeItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeItems.swift; sourceTree = "<group>"; };
-		D16D8BC62C50E1C700AF7677 /* LikeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeRepository.swift; sourceTree = "<group>"; };
 		D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesViewModel.swift; sourceTree = "<group>"; };
 		D16D8BCE2C514D3000AF7677 /* DetailPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPhotoViewController.swift; sourceTree = "<group>"; };
 		D16D8BD02C51D4FC00AF7677 /* DetailPhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPhotoViewModel.swift; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				D16D8BC42C50DDE000AF7677 /* LikeItems.swift */,
-				D16D8BC62C50E1C700AF7677 /* LikeRepository.swift */,
+				D11D80742C672A7500EB8680 /* RealmRepository.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -490,9 +490,9 @@
 				D1E8B19D2C4E36CB009B3D81 /* ValidationError.swift in Sources */,
 				D1E8B1E62C4F914E009B3D81 /* APIError.swift in Sources */,
 				D16D8BF22C52628600AF7677 /* RandomPhotoViewController.swift in Sources */,
+				D11D80752C672A7500EB8680 /* RealmRepository.swift in Sources */,
 				D1E8B1952C4E3293009B3D81 /* NicknameTextField.swift in Sources */,
 				D1E8B1BB2C4F71FA009B3D81 /* Photos.swift in Sources */,
-				D16D8BC72C50E1C700AF7677 /* LikeRepository.swift in Sources */,
 				D16D8C702C577D4200AF7677 /* Extension+UIViewController.swift in Sources */,
 				D1E8B18E2C4E2D53009B3D81 /* CustomButton.swift in Sources */,
 				D1E8B19B2C4E367C009B3D81 /* TextFieldState.swift in Sources */,

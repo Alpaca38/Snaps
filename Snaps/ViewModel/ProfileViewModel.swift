@@ -8,7 +8,7 @@
 import Foundation
 
 final class ProfileViewModel {
-    private let repository = try? LikeRepository()
+    private let repository = try? RealmRepository<LikeItems>()
     
     var outputValidText = Observable("")
     var outputNickname = Observable<String?>(nil)
