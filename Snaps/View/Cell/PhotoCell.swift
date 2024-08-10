@@ -11,13 +11,12 @@ import Kingfisher
 import SkeletonView
 
 final class PhotoCell: BaseCollectionViewCell {
-    var likeButtonTapped: ((UIImage) -> Void)?
+    var likeButtonTapped: ((Data) -> Void)?
     
     private lazy var mainImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-//        view.backgroundColor = Color.lightGray
         view.isSkeletonable = true
         contentView.addSubview(view)
         return view
@@ -104,7 +103,10 @@ final class PhotoCell: BaseCollectionViewCell {
     }
     
     func configure(data: LikeItems) {
-        mainImageView.image = FileUtility.shared.loadImageToDocument(filename: data.id)
+        if let imagePath = FileUtility.shared.loadImageToDocument(filename: data.id) {
+            mainImageView.image = UIImage(contentsOfFile: imagePath)
+        }
+        
         likeCountView.isHidden = true
         likeButton.setImage(Image.likeCircle, for: .normal)
     }
@@ -112,9 +114,8 @@ final class PhotoCell: BaseCollectionViewCell {
 
 private extension PhotoCell {
     @objc func likeButtonTapped(_ sender: UIButton) {
-        if let image = mainImageView.image {
-            likeButtonTapped?(image)
-        }
+        guard let data = mainImageView.image?.jpegData(compressionQuality: 0.5) else { return }
+        likeButtonTapped?(data)
     }
 }
 

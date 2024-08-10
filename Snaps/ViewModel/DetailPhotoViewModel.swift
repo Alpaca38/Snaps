@@ -18,7 +18,7 @@ final class DetailPhotoViewModel {
     
     var inputSelectedPhoto = Observable<PhotoItem?>(nil)
     var inputLikedPhoto = Observable<PhotoItem?>(nil)
-    var inputLikeButtonTapped = Observable<PhotoItem?>(nil)
+    var inputLikeButtonTapped = Observable<(Data?, Data?, PhotoItem?)>((nil,nil,nil))
     var inputLikedButtonTapped = Observable<LikeItems?>(nil)
     
     init() {
@@ -40,15 +40,25 @@ private extension DetailPhotoViewModel {
             self?.getStatistics(imageID: likedItem.id)
         }
         
-        inputLikeButtonTapped.bind { [weak self] photoItem in
-            guard let photoItem else { return }
+        inputLikeButtonTapped.bind { [weak self] (photoData, profileData, photoItem) in
+            guard let photoData, let profileData, let photoItem else { return }
             if UserDefaultsManager.likeList.contains(photoItem.id) {
-                guard let deleteItem = self?.repository?.fetchItemFromProduct(id: photoItem.id) else { return }
+                UserDefaultsManager.likeList.remove(photoItem.id)
+                
                 NotificationCenter.default.post(name: .likeItemWillBeRemoved, object: LikeItems(from: photoItem))
+                
+                guard let deleteItem = self?.repository?.fetchItemFromProduct(id: photoItem.id) else { return }
                 self?.repository?.deleteItem(data: deleteItem)
+                
                 self?.outputSetLike.value = false
             } else {
+                UserDefaultsManager.likeList.insert(photoItem.id)
+                
+                FileUtility.shared.saveImageToDocument(data: photoData, filename: photoItem.id)
+                FileUtility.shared.saveImageToDocument(data: profileData, filename: photoItem.user.id)
+                
                 self?.repository?.createItem(data: LikeItems(from: photoItem))
+                
                 self?.outputSetLike.value = true
             }
         }

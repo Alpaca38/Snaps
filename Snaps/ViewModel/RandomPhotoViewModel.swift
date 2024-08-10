@@ -15,7 +15,7 @@ final class RandomPhotoViewModel {
     
     var inputViewDidLoadTrigger = Observable<Void?>(nil)
     var inputLikeItemRemove = Observable<LikeItems?>(nil)
-    var inputLikeItemAdd = Observable<LikeItems?>(nil)
+    var inputLikeItemAdd = Observable<(Data?, Data?, LikeItems?)>((nil,nil,nil))
     
     init() {
         transform()
@@ -28,9 +28,13 @@ private extension RandomPhotoViewModel {
             self?.getRandomPhotos()
         }
         
-        inputLikeItemAdd.bind { [weak self] item in
-            guard let item else { return }
+        inputLikeItemAdd.bind { [weak self] (profileData, photoData, item) in
+            guard let profileData, let photoData, let item else { return }
             UserDefaultsManager.likeList.insert(item.id)
+            
+            FileUtility.shared.saveImageToDocument(data: profileData, filename: item.photoGrapherID)
+            FileUtility.shared.saveImageToDocument(data: photoData, filename: item.id)
+            
             self?.repository?.createItem(data: item)
         }
         

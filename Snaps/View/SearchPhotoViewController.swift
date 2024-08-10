@@ -177,18 +177,15 @@ private extension SearchPhotoViewController {
 private extension SearchPhotoViewController {
     func configurePhotoDataSource() {
         let cellRegistration = CellRegistration<PhotoItem> { [weak self] cell, indexPath, itemIdentifier in
-            cell.likeButtonTapped = { image in
+            cell.likeButtonTapped = { data in
                 if UserDefaultsManager.likeList.contains(itemIdentifier.id) {
                     self?.viewModel.inputLikeItemRemove.value = LikeItems(from: itemIdentifier)
                 } else {
-                    self?.viewModel.inputLikeItemAdd.value = LikeItems(from: itemIdentifier)
-                    FileUtility.shared.saveImageToDocument(image: image, filename: itemIdentifier.id)
                     DispatchQueue.global().async {
                         do {
                             guard let profileImageURL = URL(string: itemIdentifier.user.profileImage.medium) else { return }
                             let profileData = try Data(contentsOf: profileImageURL)
-                            guard let profileImage = UIImage(data: profileData) else { return }
-                            FileUtility.shared.saveImageToDocument(image: profileImage, filename: itemIdentifier.user.id)
+                            self?.viewModel.inputLikeItemAdd.value = (data, profileData, LikeItems(from: itemIdentifier))
                         } catch {
                             print("Image Data Error")
                         }

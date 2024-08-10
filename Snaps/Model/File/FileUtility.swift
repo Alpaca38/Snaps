@@ -5,13 +5,13 @@
 //  Created by 조규연 on 7/28/24.
 //
 
-import UIKit
+import Foundation
 
 final class FileUtility {
     private init() {}
     static let shared = FileUtility()
     
-    func saveImageToDocument(image: UIImage, filename: String) {
+    func saveImageToDocument(data: Data, filename: String) {
         
         guard let documentDirectory = FileManager.default.urls(
             for: .documentDirectory,
@@ -19,9 +19,6 @@ final class FileUtility {
         
         //이미지를 저장할 경로(파일명) 지정
         let fileURL = documentDirectory.appendingPathComponent("\(filename).jpg")
-        
-        //이미지 압축
-        guard let data = image.jpegData(compressionQuality: 0.5) else { return }
         
         //이미지 파일 저장
         do {
@@ -52,7 +49,7 @@ final class FileUtility {
         
     }
     
-    func loadImageToDocument(filename: String) -> UIImage? {
+    func loadImageToDocument(filename: String) -> String? {
          
         guard let documentDirectory = FileManager.default.urls(
             for: .documentDirectory,
@@ -62,9 +59,9 @@ final class FileUtility {
         
         //이 경로에 실제로 파일이 존재하는 지 확인
         if FileManager.default.fileExists(atPath: fileURL.path) {
-            return UIImage(contentsOfFile: fileURL.path)
+            return fileURL.path
         } else {
-            return UIImage(systemName: "star.fill")
+            return nil
         }
         
     }

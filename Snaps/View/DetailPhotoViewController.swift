@@ -261,30 +261,13 @@ private extension DetailPhotoViewController {
 // MARK: Action
 private extension DetailPhotoViewController {
     @objc func likeButtonTapped(_ sender: UIButton) {
-        guard let photoImage = photoImageView.image, let profileImage = profileImage.image else { return }
+        guard let photoData = photoImageView.image?.jpegData(compressionQuality: 0.5), let profileData = profileImage.image?.jpegData(compressionQuality: 0.5) else { return }
+        
         if let photoItem = viewModel.outputPhotoData.value {
-            viewModel.inputLikeButtonTapped.value = photoItem
-            
-            if UserDefaultsManager.likeList.contains(photoItem.id) {
-                UserDefaultsManager.likeList.remove(photoItem.id)
-            } else {
-                UserDefaultsManager.likeList.insert(photoItem.id)
-                FileUtility.shared.saveImageToDocument(image: photoImage, filename: photoItem.id)
-                FileUtility.shared.saveImageToDocument(image: profileImage, filename: photoItem.user.id)
-            }
+            viewModel.inputLikeButtonTapped.value = (photoData, profileData, photoItem)
         } else if let likedItem = viewModel.outputLikedPhotoData.value {
-            viewModel.inputLikeButtonTapped.value = likedItem
-            
-            if UserDefaultsManager.likeList.contains(likedItem.id) {
-                UserDefaultsManager.likeList.remove(likedItem.id)
-            } else {
-                UserDefaultsManager.likeList.insert(likedItem.id)
-                FileUtility.shared.saveImageToDocument(image: photoImage, filename: likedItem.id)
-                FileUtility.shared.saveImageToDocument(image: profileImage, filename: likedItem.user.id)
-            }
+            viewModel.inputLikeButtonTapped.value = (photoData, profileData, likedItem)
         }
-        
-        
     }
     
     @objc func segmentControlValueChanged() {
@@ -377,7 +360,9 @@ private extension DetailPhotoViewController {
     }
     
     func configureUI(likedItem: PhotoItem) {
-        profileImage.image = FileUtility.shared.loadImageToDocument(filename: likedItem.user.id)
+        if let profileImagePath = FileUtility.shared.loadImageToDocument(filename: likedItem.user.id) {
+            profileImage.image = UIImage(contentsOfFile: profileImagePath)
+        }
         
         profileLabel.text = likedItem.user.name
         
@@ -389,7 +374,9 @@ private extension DetailPhotoViewController {
             likeButton.setImage(Image.likeInactive, for: .normal)
         }
         
-        photoImageView.image = FileUtility.shared.loadImageToDocument(filename: likedItem.id)
+        if let photoImagePath = FileUtility.shared.loadImageToDocument(filename: likedItem.id) {
+            photoImageView.image = UIImage(contentsOfFile: photoImagePath)
+        }
         
         let dynamicHeight = view.frame.width * CGFloat(likedItem.height) / CGFloat(likedItem.width)
         photoImageView.snp.updateConstraints {

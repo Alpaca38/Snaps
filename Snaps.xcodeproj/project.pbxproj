@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D11D80752C672A7500EB8680 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11D80742C672A7500EB8680 /* RealmRepository.swift */; };
+		D11D80792C673C1D00EB8680 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11D80782C673C1D00EB8680 /* ViewModel.swift */; };
 		D16D8BC32C50D84E00AF7677 /* LikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC22C50D84E00AF7677 /* LikesViewController.swift */; };
 		D16D8BC52C50DDE000AF7677 /* LikeItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC42C50DDE000AF7677 /* LikeItems.swift */; };
 		D16D8BCA2C512DE900AF7677 /* LikesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */; };
@@ -96,6 +97,7 @@
 
 /* Begin PBXFileReference section */
 		D11D80742C672A7500EB8680 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
+		D11D80782C673C1D00EB8680 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		D16D8BC22C50D84E00AF7677 /* LikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesViewController.swift; sourceTree = "<group>"; };
 		D16D8BC42C50DDE000AF7677 /* LikeItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeItems.swift; sourceTree = "<group>"; };
 		D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesViewModel.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				D1E8B1752C4E18DB009B3D81 /* ReuseIdentifier.swift */,
+				D11D80782C673C1D00EB8680 /* ViewModel.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				D1E8B17D2C4E1A89009B3D81 /* BaseCollectionViewCell.swift in Sources */,
 				D16D8BC32C50D84E00AF7677 /* LikesViewController.swift in Sources */,
 				D1E8B1862C4E2463009B3D81 /* UserDefaultsManager.swift in Sources */,
+				D11D80792C673C1D00EB8680 /* ViewModel.swift in Sources */,
 				D16D8C722C58714400AF7677 /* NetworkMonitor.swift in Sources */,
 				D1E8B1EC2C4FD061009B3D81 /* TopicPhotoViewController.swift in Sources */,
 				D16D8BF82C527F5800AF7677 /* Topic.swift in Sources */,

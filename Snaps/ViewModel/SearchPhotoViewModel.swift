@@ -23,7 +23,7 @@ final class SearchPhotoViewModel {
     var inputSortButton = Observable<Bool>(false)
     var inputPage = Observable<Int>(1)
     var inputLikeItemRemove = Observable<LikeItems?>(nil)
-    var inputLikeItemAdd = Observable<LikeItems?>(nil)
+    var inputLikeItemAdd = Observable<(Data?, Data?, LikeItems?)>((nil, nil, nil))
     var inputColor = Observable<PhotoColor?>(nil)
     
     init() {
@@ -61,8 +61,11 @@ private extension SearchPhotoViewModel {
             }
         }
         
-        inputLikeItemAdd.bind { [weak self] item in
-            guard let item else { return }
+        inputLikeItemAdd.bind { [weak self] (photoData, profileData, item) in
+            guard let item, let photoData, let profileData else { return }
+            FileUtility.shared.saveImageToDocument(data: photoData, filename: item.id)
+            FileUtility.shared.saveImageToDocument(data: profileData, filename: item.photoGrapherID)
+            
             UserDefaultsManager.likeList.insert(item.id)
             self?.repository?.createItem(data: item)
         }
