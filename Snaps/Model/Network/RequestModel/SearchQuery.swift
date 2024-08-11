@@ -12,5 +12,5 @@ struct SearchQuery: Encodable {
     let page: Int
     let per_page: Int
     let orderBy: SortOrder.RawValue
-    let client_id: String
+    let client_id = APIKey.unsplashAccessKey
 }

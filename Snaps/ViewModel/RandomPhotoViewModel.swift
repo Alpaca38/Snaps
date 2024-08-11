@@ -47,7 +47,7 @@ private extension RandomPhotoViewModel {
     }
     
     func getRandomPhotos() {
-        NetworkManager.shared.getPhotoData(api: .random, responseType: [PhotoItem].self) { [weak self] result in
+        NetworkManager.shared.getRandomPhotos { [weak self] result in
             switch result {
             case .success(let success):
                 self?.outputList.value = success

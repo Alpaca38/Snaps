@@ -8,5 +8,6 @@
 import Foundation
 
 struct RandomQuery: Encodable {
-    let client_id: String
+    let count: Int
+    let client_id = APIKey.unsplashAccessKey
 }

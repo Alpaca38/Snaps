@@ -13,5 +13,5 @@ struct SearchColorQuery: Encodable {
     let perPage: Int
     let orderBy: SortOrder.RawValue
     let color: PhotoColor.RawValue
-    let client_id: String
+    let client_id = APIKey.unsplashAccessKey
 }

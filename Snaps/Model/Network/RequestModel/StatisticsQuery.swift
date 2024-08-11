@@ -9,5 +9,5 @@ import Foundation
 
 struct StatisticsQuery: Encodable {
     let imageID: String
-    let client_id: String
+    let client_id = APIKey.unsplashAccessKey
 }
