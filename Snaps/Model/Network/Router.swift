@@ -56,6 +56,15 @@ extension Router: TargetType {
                 URLQueryItem(name: "order_by", value: query.orderBy),
                 URLQueryItem(name: "client_id", value: query.client_id)
             ]
+        case .searchColor(let query):
+            [
+                URLQueryItem(name: "query", value: query.query),
+                URLQueryItem(name: "page", value: "\(query.page)"),
+                URLQueryItem(name: "per_page", value: "\(query.perPage)"),
+                URLQueryItem(name: "order_by", value: query.orderBy),
+                URLQueryItem(name: "color", value: query.color),
+                URLQueryItem(name: "client_id", value: query.client_id),
+            ]
         default:
             nil
         }

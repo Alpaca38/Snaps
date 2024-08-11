@@ -105,26 +105,10 @@ private extension SearchPhotoViewModel {
                 outputNetworkError.value = failure
             }
         }
-//        NetworkManager.shared.getPhotoData(api: .search(query: searchText, page: inputPage.value, perPage: 20, orderBy: orderBy), responseType: Photos.self) { [weak self] result in
-//            guard let self else { return }
-//            switch result {
-//            case .success(let success):
-//                if inputPage.value == 1 {
-//                    outputList.value = success.results
-//                    if !outputList.value.isEmpty {
-//                        outputListIsNotEmpty.value = ()
-//                    }
-//                } else {
-//                    outputList.value.append(contentsOf: success.results)
-//                }
-//            case .failure(let failure):
-//                outputNetworkError.value = failure
-//            }
-//        }
     }
     
     func getSearchColorPhotos(searchText: String, orderBy: SortOrder.RawValue, color: PhotoColor.RawValue) {
-        NetworkManager.shared.getPhotoData(api: .searchColor(query: searchText, page: inputPage.value, perPage: 20, orderBy: orderBy, color: color), responseType: Photos.self) { [weak self] result in
+        NetworkManager.shared.getSearchColorPhotos(searchText: searchText, page: inputPage.value, orderBy: orderBy, color: color) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let success):
