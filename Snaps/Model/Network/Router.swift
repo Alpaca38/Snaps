@@ -29,8 +29,8 @@ extension Router: TargetType {
         switch self {
         case .search, .searchColor:
             "search/photos"
-        case .topic(let topicID):
-            "topics/\(topicID)/photos"
+        case .topic(let query):
+            "topics/\(query.topicID)/photos"
         case .statistics(let imageID):
             "photos/\(imageID)/statistics"
         case .random:
@@ -63,7 +63,15 @@ extension Router: TargetType {
                 URLQueryItem(name: "per_page", value: "\(query.perPage)"),
                 URLQueryItem(name: "order_by", value: query.orderBy),
                 URLQueryItem(name: "color", value: query.color),
-                URLQueryItem(name: "client_id", value: query.client_id),
+                URLQueryItem(name: "client_id", value: query.client_id)
+            ]
+        case .topic(let query):
+            [
+                URLQueryItem(name: "client_id", value: query.client_id)
+            ]
+        case .statistics(let query):
+            [
+                URLQueryItem(name: "client_id", value: query.client_id)
             ]
         default:
             nil

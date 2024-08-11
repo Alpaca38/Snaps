@@ -8,5 +8,6 @@
 import Foundation
 
 struct TopicQuery: Encodable {
+    let topicID: String
     let client_id: String
 }

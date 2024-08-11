@@ -61,7 +61,7 @@ private extension TopicPhotoViewModel {
         let waitGroup = DispatchGroup()
         waitGroup.enter()
         DispatchQueue.global().async(group: waitGroup) { [weak self] in
-            NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[0]), responseType: [PhotoItem].self) { [weak self] result in
+            NetworkManager.shared.getTopicPhotos(topicID: topicList[0]) { result in
                 switch result {
                 case .success(let success):
                     self?.outputFirstSectionData.value = success
@@ -73,7 +73,7 @@ private extension TopicPhotoViewModel {
         }
         waitGroup.enter()
         DispatchQueue.global().async(group: waitGroup) { [weak self] in
-            NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[1]), responseType: [PhotoItem].self) { [weak self] result in
+            NetworkManager.shared.getTopicPhotos(topicID: topicList[1]) { result in
                 switch result {
                 case .success(let success):
                     self?.outputSecondSectionData.value = success
@@ -85,7 +85,7 @@ private extension TopicPhotoViewModel {
         }
         waitGroup.enter()
         DispatchQueue.global().async(group: waitGroup) { [weak self] in
-            NetworkManager.shared.getPhotoData(api: .topic(topicID: topicList[2]), responseType: [PhotoItem].self) { [weak self] result in
+            NetworkManager.shared.getTopicPhotos(topicID: topicList[2]) { result in
                 switch result {
                 case .success(let success):
                     self?.outputThirdSectonData.value = success

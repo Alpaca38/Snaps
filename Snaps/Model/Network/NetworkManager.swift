@@ -21,7 +21,7 @@ final class NetworkManager {
                     switch response.result {
                     case .success(let success):
                         completion(.success(success))
-                    case .failure(_):
+                    case .failure(let error):
                         switch response.response?.statusCode {
                         case 400:
                             completion(.failure(.invalidRequestVariables))
@@ -40,7 +40,7 @@ final class NetworkManager {
                         case 500:
                             completion(.failure(.serverError))
                         default:
-                            print("unknown error")
+                            print(error)
                         }
                     }
                 }
@@ -58,7 +58,7 @@ final class NetworkManager {
                     switch response.result {
                     case .success(let success):
                         completion(.success(success))
-                    case .failure(_):
+                    case .failure(let error):
                         switch response.response?.statusCode {
                         case 400:
                             completion(.failure(.invalidRequestVariables))
@@ -77,7 +77,44 @@ final class NetworkManager {
                         case 500:
                             completion(.failure(.serverError))
                         default:
-                            print("unknown error")
+                            print(error)
+                        }
+                    }
+                }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func getTopicPhotos(topicID: String, completion: @escaping (Result<[PhotoItem], APIError>) -> Void) {
+        do {
+            let query = TopicQuery(topicID: topicID, client_id: APIKey.unsplashAccessKey)
+            let request = try Router.topic(query: query).asURLRequest()
+            AF.request(request)
+                .responseDecodable(of: [PhotoItem].self) { response in
+                    switch response.result {
+                    case .success(let success):
+                        completion(.success(success))
+                    case .failure(let error):
+                        switch response.response?.statusCode {
+                        case 400:
+                            completion(.failure(.invalidRequestVariables))
+                        case 401:
+                            completion(.failure(.failedAuthentication))
+                        case 403:
+                            completion(.failure(.invalidReauest))
+                        case 404:
+                            completion(.failure(.invalidURL))
+                        case 405:
+                            completion(.failure(.invalidMethod))
+                        case 408:
+                            completion(.failure(.networkDelay))
+                        case 429:
+                            completion(.failure(.requestLimit))
+                        case 500:
+                            completion(.failure(.serverError))
+                        default:
+                            print(error)
                         }
                     }
                 }
