@@ -101,7 +101,7 @@ final class RandomPhotoCell: BaseCollectionViewCell {
     }
     
     func configure(data: PhotoItem, indexPath: IndexPath) {
-        let photoURL = URL(string: data.urls.raw)
+        let photoURL = URL(string: data.urls.regular)
         let photoProcessor = DownsamplingImageProcessor(size: photoImageView.bounds.size)
         photoImageView.kf.setImage(
             with: photoURL,

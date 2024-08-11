@@ -15,6 +15,7 @@ final class LikeItems: Object, SectionItem {
     @Persisted var height: Int
     @Persisted var rawImageURL: String
     @Persisted var smallImageURL: String
+    @Persisted var regularImageURL: String
     @Persisted var regDate: Date
     @Persisted var likes: Int
     @Persisted var photoGrapherID: String
@@ -39,6 +40,7 @@ final class LikeItems: Object, SectionItem {
         self.height = photoItem.height
         self.rawImageURL = photoItem.urls.raw
         self.smallImageURL = photoItem.urls.small
+        self.regularImageURL = photoItem.urls.regular
         self.regDate = Date()
         self.likes = photoItem.likes
         self.photoGrapherID = photoItem.user.id

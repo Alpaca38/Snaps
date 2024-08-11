@@ -38,7 +38,7 @@ struct PhotoItem: Decodable, Hashable, Identifiable, SectionItem {
                 width: likeItem.width,
                 height: likeItem.height,
                 urls: Link(
-                    raw: likeItem.rawImageURL, small: likeItem.smallImageURL
+                    raw: likeItem.rawImageURL, small: likeItem.smallImageURL, regular: likeItem.regularImageURL
                 ),
                 likes: likeItem.likes,
                 user: PhotoGrapher(
@@ -54,6 +54,7 @@ struct PhotoItem: Decodable, Hashable, Identifiable, SectionItem {
 struct Link: Decodable, Hashable {
     let raw: String
     let small: String
+    let regular: String
 }
 
 struct PhotoGrapher: Decodable, Hashable {

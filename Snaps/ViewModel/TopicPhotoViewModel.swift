@@ -48,7 +48,7 @@ private extension TopicPhotoViewModel {
                       created_at: $0.created_at,
                       width: $0.width,
                       height: $0.height,
-                      urls: Link(raw: $0.rawImageURL, small: $0.smallImageURL),
+                      urls: Link(raw: $0.rawImageURL, small: $0.smallImageURL, regular: $0.regularImageURL),
                       likes: $0.likes,
                       user: PhotoGrapher(id: $0.photoGrapherID,
                                          name: $0.photoGrapherName,
