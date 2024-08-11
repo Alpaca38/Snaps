@@ -123,6 +123,43 @@ final class NetworkManager {
         }
     }
     
+    func getStatistics(imageID: String, completion: @escaping (Result<Statistics, APIError>) -> Void) {
+        do {
+            let query = StatisticsQuery(imageID: imageID, client_id: APIKey.unsplashAccessKey)
+            let request = try Router.statistics(query: query).asURLRequest()
+            AF.request(request)
+                .responseDecodable(of: Statistics.self) { response in
+                    switch response.result {
+                    case .success(let success):
+                        completion(.success(success))
+                    case .failure(let error):
+                        switch response.response?.statusCode {
+                        case 400:
+                            completion(.failure(.invalidRequestVariables))
+                        case 401:
+                            completion(.failure(.failedAuthentication))
+                        case 403:
+                            completion(.failure(.invalidReauest))
+                        case 404:
+                            completion(.failure(.invalidURL))
+                        case 405:
+                            completion(.failure(.invalidMethod))
+                        case 408:
+                            completion(.failure(.networkDelay))
+                        case 429:
+                            completion(.failure(.requestLimit))
+                        case 500:
+                            completion(.failure(.serverError))
+                        default:
+                            print(error)
+                        }
+                    }
+                }
+        } catch {
+            print(error)
+        }
+    }
+    
     func getPhotoData<T: Decodable>(api: PhotoAPI, responseType: T.Type, completion: @escaping (Result<T, APIError>) -> Void) {
         guard let url = api.endpoint else { return }
         AF.request(url,

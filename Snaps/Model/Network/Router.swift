@@ -31,8 +31,8 @@ extension Router: TargetType {
             "search/photos"
         case .topic(let query):
             "topics/\(query.topicID)/photos"
-        case .statistics(let imageID):
-            "photos/\(imageID)/statistics"
+        case .statistics(let query):
+            "photos/\(query.imageID)/statistics"
         case .random:
             "photos/random"
         }

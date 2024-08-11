@@ -78,7 +78,7 @@ private extension DetailPhotoViewModel {
     }
     
     func getStatistics(imageID: String) {
-        NetworkManager.shared.getPhotoData(api: .statistics(imageID: imageID), responseType: Statistics.self) { [weak self] result in
+        NetworkManager.shared.getStatistics(imageID: imageID) { [weak self] result in
             switch result {
             case .success(let success):
                 self?.outputStatistics.value = success
