@@ -180,18 +180,21 @@ private extension SearchPhotoViewController {
             cell.likeButtonTapped = { data in
                 if UserDefaultsManager.likeList.contains(itemIdentifier.id) {
                     self?.viewModel.inputLikeItemRemove.value = LikeItems(from: itemIdentifier)
+                    self?.photoCollectionView.reloadData()
                 } else {
                     DispatchQueue.global().async {
                         do {
                             guard let profileImageURL = URL(string: itemIdentifier.user.profileImage.medium) else { return }
                             let profileData = try Data(contentsOf: profileImageURL)
-                            self?.viewModel.inputLikeItemAdd.value = (data, profileData, LikeItems(from: itemIdentifier))
+                            DispatchQueue.main.async {
+                                self?.viewModel.inputLikeItemAdd.value = (data, profileData, LikeItems(from: itemIdentifier))
+                                self?.photoCollectionView.reloadData()
+                            }
                         } catch {
                             print("Image Data Error")
                         }
                     }
                 }
-                self?.photoCollectionView.reloadData()
             }
             cell.configure(data: itemIdentifier, category: .search)
         }
@@ -246,7 +249,8 @@ private extension SearchPhotoViewController {
         }
         
         viewModel.outputNetworkError.bind { [weak self] error in
-            self?.view.makeToast(error?.rawValue, position: .center)
+            guard let error else { return }
+            self?.view.makeToast(error.rawValue, position: .center)
         }
         
         viewModel.outputSort.bind { [weak self] _ in

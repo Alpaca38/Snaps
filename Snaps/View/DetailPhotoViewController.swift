@@ -314,7 +314,8 @@ private extension DetailPhotoViewController {
         }
         
         viewModel.outputStatisticsError.bind { [weak self] error in
-            self?.view.makeToast(error?.rawValue, position: .center)
+            guard let error else { return }
+            self?.view.makeToast(error.rawValue, position: .center)
         }
     }
     

@@ -101,7 +101,8 @@ private extension RandomPhotoViewController {
         }
         
         viewModel.outputNetworkError.bind { [weak self] error in
-            self?.view.makeToast(error?.rawValue, position: .center)
+            guard let error else { return }
+            self?.view.makeToast(error.rawValue, position: .center)
         }
     }
 }
