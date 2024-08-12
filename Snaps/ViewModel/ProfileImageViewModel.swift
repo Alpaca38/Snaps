@@ -8,9 +8,9 @@
 import Foundation
 
 final class ProfileImageViewModel {
-    var outputImage: Observable<String?> = Observable(nil)
+    var outputImage: CustomObservable<String?> = CustomObservable(nil)
     
-    var inputSelectedIndex: Observable<Int> = Observable(UserDefaultsManager.user.image)
+    var inputSelectedIndex: CustomObservable<Int> = CustomObservable(UserDefaultsManager.user.image)
     
     init() {
         inputSelectedIndex.bind { [weak self] index in

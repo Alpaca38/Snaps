@@ -10,16 +10,16 @@ import Foundation
 final class DetailPhotoViewModel {
     private let repository = try? RealmRepository<LikeItems>()
     
-    var outputPhotoData = Observable<PhotoItem?>(nil)
-    var outputLikedPhotoData = Observable<PhotoItem?>(nil)
-    var outputSetLike = Observable<Bool?>(nil)
-    var outputStatistics = Observable<Statistics?>(nil)
-    var outputStatisticsError = Observable<APIError?>(nil)
+    var outputPhotoData = CustomObservable<PhotoItem?>(nil)
+    var outputLikedPhotoData = CustomObservable<PhotoItem?>(nil)
+    var outputSetLike = CustomObservable<Bool?>(nil)
+    var outputStatistics = CustomObservable<Statistics?>(nil)
+    var outputStatisticsError = CustomObservable<APIError?>(nil)
     
-    var inputSelectedPhoto = Observable<PhotoItem?>(nil)
-    var inputLikedPhoto = Observable<PhotoItem?>(nil)
-    var inputLikeButtonTapped = Observable<(Data?, Data?, PhotoItem?)>((nil,nil,nil))
-    var inputLikedButtonTapped = Observable<LikeItems?>(nil)
+    var inputSelectedPhoto = CustomObservable<PhotoItem?>(nil)
+    var inputLikedPhoto = CustomObservable<PhotoItem?>(nil)
+    var inputLikeButtonTapped = CustomObservable<(Data?, Data?, PhotoItem?)>((nil,nil,nil))
+    var inputLikedButtonTapped = CustomObservable<LikeItems?>(nil)
     
     init() {
         transform()

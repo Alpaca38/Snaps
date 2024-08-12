@@ -6,91 +6,121 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
-final class ProfileViewModel {
+final class ProfileViewModel: ViewModel {
     private let repository = try? RealmRepository<LikeItems>()
+    private let disposeBag = DisposeBag()
     
-    var outputValidText = Observable("")
-    var outputNickname = Observable<String?>(nil)
-    var outputTextValid = Observable(false)
-    var outputImageIndex = Observable<Int?>(nil)
-    var outputMBTIValid = Observable(false)
-    var outputTotalValid = Observable(false)
-    var outputMBTI = Observable<[MBTIItem]?>(nil)
-    var outputSaveImageIndex = Observable<Int?>(nil)
-    
-    var inputText: Observable<String?> = Observable("")
-    var inputValidNickname = Observable<String?>(nil)
-    var inputSelectedImageIndex = Observable<Int?>(nil)
-    var inputMBTI = Observable<[MBTIItem]?>(nil)
-    var inputValidMBTI = Observable<[MBTIItem]?>(nil)
-    var inputSaveImage = Observable<Int?>(nil)
-    var inputWithdrawal = Observable<Void?>(nil)
-    
-    init() {
-        inputText.bind { [weak self] value in
-            guard let self, let text = value?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-            do {
-                _ = try validateProfileName(text: text)
-                outputValidText.value = TextFieldState.valid
-                outputTextValid.value = true
-            } catch NicknameValidationError.includeSpecial {
-                outputValidText.value = TextFieldState.specialCharacter
-                outputTextValid.value = false
-            } catch NicknameValidationError.includeInt {
-                outputValidText.value = TextFieldState.number
-                outputTextValid.value = false
-            } catch NicknameValidationError.isNotValidCount {
-                outputValidText.value = TextFieldState.count
-                outputTextValid.value = false
-            } catch {
-                
-            }
-            updateTotalValid()
-        }
+    func transform(input: Input) -> Output {
+        let validText = PublishSubject<String>()
+        let textValid = BehaviorSubject<Bool>(value: false)
+        let mbtiValid = BehaviorSubject<Bool>(value: false)
+        let totalValid = BehaviorSubject<Bool>(value: false)
         
-        inputValidNickname.bind { [weak self] nickname in
-            guard let nickname else { return }
-            self?.outputNickname.value = nickname
-        }
-        
-        inputSelectedImageIndex.bind { [weak self] index in
-            guard let index else { return }
-            self?.outputImageIndex.value = index
-        }
-        
-        inputMBTI.bind { [weak self] mbti in
-            guard let mbti ,let self else { return }
-            do {
-                _ = try validateMBTI(mbti: mbti)
-                outputMBTIValid.value = true
-            } catch MBTIValidationError.isNotValidCount {
-                outputMBTIValid.value = false
-            } catch {
-                
-            }
-            updateTotalValid()
-        }
-        
-        inputValidMBTI.bind { [weak self] mbti in
-            guard let mbti else { return }
-            self?.outputMBTI.value = mbti
-        }
-        
-        inputSaveImage.bind { [weak self] index in
-            guard let index else { return }
-            self?.outputSaveImageIndex.value = index
-        }
-        
-        inputWithdrawal.bind(false) { [weak self] _ in
-            UserDefaultsManager.isLogin = false
-            UserDefaultsManager.user = User(nickname: "", image: Int.random(in: 0...11), mbti: [])
-            UserDefaultsManager.likeList = []
+        disposeBag.insert {
+            input.text
+                .bind(with: self) { owner, value in
+                    do {
+                        _ = try owner.validateProfileName(text: value)
+                        validText.onNext(TextFieldState.valid)
+                        textValid.onNext(true)
+                    } catch NicknameValidationError.includeSpecial {
+                        validText.onNext(TextFieldState.specialCharacter)
+                        textValid.onNext(false)
+                    } catch NicknameValidationError.includeInt {
+                        validText.onNext(TextFieldState.number)
+                        textValid.onNext(false)
+                    } catch NicknameValidationError.isNotValidCount {
+                        validText.onNext(TextFieldState.count)
+                        textValid.onNext(false)
+                    } catch {
+                        
+                    }
+                }
             
-            self?.repository?.deleteAll()
+            input.mbti
+                .bind(with: self) { owner, value in
+                    do {
+                        _ = try owner.validateMBTI(mbti: value)
+                        mbtiValid.onNext(true)
+                    } catch MBTIValidationError.isNotValidCount {
+                        mbtiValid.onNext(false)
+                    } catch {
+                        
+                    }
+                }
+            
+            Observable.combineLatest(textValid, mbtiValid)
+                .map { $0.0 && $0.1 }
+                .bind(to: totalValid)
+            
+            let completeTap = input.completeTap
+                .share()
+            
+            completeTap
+                .withLatestFrom(input.text)
+                .bind { nickname in
+                    UserDefaultsManager.user.nickname = nickname
+                }
+            
+            completeTap
+                .withLatestFrom(input.mbti)
+                .bind { mbti in
+                    UserDefaultsManager.user.mbti = mbti
+                }
+            
+            completeTap
+                .withLatestFrom(input.profileImage)
+                .bind { image in
+                    UserDefaultsManager.user.image = image
+                }
+            
+            completeTap
+                .bind { _ in
+                    UserDefaultsManager.isLogin = true
+                }
+            
+            let saveTap = input.saveTap
+                .share()
+            
+            saveTap
+                .withLatestFrom(input.text)
+                .bind { nickname in
+                    UserDefaultsManager.user.nickname = nickname
+                }
+            
+            saveTap
+                .withLatestFrom(input.mbti)
+                .bind { mbti in
+                    UserDefaultsManager.user.mbti = mbti
+                }
+            
+            saveTap
+                .withLatestFrom(input.profileImage)
+                .bind { image in
+                    UserDefaultsManager.user.image = image
+                }
+            
+            input.delete
+                .bind(with: self) { owner, _ in
+                    UserDefaultsManager.isLogin = false
+                    UserDefaultsManager.user = User(nickname: "", image: Int.random(in: 0...11), mbti: [])
+                    UserDefaultsManager.likeList = []
+                    
+                    owner.repository?.deleteAll()
+                }
         }
+        
+        return Output(
+            validText: validText,
+            totalValid: totalValid,
+            completeTap: input.completeTap,
+            saveTap: input.saveTap,
+            withdrawalTap: input.withdrawalTap
+        )
     }
-    
 }
 
 private extension ProfileViewModel {
@@ -113,8 +143,24 @@ private extension ProfileViewModel {
         }
         return true
     }
+}
+
+extension ProfileViewModel {
+    struct Input {
+        let text: ControlProperty<String>
+        let mbti: BehaviorRelay<[MBTIItem]>
+        let profileImage: PublishRelay<Int>
+        let completeTap: ControlEvent<Void>
+        let saveTap: ControlEvent<Void>
+        let withdrawalTap: ControlEvent<Void>
+        let delete: PublishRelay<Void>
+    }
     
-    func updateTotalValid() {
-        outputTotalValid.value = outputTextValid.value && outputMBTIValid.value
+    struct Output {
+        let validText: Observable<String>
+        let totalValid: Observable<Bool>
+        let completeTap: ControlEvent<Void>
+        let saveTap: ControlEvent<Void>
+        let withdrawalTap: ControlEvent<Void>
     }
 }

@@ -10,12 +10,12 @@ import Foundation
 final class RandomPhotoViewModel {
     private let repository = try? RealmRepository<LikeItems>()
     
-    var outputList = Observable<[PhotoItem]>([])
-    var outputNetworkError = Observable<APIError?>(nil)
+    var outputList = CustomObservable<[PhotoItem]>([])
+    var outputNetworkError = CustomObservable<APIError?>(nil)
     
-    var inputViewDidLoadTrigger = Observable<Void?>(nil)
-    var inputLikeItemRemove = Observable<LikeItems?>(nil)
-    var inputLikeItemAdd = Observable<(Data?, Data?, LikeItems?)>((nil,nil,nil))
+    var inputViewDidLoadTrigger = CustomObservable<Void?>(nil)
+    var inputLikeItemRemove = CustomObservable<LikeItems?>(nil)
+    var inputLikeItemAdd = CustomObservable<(Data?, Data?, LikeItems?)>((nil,nil,nil))
     
     init() {
         transform()

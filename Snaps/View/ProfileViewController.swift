@@ -8,13 +8,15 @@
 import UIKit
 import SnapKit
 import Toast
+import RxSwift
+import RxCocoa
 
 final class ProfileViewController: BaseViewController {
     var updateImage: (() -> Void)?
+    private let tapGesture = UITapGestureRecognizer()
     
     private lazy var profileImageView = {
         let view = CircleImageView(borderWidth: Image.Border.active, borderColor: Color.main, cornerRadius: Image.Size.bigProfile / 2, alpha: Image.Alpha.active)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
         view.addGestureRecognizer(tapGesture)
         view.isUserInteractionEnabled = true
         self.view.addSubview(view)
@@ -32,8 +34,6 @@ final class ProfileViewController: BaseViewController {
     }()
     private lazy var nicknameTextField = {
         let view = NicknameTextField()
-        view.delegate = self
-        view.addTarget(self, action: #selector(textFieldDidChage(_ :)), for: .editingChanged)
         self.view.addSubview(view)
         return view
     }()
@@ -46,15 +46,12 @@ final class ProfileViewController: BaseViewController {
     }()
     private lazy var completeButton = {
         let button = CustomButton(title: "완료")
-        button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
-        
         self.view.addSubview(button)
         return button
     }()
     
     private lazy var mbtiView = {
         let view = MBTIView()
-        view.collectionView.delegate = self
         self.view.addSubview(view)
         return view
     }()
@@ -69,12 +66,11 @@ final class ProfileViewController: BaseViewController {
             .foregroundColor: UIColor.systemBlue,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]), for: .normal)
-        view.addTarget(self, action: #selector(withdrawalButtonTaped), for: .touchUpInside)
         self.view.addSubview(view)
         return view
     }()
     
-    private lazy var saveButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
+    private let saveButton = UIBarButtonItem(title: "저장")
     
     private let viewModel = ProfileViewModel()
     
@@ -138,11 +134,9 @@ private extension ProfileViewController {
             profileImageView.image = UIImage(named: Image.Profile.allCases[UserDefaultsManager.user.image].profileImage)
             
             nicknameTextField.text = UserDefaultsManager.user.nickname
-            viewModel.inputText.value = UserDefaultsManager.user.nickname
             
             mbtiView.mbtiItems = UserDefaultsManager.user.mbti
-            viewModel.inputMBTI.value = UserDefaultsManager.user.mbti
-            mbtiView.updateSnapshot()
+            mbtiView.sectionRelay.accept([MBTIView.MBTISection(model: 0, items: mbtiView.mbtiItems)])
         } else {
             completeButton.isHidden = false
             withdrawalButton.isHidden = true
@@ -167,95 +161,79 @@ private extension ProfileViewController {
     }
     
     func bindData() {
-        viewModel.outputValidText.bind { [weak self] in
-            guard let self else { return }
-            textFieldStateLabel.text = $0
-        }
+        let mbti = BehaviorRelay(value: mbtiView.mbtiItems)
+        let profileImage = PublishRelay<Int>()
+        let delete = PublishRelay<Void>()
         
-        viewModel.outputNickname.bind { nickname in
-            guard let nickname else { return }
-            UserDefaultsManager.user.nickname = nickname
-        }
+        let input = ProfileViewModel.Input(
+            text: nicknameTextField.rx.text.orEmpty,
+            mbti: mbti,
+            profileImage: profileImage,
+            completeTap: completeButton.rx.tap,
+            saveTap: saveButton.rx.tap,
+            withdrawalTap: withdrawalButton.rx.tap,
+            delete: delete
+        )
         
-        viewModel.outputTotalValid.bind { [weak self] in
-            guard let self else { return }
-            completeButton.backgroundColor = $0 ? Color.main : Color.gray
-            completeButton.isEnabled = $0
-            $0 ? saveButton.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal) : saveButton.setTitleTextAttributes([.foregroundColor: UIColor.lightGray], for: .normal)
-            saveButton.isEnabled = $0
-        }
+        let output = viewModel.transform(input: input)
         
-        viewModel.outputSaveImageIndex.bind { index in
-            guard let index else { return }
-            UserDefaultsManager.user.image = index
-        }
-        
-        viewModel.outputMBTI.bind { mbti in
-            guard let mbti else { return }
-            UserDefaultsManager.user.mbti = mbti
-        }
-    }
-}
-
-private extension ProfileViewController {
-    @objc func saveButtonTapped() {
-        guard let nickname = nicknameTextField.text else { return }
-        UserDefaultsManager.user.nickname = nickname
-        UserDefaultsManager.user.mbti = mbtiView.mbtiItems
-        viewModel.inputSaveImage.value = viewModel.outputImageIndex.value
-        
-        updateImage?()
-        
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc func completeButtonTapped() {
-        guard let nickname = nicknameTextField.text else { return }
-        viewModel.inputValidNickname.value = nickname
-        viewModel.inputSaveImage.value = viewModel.outputImageIndex.value
-        viewModel.inputValidMBTI.value = mbtiView.mbtiItems
-        
-        UserDefaultsManager.isLogin = true
-        SceneManager.shared.setScene(viewController: TabBarController())
-    }
-    
-    @objc func profileImageTapped() {
-        let vc = ProfileImageViewController()
-        vc.viewModel.inputSelectedIndex.value = viewModel.outputImageIndex.value ?? UserDefaultsManager.user.image
-        vc.sendImage = { [weak self] image in
-            self?.profileImageView.image = UIImage(named: image)
-            self?.viewModel.inputSelectedImageIndex.value = Image.Profile.allCases.firstIndex(where: { $0.profileImage == image })
-        }
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @objc func withdrawalButtonTaped() {
-        showAlert(title: "회원을 탈퇴하시겠습니까?", message: "회원을 탈퇴하면 저장된 모든 정보가 사라집니다. 정말로 탈퇴하시겠습니까?", buttonTitle: "네") { [weak self] in
-            self?.viewModel.inputWithdrawal.value = ()
+        disposeBag.insert {
+            output.validText
+                .bind(to: textFieldStateLabel.rx.text)
             
-            SceneManager.shared.setNaviScene(viewController: OnBoardingViewController())
+            Observable.zip(mbtiView.collectionView.rx.itemSelected, mbtiView.collectionView.rx.modelSelected(MBTIItem.self))
+                .bind(with: self) { owner, value in
+                    owner.mbtiView.mbtiItems[value.0.item].selected = value.1.selected ? false : true
+                    owner.updatePair(data: value.1)
+                    
+                    mbti.accept(owner.mbtiView.mbtiItems)
+                    owner.mbtiView.sectionRelay.accept([MBTIView.MBTISection(model: 0, items: owner.mbtiView.mbtiItems)])
+                }
+            
+            output.totalValid
+                .bind(with: self) { owner, value in
+                    owner.completeButton.backgroundColor = value ? Color.main : Color.gray
+                    owner.completeButton.isEnabled = value
+                    
+                    let saveColor = value ? Color.black : Color.lightGray
+                    owner.saveButton.setTitleTextAttributes([.foregroundColor: saveColor], for: .normal)
+                    owner.saveButton.isEnabled = value
+                }
+            
+            tapGesture.rx.event
+                .bind(with: self, onNext: { owner, _ in
+                    let vc = ProfileImageViewController()
+                    vc.sendImage = { image in
+                        owner.profileImageView.image = UIImage(named: image)
+                        profileImage.accept(Image.Profile.allCases.firstIndex(where: { $0.profileImage == image })!)
+                    }
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                })
+            
+            output.completeTap
+                .bind { _ in
+                    SceneManager.shared.setScene(viewController: TabBarController())
+                }
+            
+            output.saveTap
+                .bind(with: self) { owner, _ in
+                    owner.navigationController?.popViewController(animated: true)
+                    owner.updateImage?()
+                }
+            
+            output.withdrawalTap
+                .bind(with: self) { owner, _ in
+                    owner.showAlert(title: "회원을 탈퇴하시겠습니까?", message: "회원을 탈퇴하면 저장된 모든 정보가 사라집니다. 정말로 탈퇴하시겠습니까?", buttonTitle: "네") {
+                        delete.accept(())
+                        
+                        SceneManager.shared.setNaviScene(viewController: OnBoardingViewController())
+                    }
+                }
         }
     }
 }
 
-extension ProfileViewController: UITextFieldDelegate {
-    @objc func textFieldDidChage(_ textField: UITextField) {
-        viewModel.inputText.value = textField.text
-    }
-}
-
-extension ProfileViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let data = mbtiView.dataSource.itemIdentifier(for: indexPath) else { return }
-        
-        mbtiView.mbtiItems[indexPath.item].selected = data.selected ? false : true
-        updatePair(data: data)
-        
-        viewModel.inputMBTI.value = mbtiView.mbtiItems
-        
-        mbtiView.updateSnapshot()
-    }
-    
+extension ProfileViewController {
     private func updatePair(data: MBTIItem) {
         let pairs: [String: String] = [
             "E": "I", "I": "E",

@@ -15,6 +15,8 @@
 		D11D80822C67519800EB8680 /* TopicQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11D80812C67519800EB8680 /* TopicQuery.swift */; };
 		D11D80842C6751AE00EB8680 /* StatisticsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11D80832C6751AE00EB8680 /* StatisticsQuery.swift */; };
 		D11D80862C6751BB00EB8680 /* RandomQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11D80852C6751BB00EB8680 /* RandomQuery.swift */; };
+		D11D80902C69EE2100EB8680 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = D11D808F2C69EE2100EB8680 /* Differentiator */; };
+		D11D80922C69EE2100EB8680 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = D11D80912C69EE2100EB8680 /* RxDataSources */; };
 		D16D8BC32C50D84E00AF7677 /* LikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC22C50D84E00AF7677 /* LikesViewController.swift */; };
 		D16D8BC52C50DDE000AF7677 /* LikeItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC42C50DDE000AF7677 /* LikeItems.swift */; };
 		D16D8BCA2C512DE900AF7677 /* LikesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D8BC92C512DE900AF7677 /* LikesViewModel.swift */; };
@@ -54,7 +56,7 @@
 		D1E8B1782C4E1996009B3D81 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1772C4E1996009B3D81 /* BaseViewController.swift */; };
 		D1E8B17B2C4E19C4009B3D81 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B17A2C4E19C4009B3D81 /* Color.swift */; };
 		D1E8B17D2C4E1A89009B3D81 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B17C2C4E1A89009B3D81 /* BaseCollectionViewCell.swift */; };
-		D1E8B17F2C4E1F85009B3D81 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B17E2C4E1F85009B3D81 /* Observable.swift */; };
+		D1E8B17F2C4E1F85009B3D81 /* CustomObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B17E2C4E1F85009B3D81 /* CustomObservable.swift */; };
 		D1E8B1812C4E236E009B3D81 /* SceneManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1802C4E236E009B3D81 /* SceneManger.swift */; };
 		D1E8B1842C4E2401009B3D81 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1832C4E2401009B3D81 /* UserDefaults.swift */; };
 		D1E8B1862C4E2463009B3D81 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8B1852C4E2463009B3D81 /* UserDefaultsManager.swift */; };
@@ -142,7 +144,7 @@
 		D1E8B1772C4E1996009B3D81 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		D1E8B17A2C4E19C4009B3D81 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		D1E8B17C2C4E1A89009B3D81 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
-		D1E8B17E2C4E1F85009B3D81 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		D1E8B17E2C4E1F85009B3D81 /* CustomObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomObservable.swift; sourceTree = "<group>"; };
 		D1E8B1802C4E236E009B3D81 /* SceneManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManger.swift; sourceTree = "<group>"; };
 		D1E8B1832C4E2401009B3D81 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		D1E8B1852C4E2463009B3D81 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -183,10 +185,12 @@
 				D1E8B1692C4E176E009B3D81 /* Kingfisher in Frameworks */,
 				D1E8B16C2C4E1778009B3D81 /* Alamofire in Frameworks */,
 				D1E8B1662C4E1764009B3D81 /* Toast in Frameworks */,
+				D11D80922C69EE2100EB8680 /* RxDataSources in Frameworks */,
 				D16D8D072C60BE1600AF7677 /* RxCocoa in Frameworks */,
 				D1E8B16F2C4E17A9009B3D81 /* RealmSwift in Frameworks */,
 				D16D8C6E2C575CC700AF7677 /* SkeletonView in Frameworks */,
 				D16D8D092C60BE1600AF7677 /* RxSwift in Frameworks */,
+				D11D80902C69EE2100EB8680 /* Differentiator in Frameworks */,
 				D1E8B1632C4E175C009B3D81 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,7 +340,7 @@
 				D16D8BEF2C524D8000AF7677 /* Statistics.swift */,
 				D16D8BF72C527F5800AF7677 /* Topic.swift */,
 				D16D8BF92C534DF100AF7677 /* PhotoColor.swift */,
-				D1E8B17E2C4E1F85009B3D81 /* Observable.swift */,
+				D1E8B17E2C4E1F85009B3D81 /* CustomObservable.swift */,
 				D16D8BED2C52392A00AF7677 /* DateFormatManger.swift */,
 			);
 			path = Model;
@@ -449,6 +453,8 @@
 				D16D8C6D2C575CC700AF7677 /* SkeletonView */,
 				D16D8D062C60BE1600AF7677 /* RxCocoa */,
 				D16D8D082C60BE1600AF7677 /* RxSwift */,
+				D11D808F2C69EE2100EB8680 /* Differentiator */,
+				D11D80912C69EE2100EB8680 /* RxDataSources */,
 			);
 			productName = Snaps;
 			productReference = D1E8B1462C4E1568009B3D81 /* Snaps.app */;
@@ -486,6 +492,7 @@
 				D1E8B16D2C4E17A9009B3D81 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				D16D8C6C2C575CC700AF7677 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				D16D8D052C60BE1600AF7677 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				D11D808E2C69EE2100EB8680 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = D1E8B1472C4E1568009B3D81 /* Products */;
 			projectDirPath = "";
@@ -567,7 +574,7 @@
 				D1E8B1EA2C4F9557009B3D81 /* SearchPhotoViewModel.swift in Sources */,
 				D1E8B18B2C4E25C8009B3D81 /* Image.swift in Sources */,
 				D16D8C742C58724800AF7677 /* NetworkErrorView.swift in Sources */,
-				D1E8B17F2C4E1F85009B3D81 /* Observable.swift in Sources */,
+				D1E8B17F2C4E1F85009B3D81 /* CustomObservable.swift in Sources */,
 				D1E8B1A62C4E4845009B3D81 /* MBTICell.swift in Sources */,
 				D1E8B1B22C4F3902009B3D81 /* PhotoCell.swift in Sources */,
 				D16D8D0B2C60BE4400AF7677 /* OnBoardingViewModel.swift in Sources */,
@@ -806,6 +813,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D11D808E2C69EE2100EB8680 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		D16D8C6C2C575CC700AF7677 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
@@ -865,6 +880,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D11D808F2C69EE2100EB8680 /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D11D808E2C69EE2100EB8680 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		D11D80912C69EE2100EB8680 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D11D808E2C69EE2100EB8680 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
+		};
 		D16D8C6D2C575CC700AF7677 /* SkeletonView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D16D8C6C2C575CC700AF7677 /* XCRemoteSwiftPackageReference "SkeletonView" */;

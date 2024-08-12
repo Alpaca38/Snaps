@@ -10,12 +10,12 @@ import Foundation
 final class LikesViewModel {
     private let repository = try? RealmRepository<LikeItems>()
     
-    var outputList = Observable<[LikeItems]>([])
+    var outputList = CustomObservable<[LikeItems]>([])
     
-    var inputViewWillAppearEvent = Observable<Void?>(nil)
-    var inputLikeButtonTapped = Observable<LikeItems?>(nil)
-    var inputSortButton = Observable<Bool>(false)
-    var inputText = Observable<String?>(nil)
+    var inputViewWillAppearEvent = CustomObservable<Void?>(nil)
+    var inputLikeButtonTapped = CustomObservable<LikeItems?>(nil)
+    var inputSortButton = CustomObservable<Bool>(false)
+    var inputText = CustomObservable<String?>(nil)
     
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleLikeItemWillBeRemoved(_:)), name: .likeItemWillBeRemoved, object: nil)

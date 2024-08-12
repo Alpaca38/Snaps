@@ -11,18 +11,18 @@ final class TopicPhotoViewModel {
     private let repository = try? RealmRepository<LikeItems>()
     
     private var lastRefreshTime: Date?
-    var isRefreshing = Observable<Void?>(nil)
-    var refreshCompleted = Observable<Bool?>(nil)
+    var isRefreshing = CustomObservable<Void?>(nil)
+    var refreshCompleted = CustomObservable<Bool?>(nil)
     
-    var outputFirstSectionData = Observable<[PhotoItem]>([])
-    var outputSecondSectionData = Observable<[PhotoItem]>([])
-    var outputThirdSectonData = Observable<[PhotoItem]>([])
-    var outputLikedSectionData = Observable<[PhotoItem]>([])
-    var outputNetworkError = Observable<APIError?>(nil)
-    var outputUpdateSnapshot = Observable<Void?>(nil)
+    var outputFirstSectionData = CustomObservable<[PhotoItem]>([])
+    var outputSecondSectionData = CustomObservable<[PhotoItem]>([])
+    var outputThirdSectonData = CustomObservable<[PhotoItem]>([])
+    var outputLikedSectionData = CustomObservable<[PhotoItem]>([])
+    var outputNetworkError = CustomObservable<APIError?>(nil)
+    var outputUpdateSnapshot = CustomObservable<Void?>(nil)
     
-    var inputTopic = Observable<[String]?>(nil)
-    var inputRefresh = Observable<Void?>(nil)
+    var inputTopic = CustomObservable<[String]?>(nil)
+    var inputRefresh = CustomObservable<Void?>(nil)
     
     init() {
         transform()

@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class OnBoardingViewModel {
+final class OnBoardingViewModel: ViewModel {
     func transform(input: Input) -> Output {
         return Output(startTap: input.startTap)
     }

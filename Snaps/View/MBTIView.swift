@@ -7,18 +7,12 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
+import RxDataSources
+import Differentiator
 
 final class MBTIView: BaseView {
-    var dataSource: DataSource!
-    var mbtiItems = [MBTIItem(element: "E"),
-                             MBTIItem(element: "S"),
-                             MBTIItem(element: "T"),
-                             MBTIItem(element: "J"),
-                             MBTIItem(element: "I"),
-                             MBTIItem(element: "N"),
-                             MBTIItem(element: "F"),
-                             MBTIItem(element: "P")]
-    
     private lazy var titleLabel = {
         let view = UILabel()
         view.text = "MBTI"
@@ -34,10 +28,25 @@ final class MBTIView: BaseView {
         return view
     }()
     
+    private var dataSource: DataSource!
+    
+    lazy var sectionRelay = BehaviorRelay(value: [MBTISection(model: 0, items: mbtiItems)])
+    
+    var mbtiItems = [MBTIItem(element: "E"),
+                             MBTIItem(element: "S"),
+                             MBTIItem(element: "T"),
+                             MBTIItem(element: "J"),
+                             MBTIItem(element: "I"),
+                             MBTIItem(element: "N"),
+                             MBTIItem(element: "F"),
+                             MBTIItem(element: "P")]
+    
+    private let disposeBag = DisposeBag()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureDataSource()
-        updateSnapshot()
+        bind()
     }
     
     override func configureLayout() {
@@ -78,28 +87,29 @@ extension MBTIView {
             cell.configure(data: itemIdentifier)
         }
         
-        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = DataSource(configureCell: { MBTISection, collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
             return cell
         })
     }
     
-    func updateSnapshot() {
-        var snapshot = SnapShot()
-        snapshot.appendSections([0])
-        snapshot.appendItems(mbtiItems)
-        
-        dataSource.apply(snapshot)
+    func bind() {
+        sectionRelay
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
 }
 
 extension MBTIView {
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, MBTIItem>
+    typealias MBTISection = AnimatableSectionModel<Int, MBTIItem>
+    typealias DataSource = RxCollectionViewSectionedAnimatedDataSource<MBTISection>
     typealias MBTIRegistration = UICollectionView.CellRegistration<MBTICell, MBTIItem>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<Int, MBTIItem>
 }
 
-struct MBTIItem: Codable, Hashable {
+struct MBTIItem: Codable, Hashable, IdentifiableType {
+    var identity = UUID().uuidString
     let element: String
     var selected: Bool = false
 }
+
+
