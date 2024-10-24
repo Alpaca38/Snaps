@@ -38,6 +38,7 @@
 ### 사용 기술 및 라이브러리
 - UIKit, SnapKit, MVVM
 - RxSwift
+- CompositionalLayout, DiffableDataSource
 - Down Sampling
 - Skeleton View
 - Realm
