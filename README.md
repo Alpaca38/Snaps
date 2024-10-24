@@ -75,6 +75,9 @@
 #### 다운 샘플링
   - Unsplash API로 이미지 데이터를 받아올 때 다운 샘플링
 
+#### Formatting
+  - Formatting이 필요할 때 마다 Formatter를 생성하는 리소스 낭비를 줄이고자 Formatting을 담당하는 싱글턴 객체 생성
+
 #### 로컬 DB
   - 찜한 사진 로컬 DB에 저장
   - Repository를 만들어 로컬 DB에 관련된 로직을 담당하게 함
