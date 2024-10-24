@@ -1,4 +1,4 @@
-# Snaps
+# Snaps
 
 ## 프로젝트 소개
 > 좋아하는 사진을 탐색하고 저장할 수 있는 앱
@@ -39,7 +39,6 @@
 ### 주요 기술
 #### 아키텍쳐
 - **MVVM**
-![mvvm](https://github.com/user-attachments/assets/a585c0e8-2c06-4a77-83c6-f73606298034)
   - RxSwift를 이용해 데이터 바인딩을 구현
   - Input-Output 패턴을 이용해 VM과 VC의 데이터 바인딩을 구현
 
