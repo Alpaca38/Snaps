@@ -62,7 +62,7 @@
   - 코드 기반 UI 구현
   - 오토레이아웃 관리
 
-- **RxSwift & RxDataSource**
+- **RxSwift**
   - 반응형 프로그래밍 구현
   - 데이터 스트림 관리
 
